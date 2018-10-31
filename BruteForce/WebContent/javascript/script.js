@@ -11,20 +11,27 @@ $(document).ready(function() {
     getSuggestions();
   });
 });
-
+/*
+ * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
+ * 
+ */
 function addClassToList(className) {
-  var item = document.createElement('li');
-  item.classList.add('list-group-item');
-  item.classList.add('d-flex');
-  item.classList.add('justify-content-between');
-  var title = document.createElement('span');
-  title.innerText = className;
-  var button = document.createElement('i');
-  button.classList.add('fas');
-  button.classList.add('fa-times');
-  button.classList.add('my-auto');
-  item.appendChild(title);
-  item.appendChild(button);
+  //CREATE A LIST ITEM
+  var item = $(
+    '<li id="' +
+      className.toUpperCase() +
+      '"class="list-group-item d-flex justify-content-between"></li>'
+  );
+  var title = $('<span></span>');
+  title.text(className);
+
+  //SETUP DELETE BUTTON
+  var button = $('<i class="fas fa-times my-auto">');
+  button.on('click', function() {
+    $('#' + className).remove();
+  });
+  title.appendTo(item);
+  button.appendTo(item);
   $('#class-list').append(item);
 }
 /*
@@ -90,7 +97,7 @@ var submitClassListToServer = () => {
 function getSuggestions() {
   var ul = $('#suggestion-box');
   ul.empty();
-  var suggestions = ['CSCI', 'PHYS', 'AHIS'];
+  var suggestions = ['CSCI', 'PHYS', 'AHIS', 'A', 'AH', 'AI'];
   // Declare variables
   var input = $('#search-box');
   var filter = input.val().toUpperCase();
@@ -99,10 +106,13 @@ function getSuggestions() {
   // Loop through all list items, and hide those who don't match the search query
   for (var i = 0; i < suggestions.length; i++) {
     if (suggestions[i].substr(0, filter.length) == filter) {
-      var li = document.createElement('li');
-      li.innerText = suggestions[i];
-      li.classList.add('list-group-item');
-      ul.append(li);
+      var li = $('<li class="list-group-item py-1"></li>');
+      li.text(suggestions[i]);
+      li.on('click', function() {
+        $('#search-box').val($(this).text());
+        $('#suggestion-box').empty();
+      });
+      li.appendTo(ul);
     }
   }
 }

@@ -1,3 +1,12 @@
-
-
 /*# sourceMappingURL=style.css.map */
+
+* {
+  box-sizing: border-box;
+}
+
+#suggestion-box {
+  z-index: 2;
+  max-height: 96px;
+  overflow: scroll;
+  float: left;
+}
