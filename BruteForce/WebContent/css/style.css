@@ -3,9 +3,12 @@
 * {
   box-sizing: border-box;
 }
-
+.list-group {
+  box-sizing: border-box;
+}
 #suggestion-box {
   z-index: 2;
+  min-height: 0;
   max-height: 96px;
   overflow: scroll;
   float: left;

@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BruteForceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BruteForceHandler handler;
-	//TODO Load in data from the database
-	
-	
+	//TODO Establish connection to database
+	//TODO Schedule optimization
 	
 	public BruteForceServlet() {
 		super();
@@ -24,7 +23,7 @@ public class BruteForceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String callType = request.getParameter("callType");
 		if (callType == null) return;
-		handler.handleRequest(callType);
+		handler.handleRequest(callType, request, response);
 	}
 	
 	public static void main(String[] args) {
