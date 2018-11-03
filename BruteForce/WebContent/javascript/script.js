@@ -103,16 +103,25 @@ function getSuggestions() {
   var filter = input.val().toUpperCase();
   if (filter == '') return;
 
-  // Loop through all list items, and hide those who don't match the search query
-  for (var i = 0; i < suggestions.length; i++) {
-    if (suggestions[i].substr(0, filter.length) == filter) {
-      var li = $('<li class="list-group-item py-1"></li>');
-      li.text(suggestions[i]);
-      li.on('click', function() {
-        $('#search-box').val($(this).text());
-        $('#suggestion-box').empty();
-      });
-      li.appendTo(ul);
+  $.ajax({
+    url: 'BruteForce',
+    data: {
+      callType: 'suggestions',
+      keyword: filter
+    },
+    success: function(result) {
+      var data = JSON.parse(result);
+      for (var i = 0; i < data.length; i++) {
+        var li = $('<li class="list-group-item py-1"></li>');
+        li.text(data[i]);
+        li.on('click', function() {
+          $('#search-box').val($(this).text());
+          $('#suggestion-box').empty();
+        });
+        li.appendTo(ul);
+      }
     }
-  }
+  });
+
+  // Loop through all list items, and hide those who don't match the search query
 }
