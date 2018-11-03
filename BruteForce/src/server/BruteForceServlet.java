@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 public class BruteForceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BruteForceHandler handler;
-	//TODO Load in data from the database
-	
-	
+	//TODO Establish connection to database
+	//TODO Schedule optimization
 	
 	public BruteForceServlet() {
 		super();
