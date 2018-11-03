@@ -10,6 +10,7 @@ public class User {
 	private int studentID; 
 	private String passwordHash; 
 	private Vector<Course> courses; 
+	private Vector<Section> schedule; 
 	
 	public User(String fName, String lName, String username, int studentID) {
 		
@@ -19,6 +20,7 @@ public class User {
 		this.studentID = studentID;
 		
 		courses = new Vector<Course>(); 
+		schedule = new Vector<Section>(); 
 	}
 	
 	/**
@@ -91,6 +93,18 @@ public class User {
 	
 	public Vector<Course> getCourses() {
 		return courses; 
+	}
+	
+	/**
+	 * Setter and getter for schedule
+	 */
+	
+	public void setSchedule(Vector<Section> schedule) {
+		this.schedule = schedule; 
+	}
+	
+	public Vector<Section> getSchedule() {
+		return schedule; 
 	}
 	
 }
