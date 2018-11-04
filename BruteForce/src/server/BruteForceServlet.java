@@ -23,7 +23,7 @@ public class BruteForceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String callType = request.getParameter("callType");
 		if (callType == null) return;
-		handler.handleRequest(callType, request, response);
+		//handler.handleRequest(callType, request, response);
 	}
 	
 	public static void main(String[] args) {
