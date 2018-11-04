@@ -3,12 +3,14 @@ $(document).ready(function() {
     var keyword = $('#search-box').val();
     addClassToList(keyword);
     $('#search-box').val('');
+    $('#add-button').attr("disabled", true);
   });
+  $('#add-button').attr("disabled", true);
   $('#submit-button').click(function(event) {
     checkClassListOnServer();
   });
   $('#search-box').keyup(function() {
-	console.log("called");
+	$('#add-button').attr("disabled", true);
     getSuggestions();
   });
 });
@@ -98,7 +100,6 @@ var submitClassListToServer = () => {
 function getSuggestions() {
   var ul = $('#suggestion-box');
   ul.empty();
-  var suggestions = ['CSCI', 'PHYS', 'AHIS', 'A', 'AH', 'AI'];
   // Declare variables
   var input = $('#search-box');
   var filter = input.val().toUpperCase();
@@ -119,6 +120,7 @@ function getSuggestions() {
         li.on('click', function() {
           $('#search-box').val($(this).text());
           $('#suggestion-box').empty();
+          $('#add-button').attr("disabled", false);
         });
         li.appendTo(ul);
       }
