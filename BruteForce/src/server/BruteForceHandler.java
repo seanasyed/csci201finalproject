@@ -28,7 +28,9 @@ public class BruteForceHandler {
 			}
 			break;
 		case "suggestions":
+			
 			String keyword = request.getParameter("keyword");
+			System.out.print(keyword);
 			ArrayList<String> suggestions = new ArrayList<>();
 			suggestions.add("CSCI-201");
 			suggestions.add("PHYS-151");

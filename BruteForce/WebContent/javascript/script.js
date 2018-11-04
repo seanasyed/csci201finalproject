@@ -8,6 +8,7 @@ $(document).ready(function() {
     checkClassListOnServer();
   });
   $('#search-box').keyup(function() {
+	console.log("called");
     getSuggestions();
   });
 });
@@ -111,6 +112,7 @@ function getSuggestions() {
     },
     success: function(result) {
       var data = JSON.parse(result);
+      console.log(data);
       for (var i = 0; i < data.length; i++) {
         var li = $('<li class="list-group-item py-1"></li>');
         li.text(data[i]);
