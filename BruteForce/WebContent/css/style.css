@@ -10,6 +10,6 @@
   z-index: 2;
   min-height: 0;
   max-height: 96px;
-  overflow: scroll;
+  overflow: auto;
   float: left;
 }
