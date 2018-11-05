@@ -27,22 +27,19 @@ public class ServerSocket {
 	public void message(String message, Session session) {
 		System.out.println(message);
 		//having error in one client doesn't mean it will do in other clients
-		for (Session s: sessionVector) {
-			try {
-				//NEED TO GET ARRAYLIST OF SECTIONS
-				ArrayList<String> sections = new ArrayList<>();
-				sections.add("30303R");
-				sections.add("29909R");
-				sections.add("30245R");
-				//TODO: JUST ADD ALL THE COURSE CODES FROM THE DATABASE
-				
-				//Filtering the data with the keyword			
-				String json = new Gson().toJson(sections);
-				s.getBasicRemote().sendText(json);
-			} catch (IOException ioe) {
-				System.out.println(ioe.getMessage());
-			}
+		try {
+			//NEED TO GET ARRAYLIST OF SECTIONS
+			ArrayList<String> sections = new ArrayList<>();
+			sections.add("30303R");
+			sections.add("29909R");
+			sections.add("30245R");
+			//TODO: JUST ADD ALL THE COURSE CODES FROM THE DATABASE
 			
+			//Filtering the data with the keyword			
+			String json = new Gson().toJson(sections);
+			session.getBasicRemote().sendText(json);
+		} catch (IOException ioe) {
+			System.out.println(ioe.getMessage());
 		}
 	}
 	
