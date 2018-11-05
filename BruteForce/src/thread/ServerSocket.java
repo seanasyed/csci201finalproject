@@ -1,4 +1,4 @@
-package server;
+package thread;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,13 @@ import com.google.gson.Gson;
 @ServerEndpoint (value="/ss")
 public class ServerSocket {
 	private static Vector<Session> sessionVector = new Vector<>();
+	private ClientThread ct;
 	//add connection
 	@OnOpen
 	public void open(Session session) {
+		System.out.println("connecting...");
 		sessionVector.add(session);
+		ct = new ClientThread("localhost", 6789);
 		//use a while loop until the session is closed
 		//check db for a change
 	}
