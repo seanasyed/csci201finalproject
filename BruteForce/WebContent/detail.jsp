@@ -25,7 +25,7 @@
   <title>Brute Force</title>
 </head>
 
-<body>
+<body onload="connectToServer()">
   <h1 class="display-4  text-center bg-cardinal">
     <span class="align-text-top text-gold"><strong>Brute</strong></span>
     <span class="align-text-top text-white">Force</span>
@@ -35,42 +35,56 @@
       <span class="mx-auto">Course Information</span>
     </div>
   </nav>
-  <h1>${param.courseName} Status</h1>
-  <table>
-    <tr>
-      <th style="width: 250px; text-align:left;">Section</th>
-      <th style="text-align: left;">Opening Seats</th>
-    </tr>
-    <tr>
-      <td>Event Title</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td colspan="2" id="button-row">
-        <button id="close-button" type="button" onclick="window.close();">Close</button>
-      </td>
-    </tr>
+  <h1 id="courseNameHeader" class="text-center"><span id="courseName">${param.courseName}</span> Status</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Section</th>
+        <th scope="col">Total</th>
+        <th scope="col">Registered</th>
+        <th scope="col">Remaining</th>
+      </tr>
+    </thead>
+    <tbody id="courseTableBody">
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
   </table>
   <script>
     var socket;
-    connectToServer();
     function connectToServer() {
       socket = new WebSocket("ws://localhost:8080/BruteForce/ss");
       socket.onopen = function (event) {
-        //document.getElementById("mychat").innerHTML += "Connected <br>";
+        $('#courseNameHeader').text($('#courseName').text() + " Connected");
+        sendMessage();
       };
       socket.onmessage = function (event) {
-        //document.getElementById("mychat").innerHTML += event.data + "<br>";
+        var result = JSON.parse(event.data);
+        console.log(result);
       };
       socket.onclose = function (event) {
-        //document.getElementById("mychat").innerHTML += "Disconnected <br>";
+        $('#courseNameHeader').text() += "Disonnected";
       };
     }
     function sendMessage() {
-      // socket.send("Sangjun1: " + document.chatform.message.value);
-      return false;
+      socket.send($('#courseName').text());
     }
-/*
   </script>
 </body>
 

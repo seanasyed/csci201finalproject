@@ -1,5 +1,4 @@
 $(document).ready(function() {
-  connectToServer();
   $("#add-button").click(function(event) {
     var keyword = $("#search-box").val();
     addClassToList(keyword);
@@ -15,24 +14,6 @@ $(document).ready(function() {
     getSuggestions();
   });
 });
-
-var socket;
-function connectToServer() {
-  // socket = new WebSocket("ws://localhost:8080/BruteForce/ss");
-  // socket.onopen = function(event) {
-  //   document.getElementById("mychat").innerHTML += "Connected <br>";
-  // };
-  // socket.onmessage = function(event) {
-  //   document.getElementById("mychat").innerHTML += event.data + "<br>";
-  // };
-  // socket.onclose = function(event) {
-  //   document.getElementById("mychat").innerHTML += "Disconnected <br>";
-  // };
-}
-function sendMessage() {
-  // socket.send("Sangjun1: " + document.chatform.message.value);
-  return false;
-}
 /*
  * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
  * 
