@@ -113,8 +113,12 @@ function getSuggestions() {
     },
     success: function(result) {
       var data = JSON.parse(result);
-      console.log(data);
+      var texts = [];
+      $('#class-list li span').each(function(){
+          texts.push($(this).text());
+      });
       for (var i = 0; i < data.length; i++) {
+    	if (jQuery.inArray(data[i], texts) !== -1) continue;
         var li = $('<li class="list-group-item py-1"></li>');
         li.text(data[i]);
         li.on('click', function() {
