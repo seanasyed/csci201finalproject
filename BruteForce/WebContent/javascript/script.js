@@ -1,19 +1,38 @@
 $(document).ready(function() {
-  $('#add-button').click(function(event) {
-    var keyword = $('#search-box').val();
+  connectToServer();
+  $("#add-button").click(function(event) {
+    var keyword = $("#search-box").val();
     addClassToList(keyword);
-    $('#search-box').val('');
-    $('#add-button').attr("disabled", true);
+    $("#search-box").val("");
+    $("#add-button").attr("disabled", true);
   });
-  $('#add-button').attr("disabled", true);
-  $('#submit-button').click(function(event) {
+  $("#add-button").attr("disabled", true);
+  $("#submit-button").click(function(event) {
     checkClassListOnServer();
   });
-  $('#search-box').keyup(function() {
-	$('#add-button').attr("disabled", true);
+  $("#search-box").keyup(function() {
+    $("#add-button").attr("disabled", true);
     getSuggestions();
   });
 });
+
+var socket;
+function connectToServer() {
+  // socket = new WebSocket("ws://localhost:8080/BruteForce/ss");
+  // socket.onopen = function(event) {
+  //   document.getElementById("mychat").innerHTML += "Connected <br>";
+  // };
+  // socket.onmessage = function(event) {
+  //   document.getElementById("mychat").innerHTML += event.data + "<br>";
+  // };
+  // socket.onclose = function(event) {
+  //   document.getElementById("mychat").innerHTML += "Disconnected <br>";
+  // };
+}
+function sendMessage() {
+  // socket.send("Sangjun1: " + document.chatform.message.value);
+  return false;
+}
 /*
  * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
  * 
@@ -25,17 +44,32 @@ function addClassToList(className) {
       className.toUpperCase() +
       '"class="list-group-item d-flex justify-content-between"></li>'
   );
-  var title = $('<span></span>');
+  var form = $(
+    '<form id="' +
+      className +
+      'Form" target="_blank" name="detailForm" method= "GET" action = "detail.jsp" ></form>'
+  );
+  var input = $(
+    '<input style="display: none;" name="courseName" value="' +
+      className +
+      '"></input>"'
+  );
+  input.appendTo(form);
+  var title = $("<span></span>");
   title.text(className);
 
   //SETUP DELETE BUTTON
   var button = $('<i class="fas fa-times my-auto">');
-  button.on('click', function() {
-    $('#' + className).remove();
+  button.on("click", function() {
+    $("#" + className.toUpperCase()).remove();
   });
   title.appendTo(item);
   button.appendTo(item);
-  $('#class-list').append(item);
+  form.appendTo($(document.body));
+  title.on("click", function() {
+    form.submit();
+  });
+  $("#class-list").append(item);
 }
 /*
  * FUNCTIONS FOR COMMUNICATING WITH THE SERVER
@@ -43,9 +77,9 @@ function addClassToList(className) {
  */
 var addUser = (email, fname, lname) => {
   $.ajax({
-    url: 'BruteForce',
+    url: "BruteForce",
     data: {
-      callType: 'add_user',
+      callType: "add_user",
       email: email,
       fname: fname,
       lname: lname
@@ -58,19 +92,19 @@ var addUser = (email, fname, lname) => {
 
 var checkClassListOnServer = () => {
   var classList = [];
-  for (var i = 0; i < $('#class-list').children().length; i++) {
-    var text = $('#class-list').children()[i].innerText;
-    text = text.replace(/\n/gi, '');
+  for (var i = 0; i < $("#class-list").children().length; i++) {
+    var text = $("#class-list").children()[i].innerText;
+    text = text.replace(/\n/gi, "");
     classList.push(text);
   }
   var classListJSON = JSON.stringify(classList);
 
   $.ajax({
-    url: 'BruteForce',
-    contentType: 'application/json',
-    dataType: 'json',
+    url: "BruteForce",
+    contentType: "application/json",
+    dataType: "json",
     data: {
-      callType: 'check_class_list',
+      callType: "check_class_list",
       classList: classListJSON
     },
     success: function(result) {
@@ -84,9 +118,9 @@ var checkClassListOnServer = () => {
 
 var submitClassListToServer = () => {
   $.ajax({
-    url: 'BruteForce',
+    url: "BruteForce",
     data: {
-      callType: 'submit_class_list'
+      callType: "submit_class_list"
     },
     success: function(result) {
       //Result must include:
@@ -98,33 +132,33 @@ var submitClassListToServer = () => {
 };
 
 function getSuggestions() {
-  var ul = $('#suggestion-box');
+  var ul = $("#suggestion-box");
   ul.empty();
   // Declare variables
-  var input = $('#search-box');
+  var input = $("#search-box");
   var filter = input.val().toUpperCase();
-  if (filter == '') return;
+  if (filter == "") return;
 
   $.ajax({
-    url: 'BruteForce',
+    url: "BruteForce",
     data: {
-      callType: 'suggestions',
+      callType: "suggestions",
       keyword: filter
     },
     success: function(result) {
       var data = JSON.parse(result);
       var texts = [];
-      $('#class-list li span').each(function(){
-          texts.push($(this).text());
+      $("#class-list li span").each(function() {
+        texts.push($(this).text());
       });
       for (var i = 0; i < data.length; i++) {
-    	if (jQuery.inArray(data[i], texts) !== -1) continue;
+        if (jQuery.inArray(data[i], texts) !== -1) continue;
         var li = $('<li class="list-group-item py-1"></li>');
         li.text(data[i]);
-        li.on('click', function() {
-          $('#search-box').val($(this).text());
-          $('#suggestion-box').empty();
-          $('#add-button').attr("disabled", false);
+        li.on("click", function() {
+          $("#search-box").val($(this).text());
+          $("#suggestion-box").empty();
+          $("#add-button").attr("disabled", false);
         });
         li.appendTo(ul);
       }
