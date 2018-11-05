@@ -67,7 +67,7 @@
         }
       };
       socket.onclose = function (event) {
-        $('#courseNameHeader').text() += "Disonnected";
+        $('#courseNameHeader').text($('#courseName').text() + " Disconnected");
       };
     }
     function sendMessage() {
