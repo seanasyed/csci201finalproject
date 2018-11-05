@@ -9,12 +9,6 @@ public class BruteForceHandler {
 	public BruteForceHandler() { }
 	public void handleRequest(String callType, HttpServletRequest request, HttpServletResponse response) {
 		switch (callType) {
-		case "add_user":
-			System.out.println("add_user");
-			break;
-		case "check_class_list":
-			System.out.print("check_class_list");
-			break;
 		case "create_user":
 			System.out.println(request.getParameter("username"));
 			System.out.println(request.getParameter("email"));
@@ -28,10 +22,11 @@ public class BruteForceHandler {
 			}
 			break;
 		case "suggestions":
-			
 			String keyword = request.getParameter("keyword");
 			System.out.print(keyword);
 			ArrayList<String> suggestions = new ArrayList<>();
+			
+			//TODO: JUST ADD ALL THE COURSE CODES FROM THE DATABASE
 			suggestions.add("CSCI-201");
 			suggestions.add("PHYS-151");
 			suggestions.add("CSCI-270");
@@ -47,6 +42,13 @@ public class BruteForceHandler {
 				System.out.println(ioe.getMessage());
 				break;
 			}
+		case "check_schedule":
+			System.out.print("check_schedule");
+			break;
+		case "submit_schedule":
+			System.out.print("submit_schedule");
+			break;
+			
 		default:
 			break;
 		}
