@@ -22,9 +22,6 @@ public class ServerSocket {
 	public void open(Session session) {
 		System.out.println("connecting...");
 		sessionVector.add(session);
-		ct = new ClientThread("localhost", 6789);
-		//use a while loop until the session is closed
-		//check db for a change
 	}
 	
 	@OnMessage
