@@ -40,30 +40,12 @@
     <thead>
       <tr>
         <th scope="col">Section</th>
-        <th scope="col">Total</th>
-        <th scope="col">Registered</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
         <th scope="col">Remaining</th>
       </tr>
     </thead>
     <tbody id="courseTableBody">
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
     </tbody>
   </table>
   <script>
@@ -76,7 +58,13 @@
       };
       socket.onmessage = function (event) {
         var result = JSON.parse(event.data);
-        console.log(result);
+        for (var i = 0; i < result.length; i++) {
+          var tr = $('<tr><th scope="row">' + result[i] + '</th></tr>');
+
+          //ADD td of startTime, endTime, and remainingSeats
+
+          tr.appendTo('#courseTableBody');
+        }
       };
       socket.onclose = function (event) {
         $('#courseNameHeader').text() += "Disonnected";
