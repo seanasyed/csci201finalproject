@@ -76,7 +76,7 @@
           </button>
         </div>
         <div id="modalContent" class="modal-body">
-          <form action="">
+          <form id="register-form" action="">
             <div class="form-group">
               <input id="register-email" type="email" class="form-control" placeholder="Email">
             </div>
@@ -112,35 +112,64 @@
       $('#register-button').click(function (event) {
         register();
       });
+      $('#registerModal').on('hidden.bs.modal', function (e) {
+    	  resetModal();
+    	})
     });
+    function resetModal() {
+      var form = $('<form id="register-form" action=""></form>');
+      var emailDiv = $('<div class="form-group"><input id="register-email" type="email" class="form-control" placeholder="Email"></div>');
+      var fnameDiv = $('<div class="form-group"><input id="register-fname" type="text" class="form-control" placeholder="First Name"></div>');
+      var lnameDiv = $('<div class="form-group"><input id="register-lname" type="text" class="form-control" placeholder="Last Name"></div>');
+      var passwordDiv = $('<div class="form-group"><input id="register-password" type="password" class="form-control" placeholder="Password"></div>');
+      emailDiv.appendTo(form);
+      fnameDiv.appendTo(form);
+      lnameDiv.appendTo(form);
+      passwordDiv.appendTo(form);
+      form.appendTo($('#modalContent'));
+    }
     function register() {
-      var username = $('#register-username').val()
-      var email = $('#register-email').val()
-      var password = $('#register-password').val()
+      var email = $('#register-email').val();
+      var fname = $('#register-fname').val();
+      var lname = $('#register-lname').val();
+      var password = $('#register-password').val();
 
       //IMPLEMENT HASHING
       $.ajax({
         url: 'BruteForce',
         data: {
           callType: 'create_user',
-          username: username,
           email: email,
+          fname: fname,
+          lname: lname,
           password: password
         },
+        dataType: "json",
         success: function (result) {
+          console.log(result);
           //Result must include:
           //Whether the user was successfully created or not
-          console.log(result);
           // $('#registerModal').modal('dispose');
           //REMOVE CONTENTS IN MODAL & ADD MESSAGE
-          $('#modalContent').remove();
-          var message = $('<div class="alert" role="alert"</div>');
-          if (result === "true") {
+          $('#register-form').remove();
+          var message = $('<div class="alert" role="alert"></div>');
+          if (result.result == "success") {
             message.addClass('alert-success');
+            message.text("Success");
+            $('#register-button').text('Close');
+            $('#register-button').unbind("click");
+            $('#register-button').click(function (event) {
+              $('#registerModal').modal('hide');
+            });
           } else {
             message.addClass('alert-danger');
+            message.text(result.message);
+            $('#register-button').text('Redo');
+            $('#register-button').unbind("click");
+            $('#register-button').click(function (event) {
+            	resetModal();
+            });
           }
-          alert(result);
           message.appendTo($('#modalContent'));
         }
       });

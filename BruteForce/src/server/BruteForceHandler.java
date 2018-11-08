@@ -2,7 +2,9 @@ package server;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,27 +17,37 @@ import database.DatabaseHandler;
 public class BruteForceHandler {
 
 	private DatabaseHandler dh;
-	
+	public BruteForceHandler() {
+		dh = new DatabaseHandler();
+	}
 	public void handleRequest(String callType, HttpServletRequest request, HttpServletResponse response) {
 		switch (callType) {
 		case "create_user":
+			System.out.println("Creating a user");
 			String email = request.getParameter("email"); 
 			String password = request.getParameter("password"); 
 			String fname = request.getParameter("fname");
 			String lname = request.getParameter("lname"); 
-
 			
 			//Call DatabaseHandler to write user information
+			Map<String, String> data = new HashMap<String, String>();
 			try {
-				dh.createUser(email, password, fname, lname);
+				if (dh.userExists(email)) {
+					data.put("result", "error");
+					data.put("message", "The email is already in use.");
+				} else {
+					dh.createUser(email, password, fname, lname);
+					data.put("result", "success");
+				}
 			} catch (SQLException sqle) {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
 			
-			response.setContentType("text");
-			
+			response.setContentType("application/json");
+			String json = new Gson().toJson(data);
+			System.out.println(json);
 			try {
-				response.getWriter().write("true");
+				response.getWriter().write(json);
 			} catch (IOException ioe) {
 				System.out.println(ioe.getMessage());
 				break;
@@ -55,7 +67,7 @@ public class BruteForceHandler {
 			List<String> list = suggestions;
 			list.removeIf(s -> !s.startsWith(keyword));
 			
-			String json = new Gson().toJson(list);
+			json = new Gson().toJson(list);
 			try {
 				response.getWriter().write(json);
 			} catch (IOException ioe) {

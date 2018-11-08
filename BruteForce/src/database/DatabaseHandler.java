@@ -12,10 +12,44 @@ public class DatabaseHandler {
 	private Connection getConnection() throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://localhost/mydb?useSSL=false", "root", "root");
+			return DriverManager.getConnection("jdbc:mysql://localhost/scheduling?useSSL=false", "root", "root");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	public boolean userExists(String username) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=?;");
+			ps.setString(1, username);
+			
+			// 2. Execute SQL query
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				if (resultSet.getString("userName") != null) return true;
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return true;
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
 		}
 	}
 	public void createUser(String username, String password, String fname, String lname) throws SQLException {
@@ -23,6 +57,7 @@ public class DatabaseHandler {
 		PreparedStatement ps = null;
 		try {
 			conn = getConnection();
+			System.out.println("connected to the database");
 			ps = conn.prepareStatement("INSERT INTO Student (userName, password, firstName, lastName) VALUE (?, ?, ?, ?) ON DUPLICATE KEY UPDATE username=?;");
 			ps.setString(1, username);
 			ps.setString(2, password);
