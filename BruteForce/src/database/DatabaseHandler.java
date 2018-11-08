@@ -45,9 +45,9 @@ public class DatabaseHandler {
 			}
 		}
 	}
-	public User getUser() {
-		
-	}
+//	public User getUser() {
+//		
+//	}
 	public void addCourse(int ID, String school, String major, String number, float units, String name, String description, int semester) {
 		Connection conn = null;
 		PreparedStatement ps = null;

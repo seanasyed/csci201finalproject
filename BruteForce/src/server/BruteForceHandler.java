@@ -19,20 +19,15 @@ public class BruteForceHandler {
 	public void handleRequest(String callType, HttpServletRequest request, HttpServletResponse response) {
 		switch (callType) {
 		case "create_user":
-			
-			String username = request.getParameter("username"); 
 			String email = request.getParameter("email"); 
 			String password = request.getParameter("password"); 
 			String fname = request.getParameter("fname");
 			String lname = request.getParameter("lname"); 
-			
-			System.out.println(username);
-			System.out.println(email);
-			System.out.println(password);
+
 			
 			//Call DatabaseHandler to write user information
 			try {
-				dh.createUser(username, password, fname, lname);
+				dh.createUser(email, password, fname, lname);
 			} catch (SQLException sqle) {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
