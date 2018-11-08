@@ -45,7 +45,10 @@ public class DatabaseHandler {
 			}
 		}
 	}
-	public void addCourse(int ID, String school, String major, String number, int units, String name, String description, int semester) {
+	public User getUser() {
+		
+	}
+	public void addCourse(int ID, String school, String major, String number, float units, String name, String description, int semester) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		try {
@@ -55,7 +58,7 @@ public class DatabaseHandler {
 			ps.setString(2, school);
 			ps.setString(3, major);
 			ps.setString(4, number);
-			ps.setInt(5, units);
+			ps.setFloat(5, units);
 			ps.setString(6, name);
 			ps.setString(7, description);
 			ps.setInt(8, semester);
@@ -82,13 +85,13 @@ public class DatabaseHandler {
 		ResultSet resultSet = null;
 		try {
 			conn = getConnection();
-			ps = conn.prepareStatement("SELECT * FROM <TABLE> WHERE courseName=?;");
+			ps = conn.prepareStatement("SELECT * FROM Course WHERE courseName=?;");
 			ps.setString(1, courseName);
 			
 			// 2. Execute SQL query
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
-				
+				//return new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), resultSet.getString("number"), resultSet.getString("school"), resultSet.getInt("units"), resultSet.getString("name"), resultSet.getString("description"), resultSet.getInt("semester"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
