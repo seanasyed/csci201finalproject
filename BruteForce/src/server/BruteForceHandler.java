@@ -43,10 +43,10 @@ public class BruteForceHandler {
 				break;
 			}
 		case "check_schedule":
-			System.out.print("check_schedule");
+			System.out.println("check_schedule");
 			break;
 		case "submit_schedule":
-			System.out.print("submit_schedule");
+			System.out.println("submit_schedule");
 			break;
 			
 		default:
