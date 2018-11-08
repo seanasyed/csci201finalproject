@@ -24,7 +24,11 @@ public class DatabaseHandler {
 		try {
 			conn = getConnection();
 			ps = conn.prepareStatement("INSERT INTO Student (userName, password, firstName, lastName) VALUE (?, ?, ?, ?) ON DUPLICATE KEY UPDATE username=?;");
-			//ps.setString(1, x);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, fname);
+			ps.setString(4, lname);
+			ps.setString(5, username);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,8 +57,7 @@ public class DatabaseHandler {
 			// 2. Execute SQL query
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
-				//Course c = new Course(resultSet.getString("courseName"))
-				//return Course;
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
