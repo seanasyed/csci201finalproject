@@ -217,7 +217,7 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) 
-	VALUES (1, 'seansyd', '29908D', '30225R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	VALUES (1, 'seansyed', '29908D', '30225R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
