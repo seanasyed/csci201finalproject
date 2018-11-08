@@ -1,19 +1,44 @@
 package server;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.google.gson.Gson;
+
+import database.DatabaseHandler;
+
+
 public class BruteForceHandler {
-	public BruteForceHandler() { }
+
+	private DatabaseHandler dh;
+	
 	public void handleRequest(String callType, HttpServletRequest request, HttpServletResponse response) {
 		switch (callType) {
 		case "create_user":
-			System.out.println(request.getParameter("username"));
-			System.out.println(request.getParameter("email"));
-			System.out.println(request.getParameter("password"));
+			
+			String username = request.getParameter("username"); 
+			String email = request.getParameter("email"); 
+			String password = request.getParameter("password"); 
+			String fname = request.getParameter("fname");
+			String lname = request.getParameter("lname"); 
+			
+			System.out.println(username);
+			System.out.println(email);
+			System.out.println(password);
+			
+			//Call DatabaseHandler to write user information
+			try {
+				dh.createUser(username, password, fname, lname);
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+			
 			response.setContentType("text");
+			
 			try {
 				response.getWriter().write("true");
 			} catch (IOException ioe) {
