@@ -23,7 +23,7 @@ public class BruteForceServlet extends HttpServlet {
 		//bft = new BruteForceThread(6789);
 	}
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void service(HttpServletRequest request, HttpServletResponse response) {
 		String callType = request.getParameter("callType");
 		if (callType == null) return;
 		bfh.handleRequest(callType, this, request, response);

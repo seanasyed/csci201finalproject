@@ -40,31 +40,29 @@
     </div>
   </nav>
   <div class="container my-5">
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto">
-        <input id="email" type="text" class="form-control w-sm-75 mx-auto" placeholder="Email" aria-label="Email"
-          aria-describedby="basic-addon2">
-      </div>
-
-    </div>
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto">
-        <input id="password" type="password" class="form-control w-sm-75 mx-auto" placeholder="Password" aria-label="Password"
-          aria-describedby="basic-addon2">
-      </div>
-    </div>
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto">
-        <button id="login-button" class="btn btn-cardinal mx-auto w-100">Login</button>
-      </div>
-    </div>
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto text-center d-flex justify-content-center">
-        <span class="mr-5">Not registered yet? </span><a class="ml-5" data-toggle="modal" data-target="#registerModal">Register</a>
-      </div>
+  	<div class="row my-1">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <input id="email" type="text" class="form-control w-sm-75 mx-auto" placeholder="Email" aria-label="Email"
+        aria-describedby="basic-addon2">
     </div>
   </div>
-
+  <div class="row my-2">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <input id="password" type="password" class="form-control w-sm-75 mx-auto" placeholder="Password" aria-label="Password"
+        aria-describedby="basic-addon2">
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <button id="login-button" class="btn btn-cardinal mx-auto w-100">Login</button>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-md-8 col-lg-6 mx-auto text-center d-flex justify-content-center">
+      <span class="mr-5">Not registered yet? </span><a class="ml-5" data-toggle="modal" data-target="#registerModal">Register</a>
+    </div>
+  </div>
+</div>
   <!-- REGISTER MODAL -->
   <div class="modal fade text-dark" id="registerModal">
     <div class="modal-dialog">
@@ -193,6 +191,19 @@
           callType: 'login_user',
           email: email,
           password: password
+<<<<<<< HEAD
+=======
+        },
+        dataType: "json",
+        success: function (result) {
+          if (result.result == "success") {
+            window.location = result.redirectURL + '?email=' + email;
+          } else {
+        	  $('#email').val("");
+        	  $('#password').val("");
+        	  alert(result.message);
+          }
+>>>>>>> 3444ef8f9d693cf83c33744760fd7498319dcd3b
         }
       });
     }
