@@ -113,10 +113,20 @@
         register();
       });
       $('#registerModal').on('hidden.bs.modal', function (e) {
-    	  resetModal();
-    	})
+        resetModal();
+      });
+      $('#login-button').on('click', function (e) {
+        login();
+      });
     });
     function resetModal() {
+      $('#register-form').remove();
+      $('#result-alert').remove();
+      $('#register-button').text('register');
+      $('#register-button').unbind("click");
+      $('#register-button').click(function (event) {
+        register();
+      });
       var form = $('<form id="register-form" action=""></form>');
       var emailDiv = $('<div class="form-group"><input id="register-email" type="email" class="form-control" placeholder="Email"></div>');
       var fnameDiv = $('<div class="form-group"><input id="register-fname" type="text" class="form-control" placeholder="First Name"></div>');
@@ -152,7 +162,7 @@
           // $('#registerModal').modal('dispose');
           //REMOVE CONTENTS IN MODAL & ADD MESSAGE
           $('#register-form').remove();
-          var message = $('<div class="alert" role="alert"></div>');
+          var message = $('<div id="result-alert" class="alert" role="alert"></div>');
           if (result.result == "success") {
             message.addClass('alert-success');
             message.text("Success");
@@ -167,10 +177,50 @@
             $('#register-button').text('Redo');
             $('#register-button').unbind("click");
             $('#register-button').click(function (event) {
-            	resetModal();
+              resetModal();
             });
           }
           message.appendTo($('#modalContent'));
+        }
+      });
+    }
+    function login() {
+      var email = $('#email').val();
+      var password = $('#password').val();
+      $.ajax({
+        url: 'BruteForce',
+        data: {
+          callType: 'login_user',
+          email: email,
+          password: password
+        },
+        //dataType: "json",
+        success: function (result) {
+          console.log(result);
+          //Result must include:
+          //Whether the user was successfully created or not
+          // $('#registerModal').modal('dispose');
+          //REMOVE CONTENTS IN MODAL & ADD MESSAGE
+          // $('#register-form').remove();
+          // var message = $('<div id="result-alert" class="alert" role="alert"></div>');
+          // if (result.result == "success") {
+          //   message.addClass('alert-success');
+          //   message.text("Success");
+          //   $('#register-button').text('Close');
+          //   $('#register-button').unbind("click");
+          //   $('#register-button').click(function (event) {
+          //     $('#registerModal').modal('hide');
+          //   });
+          // } else {
+          //   message.addClass('alert-danger');
+          //   message.text(result.message);
+          //   $('#register-button').text('Redo');
+          //   $('#register-button').unbind("click");
+          //   $('#register-button').click(function (event) {
+          //     resetModal();
+          //   });
+          // }
+          // message.appendTo($('#modalContent'));
         }
       });
     }

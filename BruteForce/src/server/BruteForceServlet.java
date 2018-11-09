@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,12 +23,22 @@ public class BruteForceServlet extends HttpServlet {
 		//bft = new BruteForceThread(6789);
 	}
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String callType = request.getParameter("callType");
 		if (callType == null) return;
-		bfh.handleRequest(callType, request, response);
+		bfh.handleRequest(callType, this, request, response);
 	}
-	
+	public void forwardUserAuthentication(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			RequestDispatcher dispatch = getServletContext().getRequestDispatcher("/index.html");
+			dispatch.forward(request, response);
+		} catch (IOException ie) {
+			System.out.println(ie.getMessage());
+		} catch (ServletException se) {
+			System.out.println(se.getMessage());
+		}
+		
+	}
 //	public static void main(String[] args) {
 //		
 //	}

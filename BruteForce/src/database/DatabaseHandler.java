@@ -18,6 +18,40 @@ public class DatabaseHandler {
 			return null;
 		}
 	}
+	public boolean authenticateUser(String username, String password) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		try {
+			conn = getConnection();
+			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=? AND password=?;");
+			ps.setString(1, username);
+			ps.setString(2, password);
+			// 2. Execute SQL query
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				if (resultSet.getString("userName") != null) return true;
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (resultSet != null) {
+					resultSet.close();
+				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
 	public boolean userExists(String username) {
 		Connection conn = null;
 		PreparedStatement ps = null;

@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,9 +23,45 @@ public class BruteForceHandler {
 	public BruteForceHandler() {
 		dh = new DatabaseHandler();
 	}
-	public void handleRequest(String callType, HttpServletRequest request, HttpServletResponse response) {
+	public void handleRequest(String callType, BruteForceServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		switch (callType) {
-		case "create_user":
+		case "login_user": {
+			String email = request.getParameter("email"); 
+			String password = request.getParameter("password"); 
+			Map<String, String> data = new HashMap<String, String>();
+			try {
+				if (email.equals("") || password.equals("")) {
+					data.put("result", "error");
+					data.put("message", "One of the fields is empty.");
+					String json = new Gson().toJson(data);
+					response.setContentType("application/json");
+					response.getWriter().write(json);
+				} else if (!dh.authenticateUser(email, password)) {
+					data.put("result", "error");
+					data.put("message", "Email and password do not match.");
+					String json = new Gson().toJson(data);
+					response.setContentType("application/json");
+					response.getWriter().write(json);
+				} else {
+					System.out.println("Logged In");
+					request.setAttribute("email", "email");
+					try {
+						response.setContentType("text/html");
+						RequestDispatcher dispatch = request.getRequestDispatcher("/index.html");
+						dispatch.forward(request, response);
+					} catch (IOException ie) {
+						System.out.println(ie.getMessage());
+					} catch (ServletException se) {
+						System.out.println(se.getMessage());
+					}
+				}
+				
+			} catch (IOException ioe) {
+				System.out.println(ioe.getMessage());
+			}
+		}
+		break;
+		case "create_user": {
 			System.out.println("Creating a user");
 			String email = request.getParameter("email"); 
 			String password = request.getParameter("password"); 
@@ -50,10 +89,10 @@ public class BruteForceHandler {
 				response.getWriter().write(json);
 			} catch (IOException ioe) {
 				System.out.println(ioe.getMessage());
-				break;
 			}
-			break;
-		case "suggestions":
+		}
+		break;
+		case "suggestions": {
 			String keyword = request.getParameter("keyword");
 			System.out.print(keyword);
 			ArrayList<String> suggestions = new ArrayList<>();
@@ -67,13 +106,14 @@ public class BruteForceHandler {
 			List<String> list = suggestions;
 			list.removeIf(s -> !s.startsWith(keyword));
 			
-			json = new Gson().toJson(list);
+			String json = new Gson().toJson(list);
 			try {
 				response.getWriter().write(json);
 			} catch (IOException ioe) {
 				System.out.println(ioe.getMessage());
-				break;
 			}
+		}
+		break;
 		case "check_schedule":
 			System.out.println("check_schedule");
 			break;
