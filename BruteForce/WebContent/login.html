@@ -195,7 +195,7 @@
         dataType: "json",
         success: function (result) {
           if (result.result == "success") {
-            window.location = result.redirectURL;
+            window.location = result.redirectURL + '?email=' + email;
           } else {
         	  $('#email').val("");
         	  $('#password').val("");
