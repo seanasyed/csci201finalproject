@@ -39,7 +39,7 @@ public class BruteForceHandler {
 				} else {
 					System.out.println("Logged In");
 					data.put("result", "success");
-					data.put("redirectURL", "http://localhost:8080/BruteForce/index.html");
+					data.put("redirectURL", "http://localhost:8080/BruteForce/index.jsp");
 				}
 				String json = new Gson().toJson(data);
 				response.setContentType("application/json");
