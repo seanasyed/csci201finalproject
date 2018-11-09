@@ -40,31 +40,29 @@
     </div>
   </nav>
   <div class="container my-5">
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto">
-        <input id="email" type="text" class="form-control w-sm-75 mx-auto" placeholder="Email" aria-label="Email"
-          aria-describedby="basic-addon2">
-      </div>
-
-    </div>
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto">
-        <input id="password" type="password" class="form-control w-sm-75 mx-auto" placeholder="Password" aria-label="Password"
-          aria-describedby="basic-addon2">
-      </div>
-    </div>
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto">
-        <button id="login-button" class="btn btn-cardinal mx-auto w-100">Login</button>
-      </div>
-    </div>
-    <div class="row my-2">
-      <div class="col-md-8 col-lg-6 mx-auto text-center d-flex justify-content-center">
-        <span class="mr-5">Not registered yet? </span><a class="ml-5" data-toggle="modal" data-target="#registerModal">Register</a>
-      </div>
+  	<div class="row my-1">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <input id="email" type="text" class="form-control w-sm-75 mx-auto" placeholder="Email" aria-label="Email"
+        aria-describedby="basic-addon2">
     </div>
   </div>
-
+  <div class="row my-2">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <input id="password" type="password" class="form-control w-sm-75 mx-auto" placeholder="Password" aria-label="Password"
+        aria-describedby="basic-addon2">
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-md-8 col-lg-6 mx-auto">
+      <button id="login-button" class="btn btn-cardinal mx-auto w-100">Login</button>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-md-8 col-lg-6 mx-auto text-center d-flex justify-content-center">
+      <span class="mr-5">Not registered yet? </span><a class="ml-5" data-toggle="modal" data-target="#registerModal">Register</a>
+    </div>
+  </div>
+</div>
   <!-- REGISTER MODAL -->
   <div class="modal fade text-dark" id="registerModal">
     <div class="modal-dialog">
@@ -194,33 +192,15 @@
           email: email,
           password: password
         },
-        //dataType: "json",
+        dataType: "json",
         success: function (result) {
-          console.log(result);
-          //Result must include:
-          //Whether the user was successfully created or not
-          // $('#registerModal').modal('dispose');
-          //REMOVE CONTENTS IN MODAL & ADD MESSAGE
-          // $('#register-form').remove();
-          // var message = $('<div id="result-alert" class="alert" role="alert"></div>');
-          // if (result.result == "success") {
-          //   message.addClass('alert-success');
-          //   message.text("Success");
-          //   $('#register-button').text('Close');
-          //   $('#register-button').unbind("click");
-          //   $('#register-button').click(function (event) {
-          //     $('#registerModal').modal('hide');
-          //   });
-          // } else {
-          //   message.addClass('alert-danger');
-          //   message.text(result.message);
-          //   $('#register-button').text('Redo');
-          //   $('#register-button').unbind("click");
-          //   $('#register-button').click(function (event) {
-          //     resetModal();
-          //   });
-          // }
-          // message.appendTo($('#modalContent'));
+          if (result.result == "success") {
+            window.location = result.redirectURL;
+          } else {
+        	  $('#email').val("");
+        	  $('#password').val("");
+        	  alert(result.message);
+          }
         }
       });
     }

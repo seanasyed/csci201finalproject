@@ -33,29 +33,17 @@ public class BruteForceHandler {
 				if (email.equals("") || password.equals("")) {
 					data.put("result", "error");
 					data.put("message", "One of the fields is empty.");
-					String json = new Gson().toJson(data);
-					response.setContentType("application/json");
-					response.getWriter().write(json);
 				} else if (!dh.authenticateUser(email, password)) {
 					data.put("result", "error");
 					data.put("message", "Email and password do not match.");
-					String json = new Gson().toJson(data);
-					response.setContentType("application/json");
-					response.getWriter().write(json);
 				} else {
 					System.out.println("Logged In");
-					request.setAttribute("email", "email");
-					try {
-						response.setContentType("text/html");
-						RequestDispatcher dispatch = request.getRequestDispatcher("/index.html");
-						dispatch.forward(request, response);
-					} catch (IOException ie) {
-						System.out.println(ie.getMessage());
-					} catch (ServletException se) {
-						System.out.println(se.getMessage());
-					}
+					data.put("result", "success");
+					data.put("redirectURL", "http://localhost:8080/BruteForce/index.html");
 				}
-				
+				String json = new Gson().toJson(data);
+				response.setContentType("application/json");
+				response.getWriter().write(json);
 			} catch (IOException ioe) {
 				System.out.println(ioe.getMessage());
 			}
