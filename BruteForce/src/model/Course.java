@@ -1,80 +1,55 @@
 package model;
 
-import java.util.Vector;
-
 public class Course {
-	
+	private int ID;
 	private String school; 
 	private String major;
+	private String number; 
 	private float units; 
-	private int number; 
-	private Vector<Section> sections; 
+	private String name;
+	private String description;
+	private int semester;
 	
-	public Course(String school, String major, float units, int number, Vector<Section> sections) {
+	public Course(int ID, String school, String major, String number, float units, String name, String description, int semester) {
+		this.ID = ID;
 		this.school = school; 
 		this.major = major; 
+		this.number = number;
 		this.units = units;
-		this.number = number; 
-		this.sections = sections; 
+		this.name = name;
+		this.description = description;
+		this.semester = semester;
 	}
 	
-	/**
-	 * Setter and getter for school
-	 */
-	
-	public void setSchool(String school) {
-		this.school = school; 
+	public int getID() {
+		return ID;
 	}
-	
+
 	public String getSchool() {
-		return school; 
+		return school;
 	}
-	
-	/*
-	 * Setter and getter for major
-	 */
-	
-	public void setMajor(String major) {
-		this.major = major; 
-	}
-	
+
 	public String getMajor() {
-		return major; 
+		return major;
 	}
-	
-	/*
-	 * Setter and getter for units
-	 */
-	
-	public void setUnits(float units) {
-		this.units = units; 
+
+	public String getNumber() {
+		return number;
 	}
-	
+
 	public float getUnits() {
-		return units; 
+		return units;
 	}
-	
-	/*
-	 * Setter and getter for number
-	 */
-	
-	public void setNumber(int number) {
-		this.number = number; 
+
+	public String getName() {
+		return name;
 	}
-	
-	public int getNumber() {
-		return number; 
+
+	public String getDescription() {
+		return description;
 	}
-	
-	/*
-	 * Setter and getter for sections
-	 */
-	
-	public void setSections(Vector<Section> sections) {
-		this.sections = sections; 
-	}
-	
-	public Vector<Section> getSections() {
-		return sections; 
+
+	public int getSemester() {
+		return semester;
 	}
 }

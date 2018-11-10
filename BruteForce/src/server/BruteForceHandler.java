@@ -6,15 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
 import database.DatabaseHandler;
+import model.Course;
 
 
 public class BruteForceHandler {
@@ -83,18 +81,12 @@ public class BruteForceHandler {
 		case "suggestions": {
 			String keyword = request.getParameter("keyword");
 			System.out.print(keyword);
-			ArrayList<String> suggestions = new ArrayList<>();
 			
-			//TODO: JUST ADD ALL THE COURSE CODES FROM THE DATABASE
-			suggestions.add("CSCI-201");
-			suggestions.add("PHYS-151");
-			suggestions.add("CSCI-270");
+			//RETURNS MAJOR+NUMBER (e.g. CSCI-201) OF THE COURSES
+			//THAT START WITH THE GIVEN KEYWORD (PREFIX)
 			
-			//Filtering the data with the keyword
-			List<String> list = suggestions;
-			list.removeIf(s -> !s.startsWith(keyword));
-			
-			String json = new Gson().toJson(list);
+			ArrayList<String> suggestions = dh.getCourseNames(keyword);
+			String json = new Gson().toJson(suggestions);
 			try {
 				response.getWriter().write(json);
 			} catch (IOException ioe) {
