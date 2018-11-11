@@ -9,10 +9,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import com.google.gson.Gson;
 
 import database.DatabaseHandler;
-import model.Course;
 
 
 public class BruteForceHandler {
@@ -24,6 +26,7 @@ public class BruteForceHandler {
 	public void handleRequest(String callType, BruteForceServlet servlet, HttpServletRequest request, HttpServletResponse response) {
 		switch (callType) {
 		case "login_user": {
+			//DONE
 			String email = request.getParameter("email"); 
 			String password = request.getParameter("password"); 
 			Map<String, String> data = new HashMap<String, String>();
@@ -48,7 +51,7 @@ public class BruteForceHandler {
 		}
 		break;
 		case "create_user": {
-			System.out.println("Creating a user");
+			//DONE
 			String email = request.getParameter("email"); 
 			String password = request.getParameter("password"); 
 			String fname = request.getParameter("fname");
@@ -79,8 +82,8 @@ public class BruteForceHandler {
 		}
 		break;
 		case "suggestions": {
+			//DONE
 			String keyword = request.getParameter("keyword");
-			System.out.print(keyword);
 			
 			//RETURNS MAJOR+NUMBER (e.g. CSCI-201) OF THE COURSES
 			//THAT START WITH THE GIVEN KEYWORD (PREFIX)
@@ -95,7 +98,34 @@ public class BruteForceHandler {
 		}
 		break;
 		case "check_schedule":
+			//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 			System.out.println("check_schedule");
+			String startTime = request.getParameter("startTime"); 
+			String endTime = request.getParameter("endTime");
+			String courseListJSON = request.getParameter("courseList");
+			
+			//startTime: HH:mm
+			//endTime: HH:mm
+			System.out.println("startTime: " + startTime);
+			System.out.println("endTime: " + endTime);
+			try {
+				
+				//CONVERT courseListJSON INTO AN LIST
+				JSONArray courses = new JSONArray(courseListJSON);
+				List<String> list = new ArrayList<String>();
+				for(int i = 0; i < courses.length(); i++){
+				    list.add(courses.optString(i));
+				    
+				    //SPLIT THE STRING BY "-"
+				    //MAJOR: courseInfo[0]
+				    //NUMBER: courseInfo[1]
+				    String courseInfo[]= courses.optString(i).split("-");
+				    System.out.println("major: " + courseInfo[0]);
+				    System.out.println("number: " + courseInfo[1]);
+				}
+			} catch (JSONException je) {
+				System.out.println("je:" + je.getMessage());
+			}	
 			break;
 		case "submit_schedule":
 			System.out.println("submit_schedule");

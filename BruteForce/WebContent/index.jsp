@@ -10,12 +10,14 @@
 	 crossorigin="anonymous">
 	</script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	 crossorigin="anonymous">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 	<title>Brute Force</title>
 </head>
@@ -53,6 +55,12 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col">
+						<input type="text" id="start-time" class="form-control timepicker" placeholder="Start Time">
+						<input type="text" id="end-time" class="form-control timepicker" placeholder="End Time">
+					</div>
+				</div>
+				<div class="row">
 					<div class="col-sm-10">
 						<input id="search-box" class="form-control w-100" type="search" placeholder="Search" aria-label="Search">
 						<ul id="suggestion-box" class="w-100 list-group"></ul>
@@ -63,13 +71,13 @@
 				</div>
 				<div class="row my-4">
 					<div class="col-sm-12">
-						<ul id="class-list" class="list-group">
+						<ul id="course-list" class="list-group">
 						</ul>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<button id="submit-button" class="btn btn-cardinal my-2 my-sm-0 w-100">Check</button>
+						<button id="check-button" class="btn btn-cardinal my-2 my-sm-0 w-100">Check</button>
 					</div>
 				</div>
 			</div>
