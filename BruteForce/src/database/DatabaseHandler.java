@@ -29,6 +29,7 @@ public class DatabaseHandler {
 	 * FALSE: NOT AUTHENTICATED
 	 */
 	public boolean authenticateUser(String username, String password) {
+		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet resultSet = null;
@@ -36,6 +37,7 @@ public class DatabaseHandler {
 			conn = getConnection();
 			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=? AND password=?;");
 			ps.setString(1, username);
+			//we want to store hashed password
 			ps.setString(2, password);
 			// 2. Execute SQL query
 			resultSet = ps.executeQuery();
@@ -105,12 +107,21 @@ public class DatabaseHandler {
 	public void createUser(String username, String password, String fname, String lname) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
+		//hash the password
+		HashPassword hp= new HashPassword();
+		String hashedPassword = null;
+		try {
+			hashedPassword = hp.getSaltedHash(password);
+		} catch (Exception e1) {
+			System.out.println("Error: "+e1.getMessage());
+		}
 		try {
 			conn = getConnection();
 			System.out.println("connected to the database");
 			ps = conn.prepareStatement("INSERT INTO Student (userName, password, firstName, lastName, isActive) VALUE (?, ?, ?, ?, 1) ON DUPLICATE KEY UPDATE username=?;");
 			ps.setString(1, username);
-			ps.setString(2, password);
+			//we want to store the hashedpassword in DB
+			ps.setString(2, hashedPassword);
 			ps.setString(3, fname);
 			ps.setString(4, lname);
 			ps.setString(5, username);
