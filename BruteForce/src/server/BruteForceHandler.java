@@ -128,6 +128,7 @@ public class BruteForceHandler {
 			}	
 			break;
 		case "submit_schedule":
+			//TODO: DISCUSS WITH FRANK
 			System.out.println("submit_schedule");
 			break;
 			

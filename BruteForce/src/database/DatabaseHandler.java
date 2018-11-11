@@ -244,6 +244,11 @@ public class DatabaseHandler {
 		}
 		return null;
 	}
+	/*
+	 * RETURN VALUE
+	 * ArrayList<String>: NAMES OF COURSES THAT CONTAIN KEYWORD AS PREFIX
+	 * NULL: NO RESULT
+	 */
 	public ArrayList<String> getCourseNames(String keyword) {
 		Connection conn = null;
 		PreparedStatement ps = null;
