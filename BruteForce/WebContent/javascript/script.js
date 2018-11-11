@@ -1,48 +1,51 @@
 $(document).ready(function() {
   $("#add-button").click(function(event) {
     var keyword = $("#search-box").val();
-    addClassToList(keyword);
+    addCourseToList(keyword);
     $("#search-box").val("");
     $("#add-button").attr("disabled", true);
   });
   $("#add-button").attr("disabled", true);
-  $("#submit-button").click(function(event) {
-    checkClassListOnServer();
+  $("#check-button").click(function(event) {
+    checkCourseListOnServer();
   });
   $("#search-box").keyup(function() {
     $("#add-button").attr("disabled", true);
     getSuggestions();
+  });
+  $("input.timepicker").timepicker({
+    timeFormat: "HH:mm"
   });
 });
 /*
  * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
  * 
  */
-function addClassToList(className) {
+function addCourseToList(courseName) {
   //CREATE A LIST ITEM
   var item = $(
     '<li id="' +
-      className.toUpperCase() +
+    courseName.toUpperCase() +
       '"class="list-group-item d-flex justify-content-between"></li>'
   );
   var form = $(
     '<form id="' +
-      className +
+    courseName +
       'Form" target="_blank" name="detailForm" method= "GET" action = "detail.jsp" ></form>'
   );
   var input = $(
     '<input style="display: none;" name="courseName" value="' +
-      className +
+    courseName +
       '"></input>"'
   );
   input.appendTo(form);
   var title = $("<span></span>");
-  title.text(className);
+  title.text(courseName);
 
   //SETUP DELETE BUTTON
   var button = $('<i class="fas fa-times my-auto">');
   button.on("click", function() {
-    $("#" + className.toUpperCase()).remove();
+    $("#" + courseName.toUpperCase()).remove();
   });
   title.appendTo(item);
   button.appendTo(item);
@@ -50,7 +53,7 @@ function addClassToList(className) {
   title.on("click", function() {
     form.submit();
   });
-  $("#class-list").append(item);
+  $("#course-list").append(item);
 }
 /*
  * FUNCTIONS FOR COMMUNICATING WITH THE SERVER
@@ -71,22 +74,24 @@ var addUser = (email, fname, lname) => {
   });
 };
 
-var checkClassListOnServer = () => {
-  var classList = [];
-  for (var i = 0; i < $("#class-list").children().length; i++) {
-    var text = $("#class-list").children()[i].innerText;
+function checkCourseListOnServer() {
+  var courseList = [];
+  var startTime = $("#start-time").val();
+  var endTime = $("#end-time").val();
+  for (var i = 0; i < $("#course-list").children().length; i++) {
+    var text = $("#course-list").children()[i].innerText;
     text = text.replace(/\n/gi, "");
-    classList.push(text);
+    courseList.push(text);
   }
-  var classListJSON = JSON.stringify(classList);
+  var courseListJSON = JSON.stringify(courseList);
 
   $.ajax({
     url: "BruteForce",
-    contentType: "application/json",
-    dataType: "json",
     data: {
-      callType: "check_class_list",
-      classList: classListJSON
+      callType: "check_schedule",
+      startTime: startTime,
+      endTime: endTime,
+      courseList: courseListJSON
     },
     success: function(result) {
       //Result must include:
@@ -129,7 +134,7 @@ function getSuggestions() {
     success: function(result) {
       var data = JSON.parse(result);
       var texts = [];
-      $("#class-list li span").each(function() {
+      $("#course-list li span").each(function() {
         texts.push($(this).text());
       });
       for (var i = 0; i < data.length; i++) {
