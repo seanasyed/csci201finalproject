@@ -1,27 +1,24 @@
 $(document).ready(function() {
   $("#add-button").click(function(event) {
     var keyword = $("#search-box").val();
-    addCourseToList(keyword);
+    addClassToList(keyword);
     $("#search-box").val("");
     $("#add-button").attr("disabled", true);
   });
   $("#add-button").attr("disabled", true);
-  $("#check-button").click(function(event) {
-    checkCourseListOnServer();
+  $("#submit-button").click(function(event) {
+    checkClassListOnServer();
   });
   $("#search-box").keyup(function() {
     $("#add-button").attr("disabled", true);
     getSuggestions();
-  });
-  $("input.timepicker").timepicker({
-    timeFormat: "HH:mm"
   });
 });
 /*
  * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
  * 
  */
-function addCourseToList(className) {
+function addClassToList(className) {
   //CREATE A LIST ITEM
   var item = $(
     '<li id="' +
@@ -53,7 +50,7 @@ function addCourseToList(className) {
   title.on("click", function() {
     form.submit();
   });
-  $("#course-list").append(item);
+  $("#class-list").append(item);
 }
 /*
  * FUNCTIONS FOR COMMUNICATING WITH THE SERVER
@@ -74,40 +71,31 @@ var addUser = (email, fname, lname) => {
   });
 };
 
-function checkCourseListOnServer() {
-  var startTime = $("#start-time").val();
-  var endTime = $("#end-time").val();
-
-  var courseList = [];
-  for (var i = 0; i < $("#course-list").children().length; i++) {
-    var text = $("#course-list").children()[i].innerText;
+var checkClassListOnServer = () => {
+  var classList = [];
+  for (var i = 0; i < $("#class-list").children().length; i++) {
+    var text = $("#class-list").children()[i].innerText;
     text = text.replace(/\n/gi, "");
-    courseList.push(text);
+    classList.push(text);
   }
-  console.log(courseList);
-  var courseListJSON = JSON.stringify(courseList);
-  console.log(courseListJSON);
+  var classListJSON = JSON.stringify(classList);
+
   $.ajax({
     url: "BruteForce",
+    contentType: "application/json",
+    dataType: "json",
     data: {
-      callType: "check_schedule",
-      startTime: startTime,
-      endTime: endTime,
-      courseList: courseListJSON
+      callType: "check_class_list",
+      classList: classListJSON
     },
     success: function(result) {
-      //RESULT WILL CONTAIN:
-      //valid: true or false
-      //messages: ["a", "b"]
-      //courses: {
-      //  "CSCI-201": <sectionID>
-      //}
-      //if "valid" == "true", change check-button into submit
-      //
+      //Result must include:
+      //Whether the algorithm was successful
+      //If it was, result must also include the optimized schedule
       console.log(result);
     }
   });
-}
+};
 
 var submitClassListToServer = () => {
   $.ajax({
@@ -141,7 +129,7 @@ function getSuggestions() {
     success: function(result) {
       var data = JSON.parse(result);
       var texts = [];
-      $("#course-list li span").each(function() {
+      $("#class-list li span").each(function() {
         texts.push($(this).text());
       });
       for (var i = 0; i < data.length; i++) {
@@ -157,4 +145,6 @@ function getSuggestions() {
       }
     }
   });
+
+  // Loop through all list items, and hide those who don't match the search query
 }

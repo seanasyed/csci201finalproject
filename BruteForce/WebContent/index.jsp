@@ -10,14 +10,12 @@
 	 crossorigin="anonymous">
 	</script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	 crossorigin="anonymous">
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 	<title>Brute Force</title>
 </head>
@@ -50,14 +48,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col text-center my-2">
-						<span class="mx-auto" style="font-size: 24px;">Welcome
-							<%= request.getParameter("email") %></span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col">
-						<input type="text" id="start-time" class="form-control timepicker" placeholder="Start Time">
-						<input type="text" id="end-time" class="form-control timepicker" placeholder="End Time">
+						<span class="mx-auto" style="font-size: 24px;">Welcome <%= request.getParameter("email") %></span>
 					</div>
 				</div>
 				<div class="row">
@@ -71,13 +62,13 @@
 				</div>
 				<div class="row my-4">
 					<div class="col-sm-12">
-						<ul id="course-list" class="list-group">
+						<ul id="class-list" class="list-group">
 						</ul>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<button id="check-button" class="btn btn-cardinal my-2 my-sm-0 w-100">Check</button>
+						<button id="submit-button" class="btn btn-cardinal my-2 my-sm-0 w-100">Check</button>
 					</div>
 				</div>
 			</div>
@@ -96,6 +87,40 @@
 			</div>
 		</div>
 	</footer>
+
+	<!-- CONTACT MODAL -->
+	<!-- <div class="modal fadse text-dark" id="contactModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Contact Me</h5>
+					<button class="close" data-dismiss="modal">
+						<span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="email">Email</label>
+							<input type="email" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="message">Message</label>
+							<textarea class="form-control"></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-info btn-block">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
 	 crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
@@ -107,5 +132,4 @@
 		$('#year').text(new Date().getFullYear());
 	</script>
 </body>
-
 </html>
