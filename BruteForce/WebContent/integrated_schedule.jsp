@@ -243,12 +243,12 @@
 
 	<div class="cover-layer"></div>
 </div> <!-- .cd-schedule -->
-<script src="js/modernizr.js"></script>
+<script src="javascript/modernizr.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script>
-	if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+	if( !window.jQuery ) document.write('<script src="javascript/jquery-3.0.0.min.js"><\/script>');
 </script>
-<script src="js/main.js"></script> <!-- Resource jQuery -->
+<script src="javascript/main.js"></script> <!-- Resource jQuery -->
 
 	<footer id="main-footer">
 		<div class="container">
