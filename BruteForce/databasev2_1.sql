@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Section` (
   `day` VARCHAR(45) NULL,
   `start_time` VARCHAR(45) NULL,
   `end_time` VARCHAR(45) NULL,
-  `am_pm` VARCHAR(2) NULL,
   `instructor` VARCHAR(45) NULL,
   `numRegistered` INT(4) NULL,
   `classCapacity` INT(4) NULL,
