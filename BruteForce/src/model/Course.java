@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Vector;
+
 public class Course {
 	private int ID;
 	private String school; 
@@ -9,8 +11,9 @@ public class Course {
 	private String name;
 	private String description;
 	private int semester;
+	private Vector<LectureSection> lectureSections; 
 	
-	public Course(int ID, String school, String major, String number, float units, String name, String description, int semester) {
+	public Course(int ID, String school, String major, String number, float units, String name, String description, int semester, Vector<LectureSection> lectureSections) {
 		this.ID = ID;
 		this.school = school; 
 		this.major = major; 
@@ -19,6 +22,7 @@ public class Course {
 		this.name = name;
 		this.description = description;
 		this.semester = semester;
+		this.lectureSections = lectureSections;
 	}
 	
 	public int getID() {
@@ -51,5 +55,9 @@ public class Course {
 
 	public int getSemester() {
 		return semester;
+	}
+	
+	public Vector<LectureSection> getLectureSections() {
+		return lectureSections; 
 	}
 }

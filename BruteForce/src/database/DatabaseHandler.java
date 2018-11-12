@@ -231,6 +231,8 @@ public class DatabaseHandler {
 			// 2. Execute SQL query
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
+				
+				//TODO Parse the lecture sections for each course and incorporate them into the constructure as a Vector<LectureSection>
 				return new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), 
 						resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
 						resultSet.getString("description"), resultSet.getInt("semester"));
