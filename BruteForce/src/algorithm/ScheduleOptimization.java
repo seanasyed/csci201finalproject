@@ -22,7 +22,7 @@ public class ScheduleOptimization {
 
 	private Vector<Course> courses;
 	
-	private Vector<Section> schedule; //Section ID's
+	private Vector<Section> schedule; //Section IDs
 	private int startTimeConstraint; 
 	private int endTimeConstraint; 
 	
