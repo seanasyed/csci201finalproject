@@ -45,7 +45,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Course` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Course` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `ID` INT(11) NOT NULL,
   `school` VARCHAR(45) NULL,
   `major` VARCHAR(45) NULL,
   `number` VARCHAR(45) NULL,
@@ -96,7 +96,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `ID` INT(11) NOT NULL,
   `studentUserName` VARCHAR(45) NOT NULL,
   `sectionID1` VARCHAR(45) NULL,
   `sectionID2` VARCHAR(45) NULL,
@@ -136,10 +136,10 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Lab_Sections` (
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sectionID`),
-  INDEX `fk_Section_Building2_idx` (`Building_ID` ASC) VISIBLE,
-  INDEX `fk_Section_Course10_idx` (`Course_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Lab_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
-  CONSTRAINT `fk_Section_Building2`
+  CONSTRAINT `fk_Section_Building10`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
     ON DELETE NO ACTION
@@ -175,10 +175,10 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Discussion_Sections` (
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sectionID`),
-  INDEX `fk_Section_Building3_idx` (`Building_ID` ASC) VISIBLE,
-  INDEX `fk_Section_Course11_idx` (`Course_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Disscussion_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
-  CONSTRAINT `fk_Section_Building3`
+  CONSTRAINT `fk_Section_Building11`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
     ON DELETE NO ACTION
@@ -214,10 +214,10 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Quiz_Sections` (
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sectionID`),
-  INDEX `fk_Section_Building4_idx` (`Building_ID` ASC) VISIBLE,
-  INDEX `fk_Section_Course12_idx` (`Course_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Quiz_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
-  CONSTRAINT `fk_Section_Building4`
+  CONSTRAINT `fk_Section_Building12`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
     ON DELETE NO ACTION
@@ -282,14 +282,14 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('1', 'Lecture', '9:00', '9:50', 'MWF', 'Mark Redekopp', 0, 50, 'GFS', 2);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('2', 'Lecture', '10:00', '11:20', 'Tues, Thurs', NULL, 0, 50, NULL, 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('3', 'Lecture', '9:00', '10:20', 'Mon, Wed', NULL, 0, 50, NULL, 4);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('4', 'Lecture', '10:00', '11:50', 'Tues, Thurs', NULL, 0, 50, NULL, 2);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('5', 'Lecture', '14:00', '16:00', 'Tues, Thurs', NULL, 0, 50, NULL, 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('6', 'Lecture', '10:00', '11:50', 'Friday', NULL, 0, 50, NULL, 5);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('7', 'Lecture', '13:00', '14:50', 'Mon, Wed', NULL, 0, 50, NULL, 2);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('8', 'Lecture', '14:00', '15:50', 'Tues, Thurs', NULL, 0, 50, NULL, 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('9', 'Lecture', '13:00', '14:50', 'Friday', NULL, 0, 50, NULL, 5);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('2', 'Lecture', '10:00', '11:20', 'Tues, Thurs', 'Aaron Cote', 0, 50, 'GFS', 3);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('3', 'Lecture', '9:00', '10:20', 'Mon, Wed', 'Leah Pate', 0, 50, 'GFS', 4);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('4', 'Lecture', '10:00', '11:50', 'Tues, Thurs', 'Andrew Goodney', 0, 50, 'GFS', 2);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('5', 'Lecture', '14:00', '16:00', 'Tues, Thurs', 'Aaron Cote', 0, 50, 'GFS', 3);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('6', 'Lecture', '10:00', '11:50', 'Friday', 'William Halfond', 0, 50, 'GFS', 5);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('7', 'Lecture', '13:00', '14:50', 'Mon, Wed', 'Mark Redekopp', 0, 50, 'GFS', 2);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('8', 'Lecture', '14:00', '15:50', 'Tues, Thurs', 'Aaron Cote', 0, 50, 'GFS', 3);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('9', 'Lecture', '13:00', '14:50', 'Friday', 'Costas Synolakis', 0, 50, 'GFS', 5);
 
 COMMIT;
 
@@ -299,17 +299,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES (1, 'seansyed', '29908D', '30225R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `scheduling`.`Lab_Sections`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `scheduling`;
-INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1, '1');
+INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES (1, 'seansyed', '1', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
