@@ -136,10 +136,10 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Lab_Sections` (
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sectionID`),
-  INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
-  INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Building2_idx` (`Building_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Course10_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Lab_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
-  CONSTRAINT `fk_Section_Building10`
+  CONSTRAINT `fk_Section_Building2`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
     ON DELETE NO ACTION
@@ -175,10 +175,10 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Discussion_Sections` (
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sectionID`),
-  INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
-  INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Building3_idx` (`Building_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Course11_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Disscussion_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
-  CONSTRAINT `fk_Section_Building11`
+  CONSTRAINT `fk_Section_Building3`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
     ON DELETE NO ACTION
@@ -214,10 +214,10 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Quiz_Sections` (
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`sectionID`),
-  INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
-  INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Building4_idx` (`Building_ID` ASC) VISIBLE,
+  INDEX `fk_Section_Course12_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Quiz_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
-  CONSTRAINT `fk_Section_Building12`
+  CONSTRAINT `fk_Section_Building4`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
     ON DELETE NO ACTION
@@ -271,7 +271,7 @@ INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `
 INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (2, 'Viterbi', 'CSCI', '103L', 4.0, 'Introduction to Programming', 'Basic datatypes, assignments, control statements (if, switch, for, while), input/output (printf, scanf, cin, cout), functions, arrays, structures, recursion, dynamic memory, file handling. Programming in C/C++.', 1);
 INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (3, 'Viterbi', 'CSCI', '170', 4.0, 'Discrete Methods in Computer Science', 'Sets, functions, series. Big-O notation and algorithm analysis. Propositional and first-order logic. Counting and discrete probability. Graphs and basic graph algorithms. Basic number theory.', 1);
 INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (4, 'Viterbi', 'ENGR', '102', 2.0, 'Engineering Freshman Academy', 'Introduction to the profession of engineering. Ethical, political and societal consequences of engineering innovations and the impact of engineering on everyday life. Team projects and guest lectures. Open to freshmen only.', 1);
-INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (5, 'Dornsife College of Letters, Arts and Sciences', 'WRIT', '150', 4.0, 'Writing and Critical Reasoning--Thematic Approaches', 'Academic writing, emphasizing analysis and argumentation, rhetorical judgment, critical reasoning, creative insight, the careful use of evidence, ethical perspectives, logical organization, stylistic and grammatical fluency. Duplicates credit in WRIT 130 and WRIT 140.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (5, 'Dornsife', 'WRIT', '150', 4.0, 'Writing and Critical Reasoning--Thematic Approaches', 'Academic writing, emphasizing analysis and argumentation, rhetorical judgment, critical reasoning, creative insight, the careful use of evidence, ethical perspectives, logical organization, stylistic and grammatical fluency. Duplicates credit in WRIT 130 and WRIT 140.', 1);
 
 COMMIT;
 
