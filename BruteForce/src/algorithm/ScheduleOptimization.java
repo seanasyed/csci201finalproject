@@ -2,8 +2,8 @@ package algorithm;
 
 import java.util.Vector;
 
+import database.DatabaseHandler;
 import model.Course;
-import model.LectureSection;
 import model.Section;
 
 public class ScheduleOptimization {
@@ -21,44 +21,37 @@ public class ScheduleOptimization {
 	 */
 
 	private Vector<Course> courses;
+	
 	private Vector<Section> schedule; //Section ID's
 	
 	public ScheduleOptimization(Vector<Course> courses) {
 		this.courses = courses; 
 		schedule = new Vector<Section>(); 
 		
-		addCourse(0); 
+		//Initial recursive call 
+		addCourse(0,0,0,0,0); 
 		
 		//TODO If the schedule is not empty, the student has been enrolled, so write the new seat count to the database
-	}
-	
-	/**
-	 * TODO Helper method to attempt to add a course to the current schedule
-	 */
-	private void addCourse(int index) {
-		
-		//Base case if either a full schedule has been created or nothing has been created
-		if (index < 0 || index >= courses.size()) {
-			return; 
+		if (schedule.size() > 0) {
+			DatabaseHandler.writeScheduleToUser(schedule); 
+			
+			for (int i = 0; i < schedule.size(); i++) {
+				schedule.get(i).
+			}
 		}
-		
-		//Retrieve the current course
-		Course course = courses.get(index); 
-		
-		//State machine implementation: lecture -> discussion -> lab -> quiz
-		Vector<LectureSection> lectureSections = course.getLectureSections();
 	}
 	
 	/**
-	 * TODO Helper method to backtrack adding a course
+	 * TODO Attempt to add a course into the schedule with a given state in terms of combination progression
 	 */
-	private void backtrackCourse(int courseIndex, int lectureIndex, int labIndex, int discussionIndex, int quizIndex) {
-	
+	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex) {
+		
 	}
 	
 	
+	
 	/**
-	 * TODO Determines if a given section conflicts with the already-existing schedule
+	 * Determines if a given section conflicts with the already-existing schedule
 	 * 
 	 * Returns false if there is a conflict
 	 */
@@ -75,7 +68,7 @@ public class ScheduleOptimization {
 			n = false; 
 		}
 		
-		//TODO Iterate through the current schedule. If days are the same, then compare the times
+		//Iterate through the current schedule. If days are the same, then compare the times
 		for (Section s : schedule) {
 			boolean[] sDays = parseDays(s.getDay()); 
 			for (boolean d : days) {
@@ -87,11 +80,19 @@ public class ScheduleOptimization {
 						int[] sStart = parseTime(s.getStartTime()); 
 						int[] sEnd = parseTime(s.getEndTime()); 
 						
-						//0) hour
-						int startHour = start[0]; 
-						//1) minute
+						int startTime = start[0] * 100 + start[1]; 
+						int endTime = end[0] * 100 + end[1]; 
+						int sStartTime = sStart[0] * 100 + sStart[1];
+						int sEndTime = sEnd[0] * 100 + sEnd[1]; 
 						
 						
+						if (endTime < sStartTime) {
+							noConflict = true; 
+						}
+						
+						if (startTime > sEndTime) {
+							noConflict = true;
+						}
 					}
 				}
 			}
