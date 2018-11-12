@@ -143,11 +143,15 @@ public class BruteForceHandler {
             }
             ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
             Vector<Section> vecSections = so.getSchedule();
+            System.out.println(vecSections);
             Map<String, String> data = new HashMap<String, String>();
             if (vecSections.size() <= 0) {
             	data.put("valid", "false");
+            } else {
+            	String vecSectionsJSON = new Gson().toJson(vecSections);
+            	data.put("courses", vecSectionsJSON);
             }
-            
+            System.out.println(vecSections);
             response.setContentType("application/json");
 
             String json = new Gson().toJson(data);

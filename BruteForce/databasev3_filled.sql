@@ -283,13 +283,18 @@ START TRANSACTION;
 USE `scheduling`;
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('1', 'Lecture', '9:00', '9:50', 'MWF', 'Mark Redekopp', 0, 50, 'GFS', 2);
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('2', 'Lecture', '10:00', '11:20', 'Tues, Thurs', 'Aaron Cote', 0, 50, 'GFS', 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('3', 'Lecture', '9:00', '10:20', 'Mon, Wed', 'Leah Pate', 0, 50, 'GFS', 4);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('3', 'Lecture', '9:00', '10:20', 'Mon, Wed', 'Leah Pate', 0, 50, 'GFS', 5);
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('4', 'Lecture', '10:00', '11:50', 'Tues, Thurs', 'Andrew Goodney', 0, 50, 'GFS', 2);
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('5', 'Lecture', '14:00', '16:00', 'Tues, Thurs', 'Aaron Cote', 0, 50, 'GFS', 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('6', 'Lecture', '10:00', '11:50', 'Friday', 'William Halfond', 0, 50, 'GFS', 5);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('6', 'Lecture', '10:00', '11:50', 'Friday', 'William Halfond', 0, 50, 'GFS', 4);
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('7', 'Lecture', '13:00', '14:50', 'Mon, Wed', 'Mark Redekopp', 0, 50, 'GFS', 2);
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('8', 'Lecture', '14:00', '15:50', 'Tues, Thurs', 'Aaron Cote', 0, 50, 'GFS', 3);
+<<<<<<< HEAD
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('9', 'Lecture', '13:00', '14:50', 'Friday', 'Costas Synolakis', 0, 50, 'GFS', 5);
+=======
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('9', 'Lecture', '13:00', '14:50', 'Friday', 'Costas Synolakis', 0, 50, 'GFS', 4);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('10', 'Lecture', '19:00', '20:50', 'MWF', 'Jack Black', 0, 50, 'GFS', 1);
+>>>>>>> d725a55b496cb6caf5607423cc60be06b4442ee0
 
 COMMIT;
 
