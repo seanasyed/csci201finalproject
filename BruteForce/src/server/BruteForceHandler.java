@@ -144,7 +144,6 @@ public class BruteForceHandler {
             ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
             Vector<Section> vecSections = so.getSchedule();
             response.setContentType("application/json");
-			response.getWriter().write(json);
             if (vecSections.size() >= 0) 
 			break;
 		case "submit_schedule":
