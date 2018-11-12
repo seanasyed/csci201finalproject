@@ -27,6 +27,7 @@ public class ScheduleOptimization {
 	private int endTimeConstraint = 0; 
 	
 	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint) {
+		
 		this.courses = courses; 
 		for (int i = 0; i < courses.size(); i++) {
 			System.out.println(courses.get(i).getName());
@@ -44,6 +45,7 @@ public class ScheduleOptimization {
 		
 		System.out.println("startTimeConstraint: " + startTimeConstraint);
 		System.out.println("endTimeConstraint: " + endTimeConstraint + "\n"); 
+		System.out.println("Courses size is " + courses.size());
 		
 		//Initial recursive call 
 		addCourse(0,0,0,0,0,0); 
@@ -99,6 +101,10 @@ public class ScheduleOptimization {
 			startTime = parseTime(lecture.getStartTime())[0] * 100 + parseTime(lecture.getStartTime())[1]; 
 			endTime = parseTime(lecture.getEndTime())[0] * 100 + parseTime(lecture.getEndTime())[1]; 
 			
+			System.out.println("startTime: " + startTime);
+			System.out.println("startTimeConstraint: " + startTimeConstraint);
+			System.out.println("endTime: " + endTime);
+			System.out.println("endTimeConstraint: " + endTimeConstraint);
 			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
 				addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state);
 				return; 
@@ -191,8 +197,9 @@ public class ScheduleOptimization {
 			if (noConflict(lecture)) {
 				
 				schedule.add(lecture); 
+				System.out.println("Line 192, size = " + schedule.size());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1); 
-				System.out.println("Line 192");
+				
 				return; 
 			} else {
 				
@@ -205,8 +212,9 @@ public class ScheduleOptimization {
 		else if (state == 1) {
 			if (noConflict(discussions.get(discussionIndex))) {
 				schedule.add(discussions.get(discussionIndex));
+				System.out.println("Line 206, size = " + schedule.size());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2);
-				System.out.println("Line 206");
+				
 				return;
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1); 
@@ -218,8 +226,9 @@ public class ScheduleOptimization {
 		else if (state == 2) {
 			if (noConflict(labs.get(labIndex))) {
 				schedule.add(labs.get(labIndex));
+				System.out.println("Line 219, size = " + schedule.size());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3); 
-				System.out.println("Line 219");
+				
 				return; 
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2); 
@@ -232,8 +241,9 @@ public class ScheduleOptimization {
 			System.out.println("State is 3");
 			if (noConflict(quizzes.get(quizIndex))) {
 				schedule.add(quizzes.get(quizIndex)); 
+				System.out.println("Line 233, size = " + schedule.size());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4); 
-				System.out.println("Line 233");
+				
 				return; 
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3); 

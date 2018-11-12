@@ -143,6 +143,7 @@ public class BruteForceHandler {
             }
             ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
             Vector<Section> vecSections = so.getSchedule();
+            System.out.println(vecSections);
             Map<String, String> data = new HashMap<String, String>();
             if (vecSections.size() <= 0) {
             	data.put("valid", "false");
