@@ -281,7 +281,7 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('29908D', 'Lecture', '9:00', '9:50', 'Mon, Wed', 'Mark Redekopp', 0, 50, 'GFS', 1);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1);
+INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1);
 
 COMMIT;
 

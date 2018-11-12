@@ -131,6 +131,7 @@ public class BruteForceHandler {
 			//TODO: DISCUSS WITH FRANK
 			System.out.println("submit_schedule");
 			break;
+		case "get_schedule":
 			
 		default:
 			break;

@@ -14,7 +14,7 @@ public class Course {
 	private Vector<LectureSection> lectureSections; 
 	
 	public Course(int ID, String school, String major, String number, float units, String name, 
-					String description, int semester, Vector<LectureSection> lectureSections) {
+					String description, int semester) {
 		this.ID = ID;
 		this.school = school; 
 		this.major = major; 
@@ -23,9 +23,23 @@ public class Course {
 		this.name = name;
 		this.description = description;
 		this.semester = semester;
-		this.lectureSections = lectureSections;
+		this.lectureSections = new Vector<>();
 	}
-	
+	public void addLectureSection(LectureSection lectureSection) {
+		lectureSections.add(lectureSection);
+	}
+	public boolean lectureSectionExists(String sectionID) {
+		for (int i = 0; i < lectureSections.size(); i++) {
+			if (lectureSections.get(i).getSectionID().equals(sectionID)) return true;
+		}
+		return false;
+	}
+	public LectureSection getLectureSection(String sectionID) {
+		for (int i = 0; i < lectureSections.size(); i++) {
+			if (lectureSections.get(i).getSectionID().equals(sectionID)) return lectureSections.get(i);
+		}
+		return null;
+	}
 	public int getID() {
 		return ID;
 	}

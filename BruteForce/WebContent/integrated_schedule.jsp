@@ -3,7 +3,8 @@
 <html lang="en">
 
 <head>
-
+	
+	<% String username = request.getParameter("username"); %>
 	<!-- Required meta tags -->
 
 	<meta charset="utf-8">
@@ -51,10 +52,11 @@
 
 
 <body>
+	<p id="username" style="display:none;"><%= username %></p>
 <script>
 	function getSchedule(){
 		var schedule = [];
-		
+		var username = $('#username').text();
 		$.ajax({
 		    url: "BruteForce",
 		    data: {
@@ -330,6 +332,26 @@
 	<script type="text/javascript" src="javascript/script.js"></script>
 	<script>
 		$('#year').text(new Date().getFullYear());
+		getSchedule();
+	    function getSchedule(){
+	        var schedule = [];
+	        
+	        $.ajax({
+	            url: "BruteForce",
+	            data: {
+	              callType: "get_schedule",
+	              username: username
+	            },
+	            success: function(result) {
+	                  console.log(result);
+	                  console.log(username);
+	                  var courses = result.courses;
+	                  console.log(courses);
+	                  var data = JSON.parse(result);
+	                  
+	            }
+	          });
+	    };
 	</script>
 </body>
 </html>
