@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Vector;
+
 public class User {
 	private String username;
 	private String fName; 
