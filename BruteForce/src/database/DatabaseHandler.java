@@ -226,6 +226,7 @@ public class DatabaseHandler {
 		ResultSet resultSet = null;
 		try {
 			conn = getConnection();
+			System.out.println("connected to database"); 
 			ps = conn.prepareStatement("SELECT * from Course JOIN Lecture_Sections ON Course.ID=Lecture_Sections.Course_ID WHERE Course.major=? AND Course.number=?;");
 			ps.setString(1, major);
 			ps.setString(2, number);
@@ -307,6 +308,7 @@ public class DatabaseHandler {
 		ArrayList<String> courses = new ArrayList<>();
 		try {
 			conn = getConnection();
+			System.out.println("connected to database");
 			ps = conn.prepareStatement("SELECT major, number FROM Course WHERE major LIKE ?;");
 			ps.setString(1, "%" + keyword + "%");
 			resultSet = ps.executeQuery();

@@ -145,10 +145,7 @@ public class BruteForceHandler {
             Vector<Section> vecSections = so.getSchedule();
             Map<String, String> data = new HashMap<String, String>();
             response.setContentType("application/json");
-<<<<<<< HEAD
-=======
-			//response.getWriter().write(json);
->>>>>>> 7f6c4be8a7e71fe1fe963802a98a750f77cf0958
+
             if (vecSections.size() >= 0) 
 			break;
 		case "submit_schedule":
