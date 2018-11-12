@@ -309,7 +309,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1, '29908D');
+INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1, '1');
 
 COMMIT;
 
