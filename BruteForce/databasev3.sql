@@ -1,8 +1,8 @@
 
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 
 -- -----------------------------------------------------
 -- Schema scheduling
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Course` (
   `major` VARCHAR(45) NULL,
   `number` VARCHAR(45) NULL,
   `units` FLOAT NULL,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(100) NULL,
   `description` TEXT NULL,
   `semester` INT(11) NULL,
   PRIMARY KEY (`ID`))
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Lecture_Sections` (
   `instructor` VARCHAR(45) NULL,
   `numRegistered` INT(4) NULL,
   `classCapacity` INT(4) NULL,
-  `Building_ID` VARCHAR(4) NOT NULL,
+  `Building_ID` VARCHAR(4) NULL,
   `Course_ID` INT(11) NOT NULL,
   PRIMARY KEY (`sectionID`),
   INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Discussion_Sections` (
   PRIMARY KEY (`sectionID`),
   INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
   INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
-  INDEX `fk_Discussion_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
+  INDEX `fk_Disscussion_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
   CONSTRAINT `fk_Section_Building11`
     FOREIGN KEY (`Building_ID`)
     REFERENCES `scheduling`.`Building` (`ID`)
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Discussion_Sections` (
     REFERENCES `scheduling`.`Course` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Discussion_Sections_Lecture_Sections1`
+  CONSTRAINT `fk_Disscussion_Sections_Lecture_Sections1`
     FOREIGN KEY (`Lecture_SectionID`)
     REFERENCES `scheduling`.`Lecture_Sections` (`sectionID`)
     ON DELETE NO ACTION
