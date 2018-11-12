@@ -13,7 +13,8 @@ public class Course {
 	private int semester;
 	private Vector<LectureSection> lectureSections; 
 	
-	public Course(int ID, String school, String major, String number, float units, String name, String description, int semester, Vector<LectureSection> lectureSections) {
+	public Course(int ID, String school, String major, String number, float units, String name, 
+					String description, int semester, Vector<LectureSection> lectureSections) {
 		this.ID = ID;
 		this.school = school; 
 		this.major = major; 
