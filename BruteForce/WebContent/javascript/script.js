@@ -7,7 +7,7 @@ $(document).ready(function() {
   });
   $("#add-button").attr("disabled", true);
   $("#check-button").click(function(event) {
-    submitClassListToServer();
+    checkCourseListOnServer();
   });
   $("#search-box").keyup(function() {
     $("#add-button").attr("disabled", true);

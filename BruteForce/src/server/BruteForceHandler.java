@@ -109,46 +109,6 @@ public class BruteForceHandler {
 			String endTime = request.getParameter("endTime");
 			String courseListJSON = request.getParameter("courseList");
 			
-			//startTime: HH:mm
-			//endTime: HH:mm
-			System.out.println("startTime: " + startTime);
-			System.out.println("endTime: " + endTime);
-			try {
-				
-				//CONVERT courseListJSON INTO AN LIST
-				JSONArray courses = new JSONArray(courseListJSON);
-				List<String> list = new ArrayList<String>();
-				for(int i = 0; i < courses.length(); i++){
-				    list.add(courses.optString(i));
-				    
-				    //SPLIT THE STRING BY "-"
-				    //MAJOR: courseInfo[0]
-				    //NUMBER: courseInfo[1]
-				    String courseInfo[]= courses.optString(i).split("-");
-				    String major = courseInfo[0];
-				    String number = courseInfo[1];
-				    System.out.println("major: " + courseInfo[0]);
-				    System.out.println("number: " + courseInfo[1]);
-					Course course = dh.getCourse(major, number);
-					if (course != null) {
-						Vector<LectureSection> lectureSections = course.getLectureSections();
-						for (int j = 0; j < lectureSections.size(); j++) {
-							System.out.println("lectureSection: " + lectureSections.get(j));
-							Vector<Section> discussionSections = lectureSections.get(j).getDiscussions();
-							Vector<Section> labSections = lectureSections.get(j).getLabs();
-							Vector<Section> quizSections = lectureSections.get(j).getQuizzes();
-							System.out.println("discussionSections: " + discussionSections);
-							System.out.println("labSections: " + labSections);
-							System.out.println("quizSections: " + quizSections);
-						}
-					}
-					
-				}
-			} catch (JSONException je) {
-				System.out.println("je:" + je.getMessage());
-			}	
-			break;
-		case "submit_schedule":
 			//TODO: DISCUSS WITH FRANK
             System.out.println("submit_schedule");
             //get courses
@@ -169,18 +129,26 @@ public class BruteForceHandler {
                     String courseInfo[]= courses.optString(i).split("-");
                     System.out.println("major: " + courseInfo[0]);
                     System.out.println("number: " + courseInfo[1]);
-                    
-                    vecCourses.add(dh.getCourse(courseInfo[0], courseInfo[1]));
+                    Course course = dh.getCourse(courseInfo[0], courseInfo[1]);
+                    if (course != null) vecCourses.add(course);
                 }
             } catch (JSONException je) {
                 System.out.println("je:" + je.getMessage());
-            }   
+            }
             startTime = request.getParameter("startTime"); 
             endTime = request.getParameter("endTime");
+            System.out.println("vecCourses:" + vecCourses);
+            for(int i = 0; i < vecCourses.size(); i++) {
+            	System.out.println("Course: " + vecCourses.get(i));
+            }
             ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
             Vector<Section> vecSections = so.getSchedule();
-            System.out.println("vecSections: " + vecSections);
+            response.setContentType("application/json");
+			response.getWriter().write(json);
+            if (vecSections.size() >= 0) 
 			break;
+		case "submit_schedule":
+			
 //		case "get_schedule":
 			
 		default:
