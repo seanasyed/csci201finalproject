@@ -144,12 +144,23 @@ public class BruteForceHandler {
             ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
             Vector<Section> vecSections = so.getSchedule();
             Map<String, String> data = new HashMap<String, String>();
+            if (vecSections.size() <= 0) {
+            	data.put("valid", "false");
+            }
+            
             response.setContentType("application/json");
 <<<<<<< HEAD
+            String json = new Gson().toJson(data);
+            try {
+				response.getWriter().write(json);
+			} catch (IOException ioe) {
+				System.out.println(ioe.getMessage());
+			}
+            
 =======
-			//response.getWriter().write(json);
->>>>>>> 7f6c4be8a7e71fe1fe963802a98a750f77cf0958
+
             if (vecSections.size() >= 0) 
+>>>>>>> 5d181f25d04b9cc4c178242dfe05ede72c0f2419
 			break;
 		case "submit_schedule":
 			

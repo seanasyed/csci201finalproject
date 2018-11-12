@@ -94,15 +94,28 @@ function checkCourseListOnServer() {
       courseList: courseListJSON
     },
     success: function(result) {
-      //Result must include:
-      //Whether the algorithm was successful
-      //If it was, result must also include the optimized schedule
-      console.log(result);
+      if (result.valid == 'false') {
+    	  alert('Invalid Schedule');
+    	  $('#course-list li').remove();
+    	  $('#start-time').val('');
+    	  $('#end-time').val('');
+      } else {
+    	  var checkButton = $('#check-button');
+    	  checkButton.text('Submit');
+    	  checkButton.unbind("click");
+    	  checkButton.click(function(event) {
+    		  submitCourseListToServer();
+    	  });
+      }
     }
   });
 };
 
-var submitClassListToServer = () => {
+var submitCourseListToServer = () => {
+	var checkButton = $('#check-button');
+	checkButton.click(function(event) {
+		checkCourseListToServer();
+	});
 	var courseList = [];
 	  var startTime = $("#start-time").val();
 	  var endTime = $("#end-time").val();

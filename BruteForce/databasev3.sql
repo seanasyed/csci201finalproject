@@ -1,8 +1,10 @@
-
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema scheduling
+-- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema scheduling
@@ -46,7 +48,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Course` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Course` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `ID` INT(11) NOT NULL,
   `school` VARCHAR(45) NULL,
   `major` VARCHAR(45) NULL,
   `number` VARCHAR(45) NULL,
@@ -97,7 +99,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `ID` INT(11) NOT NULL,
   `studentUserName` VARCHAR(45) NOT NULL,
   `sectionID1` VARCHAR(45) NULL,
   `sectionID2` VARCHAR(45) NULL,

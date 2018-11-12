@@ -28,6 +28,13 @@ public class ScheduleOptimization {
 	
 	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint) {
 		this.courses = courses; 
+		for (int i = 0; i < courses.size(); i++) {
+			System.out.println(courses.get(i).getName());
+			for (int j = 0; j < courses.get(i).getLectureSections().size(); j++) {
+				System.out.println(courses.get(i).getLectureSections().get(j).getSectionID());
+			}
+			System.out.println();
+		}
 		if (startTimeConstraint != "" && endTimeConstraint != "") {
 			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1]; 
 			this.endTimeConstraint = parseTime(endTimeConstraint)[0] * 100 + parseTime(endTimeConstraint)[1];
@@ -74,6 +81,7 @@ public class ScheduleOptimization {
 		
 		
 		if (lectureIndex >= course.getLectureSections().size()) {
+			
 			addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
 			return; 
 		}
@@ -130,14 +138,17 @@ public class ScheduleOptimization {
 		
 		//If these sections don't exist, don't worry about them!
 		if (discussions.size() == 0 && state == 1) {
+			
 			state++; 
 		}
 		
 		if (labs.size() == 0 && state == 2) {
+			 
 			state ++; 
 		}
 		
 		if (quizzes.size() == 0 && state == 3) {
+		
 			state++; 
 		}
 		
@@ -148,19 +159,23 @@ public class ScheduleOptimization {
 		//1 - discussion
 		if (state == 1) {
 			if (discussionIndex >= discussions.size()) {
-				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1); 
+				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1);
+				System.out.println("Line 163");
 				return; 
 			}
 		//2 - lab
 		} else if (state == 2) {
 			if (labIndex >= labs.size()) {
-				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1); 
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1);
+				System.out.println("Line 170");
 				return; 
 			}
 		//3 - quiz
 		} else if (state == 3) {
 			if (quizIndex >= quizzes.size()) {
+				
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				System.out.println("Line 178");
 				return; 
 			}
 		}
@@ -169,12 +184,17 @@ public class ScheduleOptimization {
 		
 		//0 - Lecture
 		if (state == 0) {
+			System.out.println("In state 0");
 			if (noConflict(lecture)) {
+				
 				schedule.add(lecture); 
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1); 
+				System.out.println("Line 192");
 				return; 
 			} else {
+				
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				System.out.println("Line 197");
 				return; 
 			}
 		}
@@ -182,10 +202,12 @@ public class ScheduleOptimization {
 		else if (state == 1) {
 			if (noConflict(discussions.get(discussionIndex))) {
 				schedule.add(discussions.get(discussionIndex));
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2);
+				System.out.println("Line 206");
 				return;
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1); 
+				System.out.println("Line 210");
 				return; 
 			}
 		}
@@ -194,25 +216,31 @@ public class ScheduleOptimization {
 			if (noConflict(labs.get(labIndex))) {
 				schedule.add(labs.get(labIndex));
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3); 
+				System.out.println("Line 219");
 				return; 
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2); 
+				System.out.println("Line 223");
 				return; 
 			}
 		}
 		//3 - Quiz
 		else if (state == 3) {
+			System.out.println("State is 3");
 			if (noConflict(quizzes.get(quizIndex))) {
 				schedule.add(quizzes.get(quizIndex)); 
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4); 
+				System.out.println("Line 233");
 				return; 
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3); 
+				System.out.println("Line 237");
 				return;  
 			}
 		}
 		//4 - Done
 		else if (state == 4) {
+			System.out.println("Line 243");
 			return; 
 		}
 	}
@@ -260,6 +288,9 @@ public class ScheduleOptimization {
 					}
 				}
 			}
+		}
+		if (schedule.size() == 0) {
+			noConflict = true; 
 		}
 		
 		//logic to incorporate section capacity
