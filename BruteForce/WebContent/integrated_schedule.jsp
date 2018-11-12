@@ -51,6 +51,27 @@
 
 
 <body>
+<script>
+	function getSchedule(){
+		var schedule = [];
+		
+		$.ajax({
+		    url: "BruteForce",
+		    data: {
+		      callType: "get_schedule",
+		      username: username
+		    },
+		    success: function(result) {
+		      	console.log(result);
+		      	console.log(username);
+		      	var courses = result.courses;
+		      	console.log(courses);
+		      	var data = JSON.parse(result);
+		      	
+		    }
+		  });
+	};
+</script>
 	<h1 class="display-4  text-center bg-cardinal">
 
 		<span class="align-text-top text-gold"><strong>Brute</strong></span>
@@ -110,6 +131,9 @@
 			<li><span>21:00</span></li>
 		</ul>
 	</div> <!-- .timeline -->
+	<script>
+		
+	</script>
 
 	<div class="events">
 		<ul>
