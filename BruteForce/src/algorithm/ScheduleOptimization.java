@@ -57,10 +57,15 @@ public class ScheduleOptimization {
 		
 		Course course = courses.get(courseIndex); 
 		
-		if (lectureIndex >= course.getLectureSections().size()) {
-			addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
-			return; 
+		try {
+			if (lectureIndex >= course.getLectureSections().size()) {
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				return; 
+			}
+		} catch (Exception e) {
+			System.out.println("npe: " + e.getMessage());
 		}
+		
 		LectureSection lecture = course.getLectureSections().get(lectureIndex); 
 		Vector<Section> discussions = lecture.getDiscussions(); 
 		Vector<Section> labs = lecture.getLabs(); 

@@ -15,6 +15,7 @@ import org.json.JSONException;
 
 import com.google.gson.Gson;
 
+import algorithm.ScheduleOptimization;
 import database.DatabaseHandler;
 import model.Course;
 import model.LectureSection;
@@ -149,9 +150,38 @@ public class BruteForceHandler {
 			break;
 		case "submit_schedule":
 			//TODO: DISCUSS WITH FRANK
-			System.out.println("submit_schedule");
+            System.out.println("submit_schedule");
+            //get courses
+            courseListJSON = request.getParameter("courseList");
+            Vector<Course> vecCourses = new Vector<Course>();
+            
+            
+            try {
+                //CONVERT courseListJSON INTO AN LIST
+                JSONArray courses = new JSONArray(courseListJSON);
+                List<String> list = new ArrayList<String>();
+                for(int i = 0; i < courses.length(); i++){
+                    list.add(courses.optString(i));
+                    
+                    //SPLIT THE STRING BY "-"
+                    //MAJOR: courseInfo[0]
+                    //NUMBER: courseInfo[1]
+                    String courseInfo[]= courses.optString(i).split("-");
+                    System.out.println("major: " + courseInfo[0]);
+                    System.out.println("number: " + courseInfo[1]);
+                    
+                    vecCourses.add(dh.getCourse(courseInfo[0], courseInfo[1]));
+                }
+            } catch (JSONException je) {
+                System.out.println("je:" + je.getMessage());
+            }   
+            startTime = request.getParameter("startTime"); 
+            endTime = request.getParameter("endTime");
+            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
+            Vector<Section> vecSections = so.getSchedule();
+            System.out.println("vecSections: " + vecSections);
 			break;
-		case "get_schedule":
+//		case "get_schedule":
 			
 		default:
 			break;
