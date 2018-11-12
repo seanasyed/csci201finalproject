@@ -81,7 +81,7 @@ public class ScheduleOptimization {
 		
 		
 		if (lectureIndex >= course.getLectureSections().size()) {
-			System.out.println("lectureIndex is out of bounds");
+			
 			addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
 			return; 
 		}
@@ -138,18 +138,17 @@ public class ScheduleOptimization {
 		
 		//If these sections don't exist, don't worry about them!
 		if (discussions.size() == 0 && state == 1) {
-			System.out.println("There are no discussion sections, incrementing. state = " + state + 1);
+			
 			state++; 
 		}
-		System.out.println("In between discussion and lab checks");
-		System.out.println(labs.size());
+		
 		if (labs.size() == 0 && state == 2) {
-			System.out.println("there are no labs, incrementing"); 
+			 
 			state ++; 
 		}
 		
 		if (quizzes.size() == 0 && state == 3) {
-			System.out.println("there are no quizzes, incrementing");
+		
 			state++; 
 		}
 		
@@ -160,20 +159,23 @@ public class ScheduleOptimization {
 		//1 - discussion
 		if (state == 1) {
 			if (discussionIndex >= discussions.size()) {
-				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1); 
+				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1);
+				System.out.println("Line 163");
 				return; 
 			}
 		//2 - lab
 		} else if (state == 2) {
 			if (labIndex >= labs.size()) {
-				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1); 
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1);
+				System.out.println("Line 170");
 				return; 
 			}
 		//3 - quiz
 		} else if (state == 3) {
 			if (quizIndex >= quizzes.size()) {
-				System.out.println("quiz index is out of bounds");
+				
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				System.out.println("Line 178");
 				return; 
 			}
 		}
@@ -184,13 +186,15 @@ public class ScheduleOptimization {
 		if (state == 0) {
 			System.out.println("In state 0");
 			if (noConflict(lecture)) {
-				System.out.println("Attempting to add section");
+				
 				schedule.add(lecture); 
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1); 
+				System.out.println("Line 192");
 				return; 
 			} else {
-				System.out.println("Conflict found");
+				
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				System.out.println("Line 197");
 				return; 
 			}
 		}
@@ -198,10 +202,12 @@ public class ScheduleOptimization {
 		else if (state == 1) {
 			if (noConflict(discussions.get(discussionIndex))) {
 				schedule.add(discussions.get(discussionIndex));
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2);
+				System.out.println("Line 206");
 				return;
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1); 
+				System.out.println("Line 210");
 				return; 
 			}
 		}
@@ -210,9 +216,11 @@ public class ScheduleOptimization {
 			if (noConflict(labs.get(labIndex))) {
 				schedule.add(labs.get(labIndex));
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3); 
+				System.out.println("Line 219");
 				return; 
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2); 
+				System.out.println("Line 223");
 				return; 
 			}
 		}
@@ -222,14 +230,17 @@ public class ScheduleOptimization {
 			if (noConflict(quizzes.get(quizIndex))) {
 				schedule.add(quizzes.get(quizIndex)); 
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4); 
+				System.out.println("Line 233");
 				return; 
 			} else {
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3); 
+				System.out.println("Line 237");
 				return;  
 			}
 		}
 		//4 - Done
 		else if (state == 4) {
+			System.out.println("Line 243");
 			return; 
 		}
 	}
