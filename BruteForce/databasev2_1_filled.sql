@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS `scheduling`.`Student` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Student` (
   `userName` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
   `firstName` VARCHAR(45) NULL,
   `lastName` VARCHAR(45) NULL,
   `isActive` TINYINT NULL,
