@@ -1,11 +1,8 @@
 
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -----------------------------------------------------
--- Schema scheduling
--- -----------------------------------------------------
 
 -- -----------------------------------------------------
 -- Schema scheduling
@@ -37,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Building` (
   `ID` VARCHAR(4) NOT NULL,
   `fullName` VARCHAR(45) NULL,
   `address` VARCHAR(45) NULL,
+  `longitude` DECIMAL(10,5) NULL,
+  `latitude` DECIMAL(10,5) NULL,
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 
@@ -53,10 +52,11 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Course` (
   `number` VARCHAR(45) NULL,
   `units` FLOAT NULL,
   `name` VARCHAR(45) NULL,
-  `description` VARCHAR(256) NULL,
+  `description` TEXT NULL,
   `semester` INT(11) NULL,
   PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+COMMENT = '	';
 
 
 -- -----------------------------------------------------
@@ -66,10 +66,12 @@ DROP TABLE IF EXISTS `scheduling`.`Section` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Section` (
   `sectionID` VARCHAR(45) NOT NULL,
-  `session` VARCHAR(45) NULL,
   `type` VARCHAR(45) NULL,
   `time` VARCHAR(45) NULL,
   `day` VARCHAR(45) NULL,
+  `start_time` VARCHAR(45) NULL,
+  `end_time` VARCHAR(45) NULL,
+  `am_pm` VARCHAR(2) NULL,
   `instructor` VARCHAR(45) NULL,
   `numRegistered` INT(4) NULL,
   `classCapacity` INT(4) NULL,
