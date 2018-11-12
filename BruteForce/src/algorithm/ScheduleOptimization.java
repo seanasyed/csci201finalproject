@@ -23,17 +23,25 @@ public class ScheduleOptimization {
 	private Vector<Course> courses;
 	
 	private Vector<Section> schedule; //Section IDs
-	private int startTimeConstraint; 
-	private int endTimeConstraint; 
+	private int startTimeConstraint = 0; 
+	private int endTimeConstraint = 0; 
 	
 	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint) {
 		this.courses = courses; 
-		this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1]; 
-		this.endTimeConstraint = parseTime(endTimeConstraint)[0] * 100 + parseTime(endTimeConstraint)[1];
+		if (startTimeConstraint != "" && endTimeConstraint != "") {
+			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1]; 
+			this.endTimeConstraint = parseTime(endTimeConstraint)[0] * 100 + parseTime(endTimeConstraint)[1];
+		}
+		
 		schedule = new Vector<Section>(); 
+		
+		System.out.println("startTimeConstraint: " + startTimeConstraint);
+		System.out.println("endTimeConstraint: " + endTimeConstraint + "\n"); 
 		
 		//Initial recursive call 
 		addCourse(0,0,0,0,0,0); 
+		
+		
 		
 	}
 	
@@ -41,6 +49,13 @@ public class ScheduleOptimization {
 	 * Attempt to add a course into the schedule with a given state in terms of combination progression
 	 */
 	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state) {
+		
+		System.out.println("courseIndex: " + courseIndex); 
+		System.out.println("lectureIndex: " + lectureIndex); 
+		System.out.println("discussionIndex: " + discussionIndex);
+		System.out.println("labIndex: " + labIndex); 
+		System.out.println("quizIndex: " + quizIndex); 
+		System.out.println("state: " + state + "\n"); 
 		
 		//Base case returns
 		
@@ -69,46 +84,49 @@ public class ScheduleOptimization {
 		Vector<Section> labs = lecture.getLabs(); 
 		Vector<Section> quizzes = lecture.getQuizzes();
 		
-		//skip the sections that violate the time constraint
-		int startTime, endTime; 
-		//check lecture section
-		startTime = parseTime(lecture.getStartTime())[0] * 100 + parseTime(lecture.getStartTime())[1]; 
-		endTime = parseTime(lecture.getEndTime())[0] * 100 + parseTime(lecture.getEndTime())[1]; 
-		
-		if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-			addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state);
-			return; 
-		}
-		//iterate through each of the Vectors to check all other sections
-		for (Section s : discussions) {
-			startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
-			endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+		if (startTimeConstraint != 0 && endTimeConstraint != 0) {
+			//skip the sections that violate the time constraint
+			int startTime, endTime; 
+			//check lecture section
+			startTime = parseTime(lecture.getStartTime())[0] * 100 + parseTime(lecture.getStartTime())[1]; 
+			endTime = parseTime(lecture.getEndTime())[0] * 100 + parseTime(lecture.getEndTime())[1]; 
 			
 			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state);
+				addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state);
 				return; 
+			}
+			//iterate through each of the Vectors to check all other sections
+			for (Section s : discussions) {
+				startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+				
+				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state);
+					return; 
+				}
+			}
+			
+			for (Section s : labs) {
+				startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+				
+				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state);
+					return; 
+				}
+			}
+			
+			for (Section s : quizzes) {
+				startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+				
+				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state);
+					return; 
+				}
 			}
 		}
 		
-		for (Section s : labs) {
-			startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
-			endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
-			
-			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state);
-				return; 
-			}
-		}
-		
-		for (Section s : quizzes) {
-			startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
-			endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
-			
-			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state);
-				return; 
-			}
-		}
 		
 		//If these sections don't exist, don't worry about them!
 		if (discussions.size() == 0 && state == 1) {
