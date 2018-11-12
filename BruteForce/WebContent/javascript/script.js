@@ -100,6 +100,10 @@ function checkCourseListOnServer() {
     	  $('#start-time').val('');
     	  $('#end-time').val('');
       } else {
+    	  var courses = JSON.parse(result.courses);
+    	  for(var i=0; i <courses.length; i++) {
+    		  console.log(courses[i]);
+    	  }
     	  var checkButton = $('#check-button');
     	  checkButton.text('Submit');
     	  checkButton.unbind("click");
