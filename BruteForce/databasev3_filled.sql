@@ -3,7 +3,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-
 -- -----------------------------------------------------
 -- Schema scheduling
 -- -----------------------------------------------------
@@ -239,7 +238,6 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-<<<<<<< HEAD
 
 -- -----------------------------------------------------
 -- Data for table `scheduling`.`Student`
@@ -282,7 +280,6 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('29908D', 'Lecture', '9:00', '9:50', 'Mon, Wed', 'Mark Redekopp', 0, 50, 'GFS', 1);
-INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1);
 
 COMMIT;
 
@@ -296,5 +293,13 @@ INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sec
 
 COMMIT;
 
-=======
->>>>>>> 17b40b7dc6abd503161fb8ebd31d57f9b8a5c0b0
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Lab_Sections`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1, '29908D');
+
+COMMIT;
+
