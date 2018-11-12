@@ -1,10 +1,9 @@
 package algorithm;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 import model.Course;
+import model.LectureSection;
 import model.Section;
 
 public class ScheduleOptimization {
@@ -22,11 +21,11 @@ public class ScheduleOptimization {
 	 */
 
 	private Vector<Course> courses;
-	private Vector<Section> schedule; 
+	private Vector<String> schedule; //Section ID's
 	
 	public ScheduleOptimization(Vector<Course> courses) {
 		this.courses = courses; 
-		schedule = new Vector<Section>(); 
+		schedule = new Vector<String>(); 
 		
 		addCourse(0); 
 		
@@ -34,50 +33,29 @@ public class ScheduleOptimization {
 	}
 	
 	/**
-	 * Helper method to attempt to add a course to the current schedule
+	 * TODO Helper method to attempt to add a course to the current schedule
 	 */
 	private void addCourse(int index) {
+		
+		//Base case if either a full schedule has been created or nothing has been created
+		if (index < 0 || index >= courses.size()) {
+			return; 
+		}
 		
 		//Retrieve the current course
 		Course course = courses.get(index); 
 		
-		//TODO Parse the sections into type vectors that are stored in a map based on the section type
-		Map<String, Vector<Section>> allSections = new HashMap<String, Vector<Section>>();
-		
-		//TODO Retrieve and store the key values for easier access
-		Vector<String> types = new Vector<String>(); 
-		
-		for (String type : allSections.keySet()) {
-			types.add(type); 
-		}
-		
 		//State machine implementation: lecture -> discussion -> lab -> quiz
-		addSectionType(0, allSections); 
+		Vector<LectureSection> lectureSections = course.getLectureSections();
 	}
 	
 	/**
-	 * TODO Helper method to attempt to add a section of a given type to the current schedule
-	 * 
-	 * Returns true if the section type is successfully added, false if not
+	 * TODO Helper method to backtrack adding a course
 	 */
-	private boolean addSectionType(int state, Map<String, Vector<Section>> allSections) {
-		
-		//Determine the type based on the state
-		String type = ""; 
-		if (state == 0) {
-			type = "lecture"; 
-		} else if (state == 1) {
-			type = "discussion"; 
-		} else if (state == 2) {
-			type = "lab"; 
-		} else if (state == 3) {
-			type = "quiz"; 
-		}
-		
-		//TODO Check for dependencies if the section is a lecture section
-		//TODO Make sure that section capacities, etc are properly handled
-		return false; 
+	private void backtrackCourse(int courseIndex, int lectureIndex, int labIndex, int discussionIndex, int quizIndex) {
+	
 	}
+	
 	
 	/**
 	 * TODO Determines if a given section conflicts with the already-existing schedule
@@ -85,10 +63,13 @@ public class ScheduleOptimization {
 	 * Returns false if there is a conflict
 	 */
 	private boolean noConflict(Section section) {
+		
+		
+		
 		return false; 
 	}
 	
-	public Vector<Section> getSchedule() {
+	public Vector<String> getSchedule() {
 		return schedule; 
 	}
 }
