@@ -1,8 +1,14 @@
 /*
 -- Query: SELECT * FROM scheduling.course
+<<<<<<< HEAD
+LIMIT 0, 1000
+
+-- Date: 2018-11-12 01:40
+=======
 LIMIT 0, 50000
 
 -- Date: 2018-11-12 02:00
+>>>>>>> bea1a4e884a87585993e0f0ae5264a3f74506566
 */
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (1,'Viterbi','CSCI','102L',2,'Fundamentals of Computation','Fundamental concepts of algorithmic thinking as a primer to programming. Introduction to C++.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (2,'Viterbi','CSCI','103L',4,'Introduction to Programming','Basic datatypes, assignments, control statements (if, switch, for, while), input/output (printf, scanf, cin, cout), functions, arrays, structures, recursion, dynamic memory, file handling. Programming in C/C++.',1);
@@ -1004,6 +1010,8 @@ INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (998,'Dornsife','Political Science','490',1,' Directed Research ','Individual research and readings. Not available for graduate credit.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (999,'Dornsife','Political Science','590',1,' Directed Research ','Research leading to the master\'s degree. Maximum units which may be applied to the degree to be determined by the department. Graded CR/NC.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (1000,'Dornsife','Political Science','790',1,' Research ','Research leading to the doctorate. Maximum units which may be applied to the degree to be determined by the department. Graded CR/NC.',1);
+<<<<<<< HEAD
+=======
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (1001,'Dornsife','Psychology','100',4,' Introduction to Psychology ','Introduction to psychological science, including historical and contemporary approaches. Behavior examined from biological, cognitive, social, developmental, and personality perspectives. Disorders and treatments.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (1002,'Dornsife','Psychology','165',4,' Drugs, Behavior, and Society ','An integrative systems perspective of drugs; including their historical, economic, and cultural importance, psychopharmacology, addiction, relationship to crime, and therapeutic use in treating psychological disorders.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (1003,'Dornsife','Psychology','240',4,' Scientific Inquiry and Reasoning in Health Care ','Critical analysis and reasoning skills required to solve scientific problems in human behavior, including presentation of data, logic of research design, statistics, and research ethics. Not for major credit for Psychology majors.',1);
@@ -5825,3 +5833,4 @@ INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (5819,'Price School of Public Policy','Real Estate Development','574',2,' Building Typologies ','The exploration of categories of building types, including retail, industrial, residential, office, and institutional, using key examples or case studies from each.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (5820,'Price School of Public Policy','Real Estate Development','590',1,' Directed Research ','Research leading to the master\'s degree. Maximum units which may be applied to the degree to be determined by the department. Graded CR/NC.',1);
 INSERT INTO `course` (`ID`,`school`,`major`,`number`,`units`,`name`,`description`,`semester`) VALUES (5821,'Price School of Public Policy','Real Estate Development','598',2,' Real Estate Product Development ','An evaluation of various real estate development product types. Case studies and site visits.',1);
+>>>>>>> bea1a4e884a87585993e0f0ae5264a3f74506566

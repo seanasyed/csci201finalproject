@@ -239,11 +239,12 @@ public class DatabaseHandler {
 							resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
 							resultSet.getString("description"), resultSet.getInt("semester"));
 				}
+				String courseName = resultSet.getString("major") + "-" + resultSet.getString("number");
 				String sectionID = resultSet.getString("sectionID");
 				LectureSection lectureSection = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
 								resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
 								resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"));
+								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
 				ps = conn.prepareStatement("SELECT * from Discussion_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
 				ResultSet disResultSet = ps.executeQuery();
@@ -251,7 +252,7 @@ public class DatabaseHandler {
 					Section dis = new Section(disResultSet.getString("sectionID"), disResultSet.getString("type"), 
 							disResultSet.getString("type"), disResultSet.getString("start_time"), disResultSet.getString("end_time"), 
 							disResultSet.getString("day"), disResultSet.getString("instructor"),disResultSet.getInt("numRegistered"), 
-							disResultSet.getInt("classCapacity"), disResultSet.getString("Building_ID"), disResultSet.getString("Course_ID"));
+							disResultSet.getInt("classCapacity"), disResultSet.getString("Building_ID"), disResultSet.getString("Course_ID"), courseName);
 					lectureSection.addDiscussion(dis);
 				}
 				ps = conn.prepareStatement("SELECT * from Lab_Sections WHERE Lecture_SectionID=?;");
@@ -261,7 +262,7 @@ public class DatabaseHandler {
 					Section lab = new Section(labResultSet.getString("sectionID"), labResultSet.getString("type"), 
 							labResultSet.getString("type"), labResultSet.getString("start_time"), labResultSet.getString("end_time"), 
 							labResultSet.getString("day"), labResultSet.getString("instructor"),labResultSet.getInt("numRegistered"), 
-							labResultSet.getInt("classCapacity"), labResultSet.getString("Building_ID"), labResultSet.getString("Course_ID"));
+							labResultSet.getInt("classCapacity"), labResultSet.getString("Building_ID"), labResultSet.getString("Course_ID"), courseName);
 					lectureSection.addLab(lab);
 				}
 				ps = conn.prepareStatement("SELECT * from Quiz_Sections WHERE Lecture_SectionID=?;");
@@ -271,7 +272,7 @@ public class DatabaseHandler {
 					Section quiz = new Section(quizResultSet.getString("sectionID"), quizResultSet.getString("type"), 
 							quizResultSet.getString("type"), quizResultSet.getString("start_time"), quizResultSet.getString("end_time"), 
 							quizResultSet.getString("day"), quizResultSet.getString("instructor"),quizResultSet.getInt("numRegistered"), 
-							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("courseID"));
+							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("courseID"), courseName);
 					lectureSection.addQuiz(quiz);;
 				}
 				course.addLectureSection(lectureSection);
