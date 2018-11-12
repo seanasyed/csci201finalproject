@@ -230,45 +230,53 @@ public class DatabaseHandler {
 			ps.setString(1, major);
 			ps.setString(2, number);
 			// 2. Execute SQL query
-			
+			resultSet = ps.executeQuery();
 			Course course = null;
 			while (resultSet.next()) {
+				
 				if (course == null) {
 					course = new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), 
 							resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
 							resultSet.getString("description"), resultSet.getInt("semester"));
 				}
-				LectureSection lecture = null;
-				String type = resultSet.getString("type");
-				switch (type) {
-				case "Lecture":
-					if (course != null && course.lectureSectionExists(resultSet.getString("sectionID"))) {
-						lecture = course.getLectureSection(resultSet.getString("sectionID"));
-					} else {
-						lecture = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
+				String sectionID = resultSet.getString("sectionID");
+				LectureSection lectureSection = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
 								resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
 								resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
-					}
-				case "Discussion":
-					Section discussion = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
-							resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-							resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-							resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
-				case "Lab":
-					Section lab = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
-							resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-							resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-							resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
-				case "Quiz":
-					Section quiz = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
-							resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-							resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-							resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
-				default:
-						break;
+								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"));
+				ps = conn.prepareStatement("SELECT * from Disscussion_Sections WHERE Lecture_SectionID=?;");
+				ps.setString(1, sectionID);
+				ResultSet disResultSet = ps.executeQuery();
+				while (disResultSet.next()) {
+					Section dis = new Section(disResultSet.getString("sectionID"), disResultSet.getString("type"), 
+							disResultSet.getString("type"), disResultSet.getString("start_time"), disResultSet.getString("end_time"), 
+							disResultSet.getString("day"), disResultSet.getString("instructor"),disResultSet.getInt("numRegistered"), 
+							disResultSet.getInt("classCapacity"), disResultSet.getString("Building_ID"), disResultSet.getString("Course_ID"));
+					lectureSection.addDiscussion(dis);
 				}
+				ps = conn.prepareStatement("SELECT * from Lab_Sections WHERE Lecture_SectionID=?;");
+				ps.setString(1, sectionID);
+				ResultSet labResultSet = ps.executeQuery();
+				while (labResultSet.next()) {
+					Section lab = new Section(labResultSet.getString("sectionID"), labResultSet.getString("type"), 
+							labResultSet.getString("type"), labResultSet.getString("start_time"), labResultSet.getString("end_time"), 
+							labResultSet.getString("day"), labResultSet.getString("instructor"),labResultSet.getInt("numRegistered"), 
+							labResultSet.getInt("classCapacity"), labResultSet.getString("Building_ID"), labResultSet.getString("Course_ID"));
+					lectureSection.addLab(lab);
+				}
+				ps = conn.prepareStatement("SELECT * from Quiz_Sections WHERE Lecture_SectionID=?;");
+				ps.setString(1, sectionID);
+				ResultSet quizResultSet = ps.executeQuery();
+				while (quizResultSet.next()) {
+					Section quiz = new Section(quizResultSet.getString("sectionID"), quizResultSet.getString("type"), 
+							quizResultSet.getString("type"), quizResultSet.getString("start_time"), quizResultSet.getString("end_time"), 
+							quizResultSet.getString("day"), quizResultSet.getString("instructor"),quizResultSet.getInt("numRegistered"), 
+							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("courseID"));
+					lectureSection.addQuiz(quiz);;
+				}
+				course.addLectureSection(lectureSection);
 			}
+			return course;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -287,7 +295,6 @@ public class DatabaseHandler {
 				System.out.println("sqle: " + sqle.getMessage());
 			}
 		}
-		return null;
 	}
 	/*
 	 * RETURN VALUE

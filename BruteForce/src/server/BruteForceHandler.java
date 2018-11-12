@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,9 @@ import org.json.JSONException;
 import com.google.gson.Gson;
 
 import database.DatabaseHandler;
+import model.Course;
+import model.LectureSection;
+import model.Section;
 
 
 public class BruteForceHandler {
@@ -120,8 +124,24 @@ public class BruteForceHandler {
 				    //MAJOR: courseInfo[0]
 				    //NUMBER: courseInfo[1]
 				    String courseInfo[]= courses.optString(i).split("-");
+				    String major = courseInfo[0];
+				    String number = courseInfo[1];
 				    System.out.println("major: " + courseInfo[0]);
 				    System.out.println("number: " + courseInfo[1]);
+					Course course = dh.getCourse(major, number);
+					if (course != null) {
+						Vector<LectureSection> lectureSections = course.getLectureSections();
+						for (int j = 0; j < lectureSections.size(); j++) {
+							System.out.println("lectureSection: " + lectureSections.get(j));
+							Vector<Section> discussionSections = lectureSections.get(j).getDiscussions();
+							Vector<Section> labSections = lectureSections.get(j).getLabs();
+							Vector<Section> quizSections = lectureSections.get(j).getQuizzes();
+							System.out.println("discussionSections: " + discussionSections);
+							System.out.println("labSections: " + labSections);
+							System.out.println("quizSections: " + quizSections);
+						}
+					}
+					
 				}
 			} catch (JSONException je) {
 				System.out.println("je:" + je.getMessage());
