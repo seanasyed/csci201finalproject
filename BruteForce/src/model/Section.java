@@ -60,4 +60,7 @@ public class Section {
 	public String getCourseID() {
 		return courseID;
 	}	
+	public void setNumRegistered(int n) {
+		numRegistered = n; 
+	}
 }
