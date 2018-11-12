@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Course` (
   `major` VARCHAR(45) NULL,
   `number` VARCHAR(45) NULL,
   `units` FLOAT NULL,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(100) NULL,
   `description` TEXT NULL,
   `semester` INT(11) NULL,
   PRIMARY KEY (`ID`))
