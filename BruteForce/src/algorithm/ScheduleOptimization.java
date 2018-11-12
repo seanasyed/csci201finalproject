@@ -2,8 +2,8 @@ package algorithm;
 
 import java.util.Vector;
 
-import database.DatabaseHandler;
 import model.Course;
+import model.LectureSection;
 import model.Section;
 
 public class ScheduleOptimization {
@@ -23,29 +23,177 @@ public class ScheduleOptimization {
 	private Vector<Course> courses;
 	
 	private Vector<Section> schedule; //Section ID's
+	private int startTimeConstraint; 
+	private int endTimeConstraint; 
 	
-	public ScheduleOptimization(Vector<Course> courses) {
+	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint) {
 		this.courses = courses; 
+		this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1]; 
+		this.endTimeConstraint = parseTime(endTimeConstraint)[0] * 100 + parseTime(endTimeConstraint)[1];
 		schedule = new Vector<Section>(); 
 		
 		//Initial recursive call 
-		addCourse(0,0,0,0,0); 
+		addCourse(0,0,0,0,0,0); 
 		
-		//TODO If the schedule is not empty, the student has been enrolled, so write the new seat count to the database
-		if (schedule.size() > 0) {
-			DatabaseHandler.writeScheduleToUser(schedule); 
-			
-			for (int i = 0; i < schedule.size(); i++) {
-				schedule.get(i).
-			}
-		}
 	}
 	
 	/**
-	 * TODO Attempt to add a course into the schedule with a given state in terms of combination progression
+	 * Attempt to add a course into the schedule with a given state in terms of combination progression
 	 */
-	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex) {
+	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state) {
 		
+		//Base case returns
+		
+		//If a complete schedule has been created, courseIndex should be out of bounds
+		if (courseIndex >= courses.size()) {
+			return; 
+		}
+		
+		//If no schedule has been created, courseIndex should be -1
+		if (courseIndex == -1) {
+			schedule.clear();
+			return; 
+		}
+		
+		Course course = courses.get(courseIndex); 
+		
+		if (lectureIndex >= course.getLectureSections().size()) {
+			addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+			return; 
+		}
+		LectureSection lecture = course.getLectureSections().get(lectureIndex); 
+		Vector<Section> discussions = lecture.getDiscussions(); 
+		Vector<Section> labs = lecture.getLabs(); 
+		Vector<Section> quizzes = lecture.getQuizzes();
+		
+		//skip the sections that violate the time constraint
+		int startTime, endTime; 
+		//check lecture section
+		startTime = parseTime(lecture.getStartTime())[0] * 100 + parseTime(lecture.getStartTime())[1]; 
+		endTime = parseTime(lecture.getEndTime())[0] * 100 + parseTime(lecture.getEndTime())[1]; 
+		
+		if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+			addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state);
+			return; 
+		}
+		//iterate through each of the Vectors to check all other sections
+		for (Section s : discussions) {
+			startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+			endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+			
+			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state);
+				return; 
+			}
+		}
+		
+		for (Section s : labs) {
+			startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+			endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+			
+			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state);
+				return; 
+			}
+		}
+		
+		for (Section s : quizzes) {
+			startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+			endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
+			
+			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state);
+				return; 
+			}
+		}
+		
+		//If these sections don't exist, don't worry about them!
+		if (discussions.size() == 0 && state == 1) {
+			state++; 
+		}
+		
+		if (labs.size() == 0 && state == 2) {
+			state ++; 
+		}
+		
+		if (quizzes.size() == 0 && state == 3) {
+			state++; 
+		}
+		
+		//Check to see if the state's appropriate index is out of bounds
+		
+		//0 - lecture (already checked)
+		
+		//1 - discussion
+		if (state == 1) {
+			if (discussionIndex >= discussions.size()) {
+				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1); 
+				return; 
+			}
+		//2 - lab
+		} else if (state == 2) {
+			if (labIndex >= labs.size()) {
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1); 
+				return; 
+			}
+		//3 - quiz
+		} else if (state == 3) {
+			if (quizIndex >= quizzes.size()) {
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				return; 
+			}
+		}
+
+		//Handle each state
+		
+		//0 - Lecture
+		if (state == 0) {
+			if (noConflict(lecture)) {
+				schedule.add(lecture); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1); 
+				return; 
+			} else {
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				return; 
+			}
+		}
+		//1 - Discussion
+		else if (state == 1) {
+			if (noConflict(discussions.get(discussionIndex))) {
+				schedule.add(discussions.get(discussionIndex));
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2); 
+				return;
+			} else {
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1); 
+				return; 
+			}
+		}
+		//2 - Lab
+		else if (state == 2) {
+			if (noConflict(labs.get(labIndex))) {
+				schedule.add(labs.get(labIndex));
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3); 
+				return; 
+			} else {
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2); 
+				return; 
+			}
+		}
+		//3 - Quiz
+		else if (state == 3) {
+			if (noConflict(quizzes.get(quizIndex))) {
+				schedule.add(quizzes.get(quizIndex)); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4); 
+				return; 
+			} else {
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3); 
+				return;  
+			}
+		}
+		//4 - Done
+		else if (state == 4) {
+			return; 
+		}
 	}
 	
 	
@@ -62,11 +210,6 @@ public class ScheduleOptimization {
 		//Parse the days of the week
 		//If true, the section meets on that day
 		boolean[] days = parseDays(section.getDay()); 
-		
-		//Instantiate all of the days as not having a time slot for the given section
-		for (boolean n : days) {
-			n = false; 
-		}
 		
 		//Iterate through the current schedule. If days are the same, then compare the times
 		for (Section s : schedule) {
@@ -97,6 +240,12 @@ public class ScheduleOptimization {
 				}
 			}
 		}
+		
+		//logic to incorporate section capacity
+		if (section.getNumRegistered() >= section.getClassCapacity()) {
+			noConflict = false; 
+		}
+		
 		return noConflict; 
 	}
 	
@@ -105,6 +254,10 @@ public class ScheduleOptimization {
 	 */
 	private boolean[] parseDays(String dayString) {
 		boolean[] days = new boolean[7]; 
+		
+		for (int i = 0; i < 7; i++) {
+			days[i] = false; 
+		}
 		
 		//Case where section meets on MWF
 		if (dayString.equals("MWF")) {
