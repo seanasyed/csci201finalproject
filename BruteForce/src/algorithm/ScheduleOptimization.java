@@ -62,7 +62,7 @@ public class ScheduleOptimization {
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
 				return; 
 			}
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			System.out.println("npe: " + e.getMessage());
 		}
 		
