@@ -46,7 +46,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Course` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Course` (
-  `ID` INT(11) NOT NULL,
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `school` VARCHAR(45) NULL,
   `major` VARCHAR(45) NULL,
   `number` VARCHAR(45) NULL,
@@ -97,7 +97,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
-  `ID` INT(11) NOT NULL,
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `studentUserName` VARCHAR(45) NOT NULL,
   `sectionID1` VARCHAR(45) NULL,
   `sectionID2` VARCHAR(45) NULL,
