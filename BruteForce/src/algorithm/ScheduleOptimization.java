@@ -140,16 +140,19 @@ public class ScheduleOptimization {
 		if (discussions.size() == 0 && state == 1) {
 			
 			state++; 
+			System.out.println("143: State = " + state); 
 		}
 		
 		if (labs.size() == 0 && state == 2) {
 			 
 			state ++; 
+			System.out.println("149: State = " + state);
 		}
 		
 		if (quizzes.size() == 0 && state == 3) {
 		
 			state++; 
+			System.out.println("155: State = " + state);
 		}
 		
 		//Check to see if the state's appropriate index is out of bounds
@@ -181,7 +184,7 @@ public class ScheduleOptimization {
 		}
 
 		//Handle each state
-		
+		System.out.println("State = " + state);
 		//0 - Lecture
 		if (state == 0) {
 			System.out.println("In state 0");
@@ -241,6 +244,7 @@ public class ScheduleOptimization {
 		//4 - Done
 		else if (state == 4) {
 			System.out.println("Line 243");
+			addCourse(courseIndex + 1, 0, 0, 0, 0, 0); 
 			return; 
 		}
 	}
