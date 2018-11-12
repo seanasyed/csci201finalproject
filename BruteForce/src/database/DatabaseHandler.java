@@ -6,9 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import model.Course;
+import model.LectureSection;
+import model.Section;
 import model.User;
 
 public class DatabaseHandler {
@@ -219,23 +220,54 @@ public class DatabaseHandler {
 	 * COURSE: COURSE INSTANCE
 	 * NULL: COURSE INSTANCE UNABLE TO BE CREATED
 	 */
-	public Course getCourseByName(String courseName) {
+	public Course getCourse(String major, String number) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet resultSet = null;
 		try {
 			conn = getConnection();
-			ps = conn.prepareStatement("SELECT * FROM Course WHERE courseName=?;");
-			ps.setString(1, courseName);
-			
+			ps = conn.prepareStatement("SELECT * from Course JOIN Lecture_Sections ON Course.ID=Lecture_Sections.Course_ID WHERE Course.major=? AND Course.number=?;");
+			ps.setString(1, major);
+			ps.setString(2, number);
 			// 2. Execute SQL query
-			resultSet = ps.executeQuery();
+			
+			Course course = null;
 			while (resultSet.next()) {
-				
-				//TODO Parse the lecture sections for each course and incorporate them into the constructure as a Vector<LectureSection>
-				return new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), 
-						resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
-						resultSet.getString("description"), resultSet.getInt("semester"));
+				if (course == null) {
+					course = new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), 
+							resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
+							resultSet.getString("description"), resultSet.getInt("semester"));
+				}
+				LectureSection lecture = null;
+				String type = resultSet.getString("type");
+				switch (type) {
+				case "Lecture":
+					if (course != null && course.lectureSectionExists(resultSet.getString("sectionID"))) {
+						lecture = course.getLectureSection(resultSet.getString("sectionID"));
+					} else {
+						lecture = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
+								resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+								resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
+					}
+				case "Discussion":
+					Section discussion = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
+							resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+							resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+							resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
+				case "Lab":
+					Section lab = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
+							resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+							resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+							resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
+				case "Quiz":
+					Section quiz = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
+							resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+							resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+							resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("courseID"));
+				default:
+						break;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -12,14 +12,14 @@ public class Section {
 	private int classCapacity;
 	private String buildingID;
 	private String courseID;
-	public Section(String sectionID, String session, String type, String time, String day, String instructor,
+	public Section(String sectionID, String session, String type, String startTime, String endTime, String day, String instructor,
 			int numRegistered, int classCapacity, String buildingID, String courseID) {
 		super();
 		this.sectionID = sectionID;
 		this.session = session;
 		this.type = type;
 		this.startTime = startTime;
-		this.endTime = endTime; 
+		this.endTime = endTime;
 		this.day = day;
 		this.instructor = instructor;
 		this.numRegistered = numRegistered;
