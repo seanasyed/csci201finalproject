@@ -152,12 +152,14 @@ public class BruteForceHandler {
             }
             System.out.println(vecSections);
             response.setContentType("application/json");
+
             String json = new Gson().toJson(data);
             try {
 				response.getWriter().write(json);
 			} catch (IOException ioe) {
 				System.out.println(ioe.getMessage());
 			}
+
 			break;
 		case "submit_schedule":
 			

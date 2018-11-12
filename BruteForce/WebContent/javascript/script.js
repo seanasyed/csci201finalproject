@@ -100,6 +100,7 @@ function checkCourseListOnServer() {
     	  $('#start-time').val('');
     	  $('#end-time').val('');
       } else {
+    	  //console.log(result.courses);
     	  var courses = JSON.parse(result.courses);
     	  for(var i=0; i <courses.length; i++) {
     		  console.log(courses[i]);

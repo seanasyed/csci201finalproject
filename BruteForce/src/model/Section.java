@@ -12,8 +12,9 @@ public class Section {
 	private int classCapacity;
 	private String buildingID;
 	private String courseID;
+	private String courseName;
 	public Section(String sectionID, String session, String type, String startTime, String endTime, String day, String instructor,
-			int numRegistered, int classCapacity, String buildingID, String courseID) {
+			int numRegistered, int classCapacity, String buildingID, String courseID, String courseName) {
 		super();
 		this.sectionID = sectionID;
 		this.session = session;
@@ -26,6 +27,10 @@ public class Section {
 		this.classCapacity = classCapacity;
 		this.buildingID = buildingID;
 		this.courseID = courseID;
+		this.courseName = courseName;
+	}
+	public String getCourseName() {
+		return courseName;
 	}
 	public String getSectionID() {
 		return sectionID;
