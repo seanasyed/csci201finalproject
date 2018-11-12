@@ -7,7 +7,7 @@ $(document).ready(function() {
   });
   $("#add-button").attr("disabled", true);
   $("#check-button").click(function(event) {
-    checkCourseListOnServer();
+    submitClassListToServer();
   });
   $("#search-box").keyup(function() {
     $("#add-button").attr("disabled", true);
@@ -103,18 +103,31 @@ function checkCourseListOnServer() {
 };
 
 var submitClassListToServer = () => {
-  $.ajax({
-    url: "BruteForce",
-    data: {
-      callType: "submit_class_list"
-    },
-    success: function(result) {
-      //Result must include:
-      //Whether the algorithm was successful
-      //If it was, result must also include the optimized schedule
-      console.log(result);
-    }
-  });
+	var courseList = [];
+	  var startTime = $("#start-time").val();
+	  var endTime = $("#end-time").val();
+	  for (var i = 0; i < $("#course-list").children().length; i++) {
+	    var text = $("#course-list").children()[i].innerText;
+	    text = text.replace(/\n/gi, "");
+	    courseList.push(text);
+	  }
+	  var courseListJSON = JSON.stringify(courseList);
+
+	  $.ajax({
+	    url: "BruteForce",
+	    data: {
+	      callType: "submit_schedule",
+	      startTime: startTime,
+	      endTime: endTime,
+	      courseList: courseListJSON
+	    },
+	    success: function(result) {
+	      //Result must include:
+	      //Whether the algorithm was successful
+	      //If it was, result must also include the optimized schedule
+	      console.log(result);
+	    }
+	  });
 };
 
 function getSuggestions() {
@@ -150,6 +163,27 @@ function getSuggestions() {
       }
     }
   });
-
-  // Loop through all list items, and hide those who don't match the search query
 }
+function getSchedule(){
+     var username = $('#username').text();
+     console.log(username);
+     $.ajax({
+         url: "BruteForce",
+         data: {
+           callType: "submit_schedule",
+           username: username
+         },
+         success: function(result) {
+             console.log(result);
+             console.log(username);
+             var courses = result.courses;
+             console.log(courses);
+             var data = JSON.parse(result);
+             
+             var courses = {};
+             for (var i=0; i<data.response.courses.length; i++){
+                 var current_course = data.response.courses[i];
+             }
+         }
+       });
+ };

@@ -23,7 +23,7 @@ public class Course {
 		this.name = name;
 		this.description = description;
 		this.semester = semester;
-		this.lectureSections = new Vector<>();
+		this.lectureSections = new Vector<LectureSection>();
 	}
 	public void addLectureSection(LectureSection lectureSection) {
 		lectureSections.add(lectureSection);

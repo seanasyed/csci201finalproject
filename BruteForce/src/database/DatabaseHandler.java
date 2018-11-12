@@ -233,7 +233,6 @@ public class DatabaseHandler {
 			resultSet = ps.executeQuery();
 			Course course = null;
 			while (resultSet.next()) {
-				
 				if (course == null) {
 					course = new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), 
 							resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
@@ -244,7 +243,7 @@ public class DatabaseHandler {
 								resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
 								resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
 								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"));
-				ps = conn.prepareStatement("SELECT * from Disscussion_Sections WHERE Lecture_SectionID=?;");
+				ps = conn.prepareStatement("SELECT * from Discussion_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
 				ResultSet disResultSet = ps.executeQuery();
 				while (disResultSet.next()) {
