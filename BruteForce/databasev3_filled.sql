@@ -3,7 +3,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-
 -- -----------------------------------------------------
 -- Schema scheduling
 -- -----------------------------------------------------
@@ -239,3 +238,68 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Student`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) VALUES ('seansyed', 'root', 'Sean', 'Syed', 1);
+INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) VALUES ('gaoxing', 'root', 'Xing', 'Gao', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Building`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('GFS', 'Grace Ford Salvatori Hall', '999 W 36th St, Los Angeles, CA 90089', NULL, NULL);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('MHP', 'Mudd Hall', '3709 Trousdale Parkway, Los Angeles, CA 90089', NULL, NULL);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Course`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (1, 'Viterbi', 'CSCI', '102L', 2.0, 'Fundamentals of Computation', 'Fundamental concepts of algorithmic thinking as a primer to programming. Introduction to C++.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (2, 'Viterbi', 'CSCI', '103L', 4.0, 'Introduction to Programming', 'Basic datatypes, assignments, control statements (if, switch, for, while), input/output (printf, scanf, cin, cout), functions, arrays, structures, recursion, dynamic memory, file handling. Programming in C/C++.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (3, 'Viterbi', 'CSCI', '170', 4.0, 'Discrete Methods in Computer Science', 'Sets, functions, series. Big-O notation and algorithm analysis. Propositional and first-order logic. Counting and discrete probability. Graphs and basic graph algorithms. Basic number theory.', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Lecture_Sections`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('29908D', 'Lecture', '9:00', '9:50', 'Mon, Wed', 'Mark Redekopp', 0, 50, 'GFS', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Schedule`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES (1, 'seansyed', '29908D', '30225R', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `scheduling`.`Lab_Sections`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `scheduling`;
+INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) VALUES ('30225R', 'Lab', '16:30', '17:20', 'Tuesday', NULL, 0, 15, 'VKC', 1, '29908D');
+
+COMMIT;
+
