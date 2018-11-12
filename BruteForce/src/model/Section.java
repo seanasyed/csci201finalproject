@@ -4,7 +4,8 @@ public class Section {
 	private String sectionID; 
 	private String session;
 	private String type;
-	private String time;
+	private String startTime;
+	private String endTime; 
 	private String day;
 	private String instructor;
 	private int numRegistered;
@@ -17,7 +18,8 @@ public class Section {
 		this.sectionID = sectionID;
 		this.session = session;
 		this.type = type;
-		this.time = time;
+		this.startTime = startTime;
+		this.endTime = endTime; 
 		this.day = day;
 		this.instructor = instructor;
 		this.numRegistered = numRegistered;
@@ -34,8 +36,11 @@ public class Section {
 	public String getType() {
 		return type;
 	}
-	public String getTime() {
-		return time;
+	public String getStartTime() {
+		return startTime;
+	}
+	public String getEndTime() {
+		return endTime; 
 	}
 	public String getDay() {
 		return day;

@@ -21,11 +21,11 @@ public class ScheduleOptimization {
 	 */
 
 	private Vector<Course> courses;
-	private Vector<String> schedule; //Section ID's
+	private Vector<Section> schedule; //Section ID's
 	
 	public ScheduleOptimization(Vector<Course> courses) {
 		this.courses = courses; 
-		schedule = new Vector<String>(); 
+		schedule = new Vector<Section>(); 
 		
 		addCourse(0); 
 		
@@ -64,12 +64,148 @@ public class ScheduleOptimization {
 	 */
 	private boolean noConflict(Section section) {
 		
+		boolean noConflict = false; 
 		
+		//Parse the days of the week
+		//If true, the section meets on that day
+		boolean[] days = parseDays(section.getDay()); 
 		
-		return false; 
+		//Instantiate all of the days as not having a time slot for the given section
+		for (boolean n : days) {
+			n = false; 
+		}
+		
+		//TODO Iterate through the current schedule. If days are the same, then compare the times
+		for (Section s : schedule) {
+			boolean[] sDays = parseDays(s.getDay()); 
+			for (boolean d : days) {
+				for (boolean sd : sDays) {
+					if (d && sd) {
+						//Compare the starting and ending times
+						int[] start = parseTime(section.getStartTime()); 
+						int[] end = parseTime(section.getEndTime()); 
+						int[] sStart = parseTime(s.getStartTime()); 
+						int[] sEnd = parseTime(s.getEndTime()); 
+						
+						//0) hour
+						int startHour = start[0]; 
+						//1) minute
+						
+						
+					}
+				}
+			}
+		}
+		return noConflict; 
 	}
 	
-	public Vector<String> getSchedule() {
+	/*
+	 * Helper method to parse the day String of a given section
+	 */
+	private boolean[] parseDays(String dayString) {
+		boolean[] days = new boolean[7]; 
+		
+		//Case where section meets on MWF
+		if (dayString.equals("MWF")) {
+			days[1] = true; 
+			days[3] = true; 
+			days[5] = true; 
+		} 
+		
+		//Case where section meets twice a week
+		else if (dayString.indexOf(",") != -1) {
+			
+			//Sunday
+			if (dayString.indexOf("Sun") != -1) {
+				days[0] = true; 
+			}
+			
+			//Monday
+			if (dayString.indexOf("Mon") != -1) {
+				days[1] = true; 
+			}
+			
+			//Tuesday
+			if (dayString.indexOf("Tues") != -1) {
+				days[2] = true; 
+			}
+			
+			//Wednesday
+			if (dayString.indexOf("Wed") != -1) {
+				days[3] = true; 
+			}
+			
+			//Thursday
+			if (dayString.indexOf("Thurs") != -1) {
+				days[4] = true; 
+			}
+			
+			//Friday
+			if (dayString.indexOf("Fri") != -1) {
+				days[5] = true; 
+			}
+			
+			//Saturday
+			if (dayString.indexOf("Sat") != -1) {
+				days[6] = true; 
+			}
+		}
+		
+		//Case where section meets once a week
+		else {
+			
+			//Sunday
+			if (dayString.equals("Sunday")) {
+				days[0] = true; 
+			}
+			
+			//Monday
+			if (dayString.equals("Monday")) {
+				days[1] = true; 
+			}
+			
+			//Tuesday
+			if (dayString.equals("Tuesday")) {
+				days[2] = true; 
+			}
+			
+			//Wednesday
+			if (dayString.equals("Wednesday")) {
+				days[3] = true; 
+			}
+			
+			//Thursday
+			if (dayString.equals("Thursday")) {
+				days[4] = true; 
+			}
+			
+			//Friday
+			if (dayString.equals("Friday")) {
+				days[5] = true; 
+			}
+			
+			//Saturday
+			if (dayString.equals("Saturday")) {
+				days[6] = true; 
+			}
+			
+		}
+		
+		return days; 
+	}
+	
+	/*
+	 * Helper method to parse a time string into hours and minutes
+	 */
+	int[] parseTime(String t) {
+		int[] time = new int[2]; 
+		time[0] = Integer.parseInt(t.substring(0, t.indexOf(":"))); 
+		time[1] = Integer.parseInt(t.substring(t.indexOf(":") + 1)); 
+		
+		return time; 
+	}
+	
+	public Vector<Section> getSchedule() {
 		return schedule; 
 	}
 }
