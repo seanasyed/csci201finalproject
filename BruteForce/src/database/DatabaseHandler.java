@@ -273,7 +273,7 @@ public class DatabaseHandler {
 					Section quiz = new Section(quizResultSet.getString("sectionID"), quizResultSet.getString("type"), 
 							quizResultSet.getString("type"), quizResultSet.getString("start_time"), quizResultSet.getString("end_time"), 
 							quizResultSet.getString("day"), quizResultSet.getString("instructor"),quizResultSet.getInt("numRegistered"), 
-							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("courseID"), courseName);
+							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("Course_ID"), courseName);
 					lectureSection.addQuiz(quiz);;
 				}
 				course.addLectureSection(lectureSection);
