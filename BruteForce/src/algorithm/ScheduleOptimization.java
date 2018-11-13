@@ -77,12 +77,17 @@ public class ScheduleOptimization {
 		//System.out.println("labIndex: " + labIndex); 
 		//System.out.println("quizIndex: " + quizIndex); 
 		//System.out.println("state: " + state); 
-		//System.out.println("backtracking: " + backtrack + "\n");
+		System.out.println("backtracking: " + backtrack + "\n");
 		
 		//Base case returns
 		
 		//If a complete schedule has been created, courseIndex should be out of bounds
 		if (courseIndex >= courses.size()) {
+			
+			System.out.println("Finalized Schedule"); 
+			for (int i = 0; i < schedule.size(); i++) {
+				System.out.println(schedule.get(i).getSectionID());
+			}
 			return; 
 		}
 		
@@ -170,7 +175,7 @@ public class ScheduleOptimization {
 		//If any of the backtracking indexes != -1, handle all backtracking procedures
 		if (backtrack) {
 		
-			//System.out.println("Backtracking detected"); 
+			System.out.println("Backtracking detected"); 
 			//Replace the parameters with the backtracking indexes
 			
 			if (backtrackingLectureIndex != -1) {
@@ -306,7 +311,7 @@ public class ScheduleOptimization {
 		} else if (state == 3) {
 			if (quizIndex >= quizzes.size()) {
 				
-				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, false); 
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
 				//System.out.println("Line 178");
 				return; 
 			}
@@ -412,7 +417,7 @@ public class ScheduleOptimization {
 	 */
 	private boolean noConflict(Section section) {
 		
-		boolean noConflict = false; 
+		boolean noConflict = true; 
 		
 		//Parse the days of the week
 		//If true, the section meets on that day
@@ -436,13 +441,48 @@ public class ScheduleOptimization {
 						int sEndTime = sEnd[0] * 100 + sEnd[1]; 
 						
 						
-						if (endTime < sStartTime) {
-							noConflict = true; 
+						System.out.println("startTime: " + startTime);
+						System.out.println("endTime: " + endTime);
+						System.out.println("sStartTime: " + sStartTime);
+						System.out.println("sEndTime: " + sEndTime);
+						
+						
+						//Check all possible counterexamples
+						
+						//Partial overlap and vice-versa
+						if ((startTime <= sStartTime && sStartTime <= endTime) && !section.getSectionID().equals(s.getSectionID())) {
+							noConflict = false; 
+							System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+							System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
 						}
 						
-						if (startTime > sEndTime) {
-							noConflict = true;
+						if ((startTime <= sEndTime && sEndTime <= endTime) && !section.getSectionID().equals(s.getSectionID())) {
+							noConflict = false; 
+							System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+							System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
 						}
+						
+						//One completely contains the other and vice-versa
+						if ((sStartTime <= startTime && sEndTime >= endTime) && !section.getSectionID().equals(s.getSectionID())) {
+							noConflict = false; 
+							System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+							System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						}
+						
+						if ((startTime <= sStartTime && endTime >= sEndTime) && !section.getSectionID().equals(s.getSectionID())) {
+							noConflict = false; 
+							System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+							System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						}
+						
+						//They have the exact same time
+						if ((sStartTime == startTime || sEndTime == endTime) && !section.getSectionID().equals(s.getSectionID())) {
+							noConflict = false; 
+							System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+							System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						}
+						
+						
 					}
 				}
 			}
