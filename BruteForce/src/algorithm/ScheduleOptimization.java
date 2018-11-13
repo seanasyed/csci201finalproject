@@ -36,9 +36,21 @@ public class ScheduleOptimization {
 			}
 			System.out.println();
 		}
-		if (startTimeConstraint != "" && endTimeConstraint != "") {
-			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1]; 
+		
+		if (!startTimeConstraint.equals("")) {
+			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1];
+		}
+		
+		if (!endTimeConstraint.equals("")) {
 			this.endTimeConstraint = parseTime(endTimeConstraint)[0] * 100 + parseTime(endTimeConstraint)[1];
+		}
+		
+		if (this.startTimeConstraint == 0) {
+			this.startTimeConstraint = 1; 
+		}
+		
+		if (this.endTimeConstraint == 0) {
+			this.endTimeConstraint = 2359;
 		}
 		
 		schedule = new Vector<Section>(); 
@@ -191,7 +203,6 @@ public class ScheduleOptimization {
 			}
 			
 		}
-		
 		
 		if (startTimeConstraint != 0 && endTimeConstraint != 0) {
 			//skip the sections that violate the time constraint
@@ -434,90 +445,110 @@ public class ScheduleOptimization {
 			days[i] = false; 
 		}
 		
-		//Case where section meets on MWF
-		if (dayString.equals("MWF")) {
-			days[1] = true; 
-			days[3] = true; 
-			days[5] = true; 
-		} 
+//		//Case where section meets on MWF
+//		if (dayString.equals("MWF")) {
+//			days[1] = true; 
+//			days[3] = true; 
+//			days[5] = true; 
+//		} 
+//		
+//		//Case where section meets twice a week
+//		else if (dayString.indexOf(",") != -1) {
+//			
+//			//Sunday
+//			if (dayString.indexOf("Sun") != -1) {
+//				days[0] = true; 
+//			}
+//			
+//			//Monday
+//			if (dayString.indexOf("Mon") != -1) {
+//				days[1] = true; 
+//			}
+//			
+//			//Tuesday
+//			if (dayString.indexOf("Tues") != -1) {
+//				days[2] = true; 
+//			}
+//			
+//			//Wednesday
+//			if (dayString.indexOf("Wed") != -1) {
+//				days[3] = true; 
+//			}
+//			
+//			//Thursday
+//			if (dayString.indexOf("Thurs") != -1) {
+//				days[4] = true; 
+//			}
+//			
+//			//Friday
+//			if (dayString.indexOf("Fri") != -1) {
+//				days[5] = true; 
+//			}
+//			
+//			//Saturday
+//			if (dayString.indexOf("Sat") != -1) {
+//				days[6] = true; 
+//			}
+//		}
+//		
+//		//Case where section meets once a week
+//		else {
+//			
+//			//Sunday
+//			if (dayString.equals("Sunday")) {
+//				days[0] = true; 
+//			}
+//			
+//			//Monday
+//			if (dayString.equals("Monday")) {
+//				days[1] = true; 
+//			}
+//			
+//			//Tuesday
+//			if (dayString.equals("Tuesday")) {
+//				days[2] = true; 
+//			}
+//			
+//			//Wednesday
+//			if (dayString.equals("Wednesday")) {
+//				days[3] = true; 
+//			}
+//			
+//			//Thursday
+//			if (dayString.equals("Thursday")) {
+//				days[4] = true; 
+//			}
+//			
+//			//Friday
+//			if (dayString.equals("Friday")) {
+//				days[5] = true; 
+//			}
+//			
+//			//Saturday
+//			if (dayString.equals("Saturday")) {
+//				days[6] = true; 
+//			}
+//			
+//		}
 		
-		//Case where section meets twice a week
-		else if (dayString.indexOf(",") != -1) {
-			
-			//Sunday
-			if (dayString.indexOf("Sun") != -1) {
-				days[0] = true; 
-			}
-			
-			//Monday
-			if (dayString.indexOf("Mon") != -1) {
-				days[1] = true; 
-			}
-			
-			//Tuesday
-			if (dayString.indexOf("Tues") != -1) {
-				days[2] = true; 
-			}
-			
-			//Wednesday
-			if (dayString.indexOf("Wed") != -1) {
-				days[3] = true; 
-			}
-			
-			//Thursday
-			if (dayString.indexOf("Thurs") != -1) {
-				days[4] = true; 
-			}
-			
-			//Friday
-			if (dayString.indexOf("Fri") != -1) {
-				days[5] = true; 
-			}
-			
-			//Saturday
-			if (dayString.indexOf("Sat") != -1) {
-				days[6] = true; 
-			}
+		if (dayString.indexOf("M") != -1) {
+			days[1] = true; 
 		}
 		
-		//Case where section meets once a week
-		else {
-			
-			//Sunday
-			if (dayString.equals("Sunday")) {
-				days[0] = true; 
-			}
-			
-			//Monday
-			if (dayString.equals("Monday")) {
-				days[1] = true; 
-			}
-			
-			//Tuesday
-			if (dayString.equals("Tuesday")) {
-				days[2] = true; 
-			}
-			
-			//Wednesday
-			if (dayString.equals("Wednesday")) {
-				days[3] = true; 
-			}
-			
-			//Thursday
-			if (dayString.equals("Thursday")) {
-				days[4] = true; 
-			}
-			
-			//Friday
-			if (dayString.equals("Friday")) {
-				days[5] = true; 
-			}
-			
-			//Saturday
-			if (dayString.equals("Saturday")) {
-				days[6] = true; 
-			}
-			
+		if (dayString.indexOf("T") != -1) {
+			days[2] = true; 
+		}
+		
+		if (dayString.indexOf("W") != -1) {
+			days[3] = true; 
+		}
+		
+		if (dayString.indexOf("H") != -1) {
+			days[4] = true; 
+		}
+		
+		if (dayString.indexOf("F") != -1) {
+			days[5] = true; 
 		}
 		
 		return days; 
