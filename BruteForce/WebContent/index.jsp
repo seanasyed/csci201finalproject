@@ -39,7 +39,7 @@
 						<a class="nav-link" href="#">Search</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="integrated_schedule.jsp">My Schedule</a>
+						<a id="scheduleLink" class="nav-link">My Schedule</a>
 					</li>
 				</ul>
 			</div>

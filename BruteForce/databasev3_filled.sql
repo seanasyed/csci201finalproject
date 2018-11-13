@@ -101,7 +101,6 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `studentUserName` VARCHAR(45) NOT NULL,
   `sectionID1` VARCHAR(45) NULL,
   `sectionID2` VARCHAR(45) NULL,
@@ -113,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
   `sectionID8` VARCHAR(45) NULL,
   `sectionID9` VARCHAR(45) NULL,
   `sectionID10` VARCHAR(45) NULL,
-  PRIMARY KEY (`ID`),
+  PRIMARY KEY (`studentUserName`),
   INDEX `fk_Schedule_Student1_idx` (`studentUserName` ASC) VISIBLE,
   CONSTRAINT `fk_Schedule_Student1`
     FOREIGN KEY (`studentUserName`)
@@ -249,10 +248,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) 
-	VALUES ('seansyed', 'root', 'Sean', 'Syed', 1);
-INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) 
-	VALUES ('gaoxing', 'root', 'Xing', 'Gao', 1);
+INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) VALUES ('seansyed', 'root', 'Sean', 'Syed', 1);
+INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) VALUES ('gaoxing', 'root', 'Xing', 'Gao', 1);
 
 COMMIT;
 
@@ -262,12 +259,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
-	VALUES ('GFS', 'Grace Ford Salvatori Hall', '999 W 36th St, Los Angeles, CA 90089', NULL, NULL);
-INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
-	VALUES ('MHP', 'Mudd Hall', '3709 Trousdale Parkway, Los Angeles, CA 90089', NULL, NULL);
-INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
-	VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', NULL, NULL);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('GFS', 'Grace Ford Salvatori Hall', '999 W 36th St, Los Angeles, CA 90089', -118.2880020142, 34.0213356018);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('MHP', 'Mudd Hall', '3709 Trousdale Parkway, Los Angeles, CA 90089', -118.2868652344, 34.0188293457);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', -118.2839584351, 34.0212898254);
 
 COMMIT;
 
@@ -277,16 +271,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) 
-	VALUES (1, 'Viterbi', 'CSCI', '102L', 2.0, 'Fundamentals of Computation', 'Fundamental concepts of algorithmic thinking as a primer to programming. Introduction to C++.', 1);
-INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) 
-	VALUES (2, 'Viterbi', 'CSCI', '103L', 4.0, 'Introduction to Programming', 'Basic datatypes, assignments, control statements (if, switch, for, while), input/output (printf, scanf, cin, cout), functions, arrays, structures, recursion, dynamic memory, file handling. Programming in C/C++.', 1);
-INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) 
-	VALUES (3, 'Viterbi', 'CSCI', '170', 4.0, 'Discrete Methods in Computer Science', 'Sets, functions, series. Big-O notation and algorithm analysis. Propositional and first-order logic. Counting and discrete probability. Graphs and basic graph algorithms. Basic number theory.', 1);
-INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) 
-	VALUES (4, 'Viterbi', 'ENGR', '102', 2.0, 'Engineering Freshman Academy', 'Introduction to the profession of engineering. Ethical, political and societal consequences of engineering innovations and the impact of engineering on everyday life. Team projects and guest lectures. Open to freshmen only.', 1);
-INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) 
-	VALUES (5, 'Dornsife', 'WRIT', '150', 4.0, 'Writing and Critical Reasoning--Thematic Approaches', 'Academic writing, emphasizing analysis and argumentation, rhetorical judgment, critical reasoning, creative insight, the careful use of evidence, ethical perspectives, logical organization, stylistic and grammatical fluency. Duplicates credit in WRIT 130 and WRIT 140.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (1, 'Viterbi', 'CSCI', '102L', 2.0, 'Fundamentals of Computation', 'Fundamental concepts of algorithmic thinking as a primer to programming. Introduction to C++.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (2, 'Viterbi', 'CSCI', '103L', 4.0, 'Introduction to Programming', 'Basic datatypes, assignments, control statements (if, switch, for, while), input/output (printf, scanf, cin, cout), functions, arrays, structures, recursion, dynamic memory, file handling. Programming in C/C++.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (3, 'Viterbi', 'CSCI', '170', 4.0, 'Discrete Methods in Computer Science', 'Sets, functions, series. Big-O notation and algorithm analysis. Propositional and first-order logic. Counting and discrete probability. Graphs and basic graph algorithms. Basic number theory.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (4, 'Viterbi', 'ENGR', '102', 2.0, 'Engineering Freshman Academy', 'Introduction to the profession of engineering. Ethical, political and societal consequences of engineering innovations and the impact of engineering on everyday life. Team projects and guest lectures. Open to freshmen only.', 1);
+INSERT INTO `scheduling`.`Course` (`ID`, `school`, `major`, `number`, `units`, `name`, `description`, `semester`) VALUES (5, 'Dornsife', 'WRIT', '150', 4.0, 'Writing and Critical Reasoning--Thematic Approaches', 'Academic writing, emphasizing analysis and argumentation, rhetorical judgment, critical reasoning, creative insight, the careful use of evidence, ethical perspectives, logical organization, stylistic and grammatical fluency. Duplicates credit in WRIT 130 and WRIT 140.', 1);
 
 COMMIT;
 
@@ -296,26 +285,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('1', 'Lecture', '9:00', '9:50', 'MWF', 'Mark Redekopp', 0, 50, 'GFS', 2);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('2', 'Lecture', '10:00', '11:20', 'TH', 'Aaron Cote', 0, 50, 'GFS', 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('3', 'Lecture', '9:00', '10:20', 'MW', 'Leah Pate', 0, 50, 'GFS', 5);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('4', 'Lecture', '10:00', '11:50', 'TH', 'Andrew Goodney', 0, 50, 'GFS', 2);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('5', 'Lecture', '14:00', '16:00', 'TH', 'Aaron Cote', 0, 50, 'GFS', 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('6', 'Lecture', '10:00', '11:50', 'F', 'William Halfond', 0, 50, 'GFS', 4);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('7', 'Lecture', '13:00', '14:50', 'MW', 'Mark Redekopp', 0, 50, 'GFS', 2);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('8', 'Lecture', '14:00', '15:50', 'TH', 'Aaron Cote', 0, 50, 'GFS', 3);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('9', 'Lecture', '13:00', '14:50', 'F', 'Costas Synolakis', 0, 50, 'GFS', 4);
-INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('10', 'Lecture', '19:00', '20:50', 'MWF', 'Jack Black', 0, 50, 'GFS', 1);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('1', 'Lecture', '9:00', '9:50', 'MWF', 'Mark Redekopp', 0, 50, 'GFS', 2);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('2', 'Lecture', '10:00', '11:20', 'TH', 'Aaron Cote', 0, 50, 'GFS', 3);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('3', 'Lecture', '9:00', '10:20', 'MW', 'Leah Pate', 0, 50, 'GFS', 5);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('4', 'Lecture', '10:00', '11:50', 'TH', 'Andrew Goodney', 0, 50, 'GFS', 2);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('5', 'Lecture', '14:00', '16:00', 'TH', 'Aaron Cote', 0, 50, 'GFS', 3);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('6', 'Lecture', '10:00', '11:50', 'F', 'William Halfond', 0, 50, 'GFS', 4);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('7', 'Lecture', '13:00', '14:50', 'MW', 'Mark Redekopp', 0, 50, 'GFS', 2);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('8', 'Lecture', '14:00', '15:50', 'TH', 'Aaron Cote', 0, 50, 'GFS', 3);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('9', 'Lecture', '13:00', '14:50', 'F', 'Costas Synolakis', 0, 50, 'GFS', 4);
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) VALUES ('10', 'Lecture', '19:00', '20:50', 'MWF', 'Jack Black', 0, 50, 'GFS', 1);
 
 COMMIT;
 
@@ -325,7 +304,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES (1, 'seansyed', '1', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `scheduling`.`Schedule` (`studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES ('seansyed', '1', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 

@@ -16,6 +16,9 @@ $(document).ready(function() {
   $("input.timepicker").timepicker({
     timeFormat: "HH:mm"
   });
+  $('#scheduleLink').click(function(event) {
+	  linkToSchedule();
+  });
 });
 /*
  * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
@@ -132,20 +135,19 @@ var submitCourseListToServer = () => {
 	    text = text.replace(/\n/gi, "");
 	    courseList.push(text);
 	  }
+	  var username = $('#username').text();
 	  var courseListJSON = JSON.stringify(courseList);
 
 	  $.ajax({
 	    url: "BruteForce",
 	    data: {
 	      callType: "submit_schedule",
+	      username: username,
 	      startTime: startTime,
 	      endTime: endTime,
 	      courseList: courseListJSON
 	    },
 	    success: function(result) {
-	      //Result must include:
-	      //Whether the algorithm was successful
-	      //If it was, result must also include the optimized schedule
 	      console.log(result);
 	    }
 	  });
@@ -185,26 +187,13 @@ function getSuggestions() {
     }
   });
 }
-//function getSchedule(){
-//     var username = $('#username').text();
-//     console.log(username);
-//     $.ajax({
-//         url: "BruteForce",
-//         data: {
-//           callType: "submit_schedule",
-//           username: username
-//         },
-//         success: function(result) {
-//             console.log(result);
-//             console.log(username);
-//             var courses = result.courses;
-//             console.log(courses);
-//             var data = JSON.parse(result);
-//             
-//             var courses = {};
-//             for (var i=0; i<data.response.courses.length; i++){
-//                 var current_course = data.response.courses[i];
-//             }
-//         }
-//       });
-// };
+
+function linkToSchedule() {
+	var form = $('<form id="schedule-form" method="GET" action="integrated_schedule.jsp" style="display:none;"></form>');
+	var input = $('<input type="text" name="username">');
+	input.val($('#username').text());
+	input.appendTo(form);
+	form.appendTo($('body'));
+	form.submit();
+}
+
