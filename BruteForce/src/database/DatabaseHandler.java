@@ -343,7 +343,7 @@ public class DatabaseHandler {
 		try {
 			conn = getConnection();
 			System.out.println("connected to the database");
-			String stmt = "INSERT INTO Schedule (studentUserName";
+			String stmt = "INSERT INTO Schedule (studentUserName ";
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				stmt += ", sectionID" + String.valueOf(i+1);
 			}
@@ -351,13 +351,14 @@ public class DatabaseHandler {
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				stmt += ", ?";
 			}
-			stmt += ");";
+			stmt += ") WHERE NOT EXISTS (SELECT * FROM Schedule WHERE studentUsername=?);";
 			System.out.println("statement: " + stmt);
 			ps = conn.prepareStatement(stmt);
 			ps.setString(1, username);
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				ps.setString(i+2, sectionIDs.get(i));
 			}
+			ps.setString(sectionIDs.size()+2, username);
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

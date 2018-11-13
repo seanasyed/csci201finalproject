@@ -163,7 +163,78 @@ public class BruteForceHandler {
 
 			break;
 		}
-		case "submit_schedule":
+		case "submit_schedule": {
+			//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
+			System.out.println("check_schedule");
+			String username = request.getParameter("username");
+			String startTime = request.getParameter("startTime"); 
+			String endTime = request.getParameter("endTime");
+			String courseListJSON = request.getParameter("courseList");
+			
+			//TODO: DISCUSS WITH FRANK
+            System.out.println("submit_schedule");
+            //get courses
+            courseListJSON = request.getParameter("courseList");
+            Vector<Course> vecCourses = new Vector<Course>();
+            
+            
+            try {
+                //CONVERT courseListJSON INTO AN LIST
+                JSONArray courses = new JSONArray(courseListJSON);
+                List<String> list = new ArrayList<String>();
+                for(int i = 0; i < courses.length(); i++){
+                    list.add(courses.optString(i));
+                    
+                    //SPLIT THE STRING BY "-"
+                    //MAJOR: courseInfo[0]
+                    //NUMBER: courseInfo[1]
+                    String courseInfo[]= courses.optString(i).split("-");
+                    System.out.println("major: " + courseInfo[0]);
+                    System.out.println("number: " + courseInfo[1]);
+                    Course course = dh.getCourse(courseInfo[0], courseInfo[1]);
+                    if (course != null) vecCourses.add(course);
+                }
+            } catch (JSONException je) {
+                System.out.println("je:" + je.getMessage());
+            }
+            startTime = request.getParameter("startTime"); 
+            endTime = request.getParameter("endTime");
+            System.out.println("vecCourses:" + vecCourses);
+            for(int i = 0; i < vecCourses.size(); i++) {
+            	System.out.println("Course: " + vecCourses.get(i));
+            }
+            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
+            Vector<Section> vecSections = so.getSchedule();
+            Map<String, String> data = new HashMap<String, String>();
+            if (vecSections.size() <= 0) {
+            	data.put("valid", "false");
+            } else {
+            	String vecSectionsJSON = new Gson().toJson(vecSections);
+            	data.put("courses", vecSectionsJSON);
+            }
+            System.out.println(vecSections);
+            ArrayList<String> sectionIDs = new ArrayList<>();
+            for (int i = 0; i < vecSections.size(); i++) {
+            	sectionIDs.add(vecSections.get(i).getSectionID());
+            }
+            try {
+				dh.createSchedule(username, sectionIDs);
+				data.put("result", "success");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				data.put("result", "error");
+				data.put("message", "submission failed.");
+			}
+            response.setContentType("application/json");
+            
+            String json = new Gson().toJson(data);
+            try {
+				response.getWriter().write(json);
+			} catch (IOException ioe) {
+				System.out.println(ioe.getMessage());
+			}
+			break;
+		}
 			
 		case "get_schedule": {
 			String username = request.getParameter("username");
