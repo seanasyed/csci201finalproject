@@ -84,11 +84,13 @@ function checkCourseListOnServer() {
     courseList.push(text);
   }
   var courseListJSON = JSON.stringify(courseList);
-
+  var username = $('#username').text();
+  console.log('username:' + username);
   $.ajax({
     url: "BruteForce",
     data: {
       callType: "check_schedule",
+      username: username,
       startTime: startTime,
       endTime: endTime,
       courseList: courseListJSON
@@ -102,6 +104,7 @@ function checkCourseListOnServer() {
       } else {
     	  //console.log(result.courses);
     	  var courses = JSON.parse(result.courses);
+    	  console.log(result.courses);
     	  for(var i=0; i <courses.length; i++) {
     		  console.log(courses[i]);
     	  }
@@ -182,26 +185,26 @@ function getSuggestions() {
     }
   });
 }
-function getSchedule(){
-     var username = $('#username').text();
-     console.log(username);
-     $.ajax({
-         url: "BruteForce",
-         data: {
-           callType: "submit_schedule",
-           username: username
-         },
-         success: function(result) {
-             console.log(result);
-             console.log(username);
-             var courses = result.courses;
-             console.log(courses);
-             var data = JSON.parse(result);
-             
-             var courses = {};
-             for (var i=0; i<data.response.courses.length; i++){
-                 var current_course = data.response.courses[i];
-             }
-         }
-       });
- };
+//function getSchedule(){
+//     var username = $('#username').text();
+//     console.log(username);
+//     $.ajax({
+//         url: "BruteForce",
+//         data: {
+//           callType: "submit_schedule",
+//           username: username
+//         },
+//         success: function(result) {
+//             console.log(result);
+//             console.log(username);
+//             var courses = result.courses;
+//             console.log(courses);
+//             var data = JSON.parse(result);
+//             
+//             var courses = {};
+//             for (var i=0; i<data.response.courses.length; i++){
+//                 var current_course = data.response.courses[i];
+//             }
+//         }
+//       });
+// };

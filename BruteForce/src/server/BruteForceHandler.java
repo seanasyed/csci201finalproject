@@ -102,9 +102,10 @@ public class BruteForceHandler {
 			}
 		}
 		break;
-		case "check_schedule":
+		case "check_schedule": {
 			//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 			System.out.println("check_schedule");
+			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime"); 
 			String endTime = request.getParameter("endTime");
 			String courseListJSON = request.getParameter("courseList");
@@ -143,7 +144,6 @@ public class BruteForceHandler {
             }
             ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
             Vector<Section> vecSections = so.getSchedule();
-            System.out.println(vecSections);
             Map<String, String> data = new HashMap<String, String>();
             if (vecSections.size() <= 0) {
             	data.put("valid", "false");
@@ -162,9 +162,25 @@ public class BruteForceHandler {
 			}
 
 			break;
+		}
 		case "submit_schedule":
 			
-//		case "get_schedule":
+		case "get_schedule": {
+			String username = request.getParameter("username");
+			try {
+				Vector<Section> schedule = dh.getSchedule(username);
+				String json = new Gson().toJson(schedule);
+	            try {
+					response.getWriter().write(json);
+				} catch (IOException ioe) {
+					System.out.println(ioe.getMessage());
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
 			
 		default:
 			break;

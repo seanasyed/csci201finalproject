@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import model.Course;
 import model.LectureSection;
@@ -325,6 +326,188 @@ public class DatabaseHandler {
 				if (resultSet != null) {
 					resultSet.close();
 				}
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	public void createSchedule(String username, ArrayList<String> sectionIDs) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = getConnection();
+			System.out.println("connected to the database");
+			String stmt = "INSERT INTO Schedule (studentUserName";
+			for (int i = 0; i < sectionIDs.size(); i++) {
+				stmt += ", sectionID" + String.valueOf(i+1);
+			}
+			stmt += ") VALUE (?";
+			for (int i = 0; i < sectionIDs.size(); i++) {
+				stmt += ", ?";
+			}
+			stmt += ");";
+			System.out.println("statement: " + stmt);
+			ps = conn.prepareStatement(stmt);
+			ps.setString(1, username);
+			for (int i = 0; i < sectionIDs.size(); i++) {
+				ps.setString(i+2, sectionIDs.get(i));
+			}
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	public String getCourseNameByID(String courseID) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		try {
+			conn = getConnection();
+			System.out.println("connected to the database");
+			ps = conn.prepareStatement("SELECT * FROM Course WHERE ID=?;");
+			ps.setString(1, courseID);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				String major = resultSet.getString("major");
+				String number = resultSet.getString("number");
+				if (major != null && number != null) return major + "-" + number;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	public Section getSectionByID(String ID) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		try {
+			conn = getConnection();
+			System.out.println("connected to the database");
+			
+			ps = conn.prepareStatement("SELECT * FROM Lecture_Sections WHERE sectionID=?;");
+			ps.setString(1, ID);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				String courseID = resultSet.getString("Course_ID");
+				String courseName = getCourseNameByID(courseID);
+				LectureSection lectureSection = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
+						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				if (lectureSection != null) return lectureSection;
+			}
+			
+			ps = conn.prepareStatement("SELECT * FROM Discussion_Sections WHERE sectionID=?;");
+			ps.setString(1, ID);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				String courseID = resultSet.getString("Course_ID");
+				String courseName = getCourseNameByID(courseID);
+				Section disSection = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
+						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				if (disSection != null) return disSection;
+			}
+			
+			ps = conn.prepareStatement("SELECT * FROM Lab_Sections WHERE sectionID=?;");
+			ps.setString(1, ID);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				String courseID = resultSet.getString("Course_ID");
+				String courseName = getCourseNameByID(courseID);
+				Section labSection = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
+						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				if (labSection != null) return labSection;
+			}
+			
+			ps = conn.prepareStatement("SELECT * FROM Quiz_Sections WHERE sectionID=?;");
+			ps.setString(1, ID);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				String courseID = resultSet.getString("Course_ID");
+				String courseName = getCourseNameByID(courseID);
+				Section quizSection = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
+						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
+						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
+						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				if (quizSection != null) return quizSection;
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (ps != null) {
+					ps.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.out.println("sqle: " + sqle.getMessage());
+			}
+		}
+	}
+	public Vector<Section> getSchedule(String username) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		Vector<Section> schedule = new Vector<>();
+		try {
+			conn = getConnection();
+			System.out.println("connected to the database");
+			ps = conn.prepareStatement("SELECT * FROM Schedule WHERE studentUserName=?;");
+			ps.setString(1, username);
+			resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				for (int i = 0; i < 10; i++) {
+					String sectionID = resultSet.getString("sectionID" + String.valueOf(i+1));
+					if (sectionID != null) {
+						Section section = getSectionByID(sectionID);
+						if (section != null) schedule.add(section);
+					}
+				}
+			}
+			return schedule;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
 				if (ps != null) {
 					ps.close();
 				}

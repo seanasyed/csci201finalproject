@@ -50,13 +50,13 @@
 			<div class="container">
 				<div class="row">
 					<div class="col text-center my-2">
-					<span class="mx-auto" style="font-size: 24px;">Welcome
-							<%= request.getParameter("email") %></span>
+					<span id="username" class="mx-auto" style="font-size: 24px;"><%= request.getParameter("email") %></span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
-						<input type="text" id="start-time" class="form-control timepicker" placeholder="Start Time">
+						<input type="text" id="start-time" class=
+						"form-control timepicker" placeholder="Start Time">
 						<input type="text" id="end-time" class="form-control timepicker" placeholder="End Time">
 					</div>
 				</div>
