@@ -2,7 +2,7 @@
 -- Query: SELECT * FROM scheduling.building
 LIMIT 0, 50000
 
--- Date: 2018-11-12 14:53
+-- Date: 2018-11-13 13:53
 */
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('ABA','Anna Bing Arnold Child Care Center','		2715 University Avenue',-118.28076,34.02835);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('ABM','American Button Manufacturing Building','',-118.27626,34.02565);
@@ -179,12 +179,6 @@ INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('OPD','Outpatient Department','',-118.20665,34.05838);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P12','Keck Hospital of USC Valet Lot','',-118.20197,34.06181);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P14','HSC Lot 71','',-118.20965,34.06187);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P2','Clinical Sciences Lot','',-118.20065,34.06310);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P3','Consolidated Lot','',-118.20302,34.06471);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P4','Eastlake Lot','',-118.20463,34.06230);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P7','HSC Lot 70','',-118.20708,34.06106);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P8','Norfolk Lot','',-118.20078,34.06149);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('P9','USC Norris Patient Valet Lot (Entrance)','',-118.20448,34.06134);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PAV','Playground Avenue House','',-118.19974,34.06111);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PCA','Pacific Apartments','2637 Severance Street',-118.28169,34.02937);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PCE','Neely Petroleum Engineering','',-118.28877,34.02011);
@@ -198,22 +192,21 @@ INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PIA','Pisa','',-118.28013,34.02482);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PKS','Parkside Apartments','',-118.29067,34.01948);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PL1','Parking Lot 1','Vermont Avenue and Jefferson Boulevard',-118.29074,34.02494);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PL23','Parking Lot 23 (College House)','',-118.28404,34.02341);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PL6','Parking Lot 6','',-118.29004,34.02167);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PLB','Parking Lot B','',-118.28272,34.02282);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PLV','Parking Lot V','',-118.28597,34.02424);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PRB','Arts and Humanities Residential College at...','',-118.28955,34.01875);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSA','Downey Way Parking Structure (formerly PSA)','3667 McClintock Avenue',-118.29034,34.02110);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSA','Department of Public Safety','',-118.28980,34.02094);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSB','Jefferson Boulevard Parking Structure','11150 West Jefferson Blvd.',-118.28946,34.02476);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSC','John Stauffer Pharmaceutical Sciences Center','',-118.20606,34.06028);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSD','Royal Street Parking Structure (formerly PSD)','649 West 34th Street\r\nLos Angeles 90089',-118.28138,34.02200);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSO','Flower Street Parking Structure','3701 Flower Street\r\nLos Angeles CA 90089',-118.28198,34.01768);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PST','Public Safety Trailer (HSC)','',-118.20161,34.06385);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSX','McCarthy Way Parking Structure (formerly PSX)','620 West McCarthy Way',-118.28164,34.02064);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PSX','Housing Services','',-118.28248,34.02046);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PTD','Pardee Tower','',-118.28260,34.02011);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('PWE','Pardee Way Entrance (formerly Entrance 2)','',-118.28340,34.01853);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RAN','Research Annex / Hoffman Contracts Resear...','',-118.27909,34.01658);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RGA','Regent Apartments','1138 West 29th Street',-118.28484,34.02807);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RGA','Parking Lot 75 (Regent Apartments)','',-118.28707,34.03051);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RGL','Lewis Hall','',-118.28349,34.01928);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RHM','Ramo Hall','',-118.28519,34.02263);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RMH','McKay\'s','',-118.28098,34.01925);
@@ -224,7 +217,7 @@ INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RTA','Regal Trojan Apartments','870 West Adams Boulevard',-118.28164,34.03031);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RTH','Tutor Hall','',-118.28982,34.02004);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('RZC','Zemeckis Center for Digital Arts','',-118.27927,34.02424);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SAI','Stardust Apartments','634 West 27th Street\r\nLos Angeles, CA 90007',-118.27808,34.02748);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SAI','Parking Lot 69 (Stardust Apartments)','',-118.27815,34.02752);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SAL','Computer Center at Salvatori Computer Scie...','',-118.28956,34.01970);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SBA','Soto Street Building Annex','',-118.19742,34.06666);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SCA','Coffee Bean & Tea Leaf','',-118.28646,34.02347);
@@ -237,15 +230,15 @@ INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SCS','School of Cinematic Arts Station','',-118.28037,34.02433);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SCT','USC Building Two','',-118.26184,34.03949);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SCX','School of Cinematic Arts - SCX','',-118.28680,34.02324);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SGA','Seven Gables Apartments','620-626 West 30th Street',-118.27855,34.02505);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SGA','Parking Lot 66 (Seven Gables Apartments)','',-118.27862,34.02508);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SGM','Seeley G. Mudd Building','',-118.28918,34.02110);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SHN','Stevens Hall Neuroimaging','',-118.20477,34.05969);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SHR','Shrine Auditorium','661 West Jefferson Boulevard',-118.28108,34.02356);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SHS','Stauffer Hall','',-118.28689,34.01963);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SIE','Sierra Apartments','2638 Portland Street\r\nLos Angeles, CA 90007',-118.28269,34.02949);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SIE','Parking Lot 53 (Sierra Apartments)','',-118.28265,34.02956);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SKS','Admission Center','',-118.28615,34.01994);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SLH','Stauffer Science Lecture Hall','',-118.28748,34.01968);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SNA','Senator Apartments','1101=1109 28th Street',-118.28436,34.02956);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SNA','Parking Lot 65 (Senator Apartments)','',-118.28441,34.02962);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SOS','Social Sciences Building','',-118.28369,34.02154);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SPS','HSC/Surplus Storage','',-118.22465,34.06461);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SRH','Seaver Residence Hall','',-118.20577,34.06060);
@@ -259,19 +252,20 @@ INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('STU','Student Union','',-118.28562,34.02015);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SUN','Sunset Apartments','1144 West 29th Street',-118.28484,34.02814);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('SWC','Social Work Center','',-118.28222,34.02250);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TAP','Troyland Apartments','955-59 West Adams Boulevard',-118.28301,34.03159);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TAP','Parking Lot 73 (Troyland Apartments)','',-118.28299,34.03161);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TBA','TBA','TBA',1.00000,0.00000);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TCC','California Pizza Kitchen','',-118.28641,34.02045);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TFE','McCarthy Way Entrance (formerly Entrance 3)','',-118.28108,34.02043);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TGF','Little Chapel of Silence','',-118.28436,34.01931);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('THH','Taper Hall','',-118.28454,34.02219);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TMC','The Music Complex','',-118.28586,34.02275);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TOW','Tower Hall','',-118.21154,34.06286);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TPA','Twin Palms Apartments','2635 Portland Street\r\nLos Angeles, CA 90007',-118.28301,34.02988);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TPA','Parking Lot 74 (Twin Palms Apartments)','',-118.28308,34.02990);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TRE','Troy East','3025 Royal Street\r\nLos Angeles, CA 90007',-118.28121,34.02568);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TRF','Temporary Research Facility','',-118.29069,34.02505);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TRH','Troy Hall','3025 Royal Street\r\nLos Angeles, CA 90007',-118.28162,34.02540);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TRH','Parking Lot 72 (Troy Hall)','',-118.28166,34.02546);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TRO','Ground Zero Performance Cafu00e9','',-118.28221,34.01960);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TSA','Terrace Apartments','1275 West 29th Street',-118.28845,34.02873);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TSA','Parking Lot 81 (Terrace Apartments)','',-118.28845,34.02874);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TSS','Theatre Scene Shop','',-118.27992,34.02371);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TTL','Technical Theatre Laboratory','',-118.29102,34.02058);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('TUS','Tuscany','',-118.28265,34.01663);
@@ -291,12 +285,12 @@ INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VEC','Villa Esperanza Center','225 East 28th Street\r\nLos Angeles, CA 90011',-118.26817,34.02279);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VHE','Vivian Hall','',-118.28819,34.02016);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VIP','LAC+USC Violence Intervention Program ','',-118.21126,34.06249);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VIS','Vista Apartments','2701 Severance Street',-118.28179,34.02922);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VIS','Parking Lot 76 (Vista Apartments)','',-118.28184,34.02921);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VKC','Von KleinSmid Center','',-118.28413,34.02108);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VPD','USC Schaeffer Center','Verna & Peter Dauterive Hall',-118.28381,34.01905);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VPD','Cammilleri Cafu00e9 (Dauterive Hall)','',-118.28379,34.01905);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('VWB','Valley Warehouse Building','',-118.19449,34.06480);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('WAH','Architecture and Fine Arts Library','',-118.28787,34.01930);
-INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('WIN','Windsor Apartments','1149 West 28th Street',-118.28552,34.02955);
+INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('WIN','Parking Lot 77 (Windsor Apartments)','',-118.28570,34.02955);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('WPH','Waite Phillips Hall','',-118.28373,34.02197);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('WTO','Webb Tower','',-118.28777,34.02461);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('WWB','West Washington Building','850 West Washington Boulevard',-118.27673,34.03667);
