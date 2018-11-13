@@ -183,8 +183,16 @@
       });
     }
     function login() {
-      var email = $('#email').val();
-      var password = $('#password').val();
+    	var email = $('#email').val();
+        var password = $('#password').val();
+    	var form = $('<form id="login-form" method="POST" action="index.jsp" style="display:none;"></form>');
+    	var emailInput = $('<input type="email" name="email">');
+    	var passwordInput = $('<input type="password" name="password">');
+    	emailInput.appendTo(form);
+    	passwordInput.appendTo(form);
+    	form.appendTo($('body'));
+    	form.submit();
+      /* 
       $.ajax({
         url: 'BruteForce',
         data: {
@@ -202,7 +210,7 @@
         	  alert(result.message);
           }
         }
-      });
+      }); */
     }
   </script>
 </body>

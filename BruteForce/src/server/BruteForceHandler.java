@@ -218,8 +218,15 @@ public class BruteForceHandler {
             	sectionIDs.add(vecSections.get(i).getSectionID());
             }
             try {
-				dh.createSchedule(username, sectionIDs);
-				data.put("result", "success");
+            	if (!sectionIDs.isEmpty()) {
+            		dh.createSchedule(username, sectionIDs);
+    				data.put("result", "success");
+    				data.put("message", "submission completed.");
+            	} else {
+            		data.put("result", "error");
+    				data.put("message", "submission failed.");
+            	}
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 				data.put("result", "error");

@@ -105,12 +105,7 @@ function checkCourseListOnServer() {
     	  $('#start-time').val('');
     	  $('#end-time').val('');
       } else {
-    	  //console.log(result.courses);
-    	  var courses = JSON.parse(result.courses);
-    	  console.log(result.courses);
-    	  for(var i=0; i <courses.length; i++) {
-    		  console.log(courses[i]);
-    	  }
+    	  alert('The schedule is valid. Click submit to continue.')
     	  var checkButton = $('#check-button');
     	  checkButton.text('Submit');
     	  checkButton.unbind("click");
@@ -148,11 +143,23 @@ var submitCourseListToServer = () => {
 	      courseList: courseListJSON
 	    },
 	    success: function(result) {
-	      console.log(result);
+	    	console.log(result);
+	    	alert(result.message);
+	    	reset();
 	    }
 	  });
 };
-
+function reset() {
+	$('#course-list li').remove();
+	$('#start-time').val('');
+	$('#end-time').val('');
+	var checkButton = $('#check-button');
+	  checkButton.text('Check');
+	  checkButton.unbind("click");
+	  checkButton.click(function(event) {
+		  checkCourseListOnServer();
+	  });
+}
 function getSuggestions() {
   var ul = $("#suggestion-box");
   ul.empty();
@@ -189,7 +196,7 @@ function getSuggestions() {
 }
 
 function linkToSchedule() {
-	var form = $('<form id="schedule-form" method="GET" action="integrated_schedule.jsp" style="display:none;"></form>');
+	var form = $('<form id="schedule-form" method="POST" action="integrated_schedule.jsp" style="display:none;"></form>');
 	var input = $('<input type="text" name="username">');
 	input.val($('#username').text());
 	input.appendTo(form);

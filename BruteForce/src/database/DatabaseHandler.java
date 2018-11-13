@@ -37,14 +37,14 @@ public class DatabaseHandler {
 		ResultSet resultSet = null;
 		try {
 			conn = getConnection();
-			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=? AND password=?;");
+			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=?");
 			ps.setString(1, username);
 			//we want to store hashed password
-			ps.setString(2, password);
 			// 2. Execute SQL query
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
-				if (resultSet.getString("userName") != null) return true;
+				String storedPassword = resultSet.getString("pw");
+				return HashPassword.check(password, storedPassword);
 			}
 			return false;
 		} catch (Exception e) {
@@ -273,7 +273,7 @@ public class DatabaseHandler {
 					Section quiz = new Section(quizResultSet.getString("sectionID"), quizResultSet.getString("type"), 
 							quizResultSet.getString("type"), quizResultSet.getString("start_time"), quizResultSet.getString("end_time"), 
 							quizResultSet.getString("day"), quizResultSet.getString("instructor"),quizResultSet.getInt("numRegistered"), 
-							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("Course_ID"), courseName);
+							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("courseID"), courseName);
 					lectureSection.addQuiz(quiz);;
 				}
 				course.addLectureSection(lectureSection);
@@ -351,14 +351,21 @@ public class DatabaseHandler {
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				stmt += ", ?";
 			}
-			stmt += ") WHERE NOT EXISTS (SELECT * FROM Schedule WHERE studentUsername=?);";
+			stmt += ") ON DUPLICATE KEY UPDATE ";
+			for (int i = 0; i < sectionIDs.size(); i++) {
+				stmt += "sectionID" + String.valueOf(i+1) + "=?";
+				if (i < sectionIDs.size() - 1) stmt += ",";
+			}
+			stmt += ";";
 			System.out.println("statement: " + stmt);
 			ps = conn.prepareStatement(stmt);
 			ps.setString(1, username);
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				ps.setString(i+2, sectionIDs.get(i));
 			}
-			ps.setString(sectionIDs.size()+2, username);
+			for (int i = 0; i < sectionIDs.size(); i++) {
+				ps.setString(i + sectionIDs.size()+2, sectionIDs.get(i));
+			}
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
