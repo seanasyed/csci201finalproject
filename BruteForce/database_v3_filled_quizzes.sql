@@ -101,7 +101,6 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `studentUserName` VARCHAR(45) NOT NULL,
   `sectionID1` VARCHAR(45) NULL,
   `sectionID2` VARCHAR(45) NULL,
@@ -113,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
   `sectionID8` VARCHAR(45) NULL,
   `sectionID9` VARCHAR(45) NULL,
   `sectionID10` VARCHAR(45) NULL,
-  PRIMARY KEY (`ID`),
+  PRIMARY KEY (`studentUserName`),
   INDEX `fk_Schedule_Student1_idx` (`studentUserName` ASC) VISIBLE,
   CONSTRAINT `fk_Schedule_Student1`
     FOREIGN KEY (`studentUserName`)
@@ -305,7 +304,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Schedule` (`ID`, `studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES (1, 'seansyed', '1', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `scheduling`.`Schedule` (`studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) VALUES ('seansyed', '1', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
