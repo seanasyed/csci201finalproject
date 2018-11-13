@@ -87,12 +87,86 @@ public class ScheduleOptimization {
 			addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
 			return; 
 		}
-		
-		
-		LectureSection lecture = course.getLectureSections().get(lectureIndex); 
+	
+		Vector<LectureSection> lectures = course.getLectureSections(); //necessary for finding lectureIndex in the event of backtracking
+		LectureSection lecture = lectures.get(lectureIndex); 
 		Vector<Section> discussions = lecture.getDiscussions(); 
 		Vector<Section> labs = lecture.getLabs(); 
 		Vector<Section> quizzes = lecture.getQuizzes();
+		
+		//Check to see if it is a backtracking call
+		
+		/**
+		 * Procedure to check if backtracking call
+		 * 
+		 * 1) Check to see if any of the course's sections are already in the schedule
+		 * 2) If they are in the schedule, record the indexes of the sections in their respective Vectors
+		 * 3) Remove all of the sections from that course 
+		 * 4) Set the parameter values to wherever the course left off
+		 * 5) Increment the quiz section
+		 * 6) Make state = 3
+		 */
+		
+		//Iterate through each vector to check if any of the sections are already in the schedule
+		int backtrackingLectureIndex = -1;
+		int backtrackingDiscussionIndex = -1;
+		int backtrackingLabIndex = -1; 
+		int backtrackingQuizIndex = -1; 
+		
+		for (Section s : schedule) {
+			
+			//account for the different lecture dependencies
+			for (int i = 0; i < lectures.size(); i++) {
+				if (s.getSectionID().equals(lectures.get(i).getSectionID())) {
+					backtrackingLectureIndex = i; 
+					lecture = lectures.get(lectureIndex); 
+					discussions = lecture.getDiscussions(); 
+					labs = lecture.getLabs(); 
+					quizzes = lecture.getQuizzes();
+				}
+			}
+			for (int i = 0; i < discussions.size(); i++) {
+				if (s.getSectionID().equals(discussions.get(i).getSectionID())) {
+					backtrackingDiscussionIndex = i; 
+				}
+			}
+			for (int i = 0; i < labs.size(); i++) {
+				if (s.getSectionID().equals(labs.get(i).getSectionID())) {
+					backtrackingLabIndex = i; 
+				}
+			}
+			for (int i = 0; i < quizzes.size(); i++) {
+				if (s.getSectionID().equals(quizzes.get(i).getSectionID())) {
+					backtrackingQuizIndex = i; 
+				}
+			}
+		}
+		
+		//If any of the backtracking indexes != -1, handle all backtracking procedures
+		if (backtrackingLectureIndex != -1 || backtrackingDiscussionIndex != -1 || 
+				backtrackingLabIndex != -1 || backtrackingQuizIndex != -1) {
+			
+			//Replace the parameters with the backtracking indexes
+			lectureIndex = backtrackingLectureIndex; 
+			discussionIndex = backtrackingDiscussionIndex; 
+			labIndex = backtrackingLabIndex; 
+			quizIndex = backtrackingQuizIndex;
+			
+			//Increment the quiz section
+			quizIndex++;
+			
+			//Set the state to 3
+			state = 3; 
+			
+			//Remove all of the course's sections from the schedule
+			for (int i = 0; i < schedule.size(); i++) {
+				if (schedule.get(i).getCourseID().equals(lecture.getCourseID())) {
+					schedule.remove(i); 
+				}
+			}
+			
+		}
+		
 		
 		if (startTimeConstraint != 0 && endTimeConstraint != 0) {
 			//skip the sections that violate the time constraint
@@ -257,6 +331,10 @@ public class ScheduleOptimization {
 			addCourse(courseIndex + 1, 0, 0, 0, 0, 0); 
 			return; 
 		}
+	}
+	
+	private void backtrackCheck(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state) {
+		
 	}
 	
 	
