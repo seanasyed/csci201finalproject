@@ -259,9 +259,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `scheduling`;
-INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('GFS', 'Grace Ford Salvatori Hall', '999 W 36th St, Los Angeles, CA 90089', NULL, NULL);
-INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('MHP', 'Mudd Hall', '3709 Trousdale Parkway, Los Angeles, CA 90089', NULL, NULL);
-INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', NULL, NULL);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('GFS', 'Grace Ford Salvatori Hall', '999 W 36th St, Los Angeles, CA 90089', -118.2880020142, 34.0213356018);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('MHP', 'Mudd Hall', '3709 Trousdale Parkway, Los Angeles, CA 90089', -118.2868652344, 34.0188293457);
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', -118.2839584351, 34.0212898254);
 
 COMMIT;
 
