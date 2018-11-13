@@ -2,29 +2,72 @@ package model;
 
 import java.util.Vector;
 
+/**
+ * @author Group 14 - Brute Force
+ * 			- Eric Duguay (eduguay@usc.edu)
+ * 			- Xing Gao (gaoxing@usc.edu)
+ * 			- Yiyang Hou (yiyangh@usc.edu)
+ * 			- Sangjun Lee (sangjun@usc.edu)
+ * 			- Sean Syed (seansyed@usc.edu)
+ * @course CSCI 201
+ * @assignment Final Project
+ *
+ */
 public class LectureSection extends Section {
+	
+	/*
+	 * ---- Private members ----
+	 */
+	
 	private Vector<Section> discussions; 
 	private Vector<Section> labs; 
 	private Vector<Section> quizzes; 
 	
+	/*
+	 * ---- Constructors ----
+	 */
+	
 	public LectureSection(String sectionID, String session, String type, String startTime, String endTime, String day, String instructor, 
 			int numRegistered, int classCapacity, String buildingID, String courseID, String courseName) {
 		
-		super(sectionID, session, type, startTime, endTime, day, instructor, numRegistered, classCapacity, buildingID, courseID, courseName);
+		super(sectionID, session, type, startTime, endTime, day, instructor, 
+				numRegistered, classCapacity, buildingID, courseID, courseName);
 		this.discussions = new Vector<>(); 
 		this.labs = new Vector<>(); 
 		this.quizzes = new Vector<>(); 
 	}
 	
-	public void addDiscussion(Section discussion) {
-		discussions.add(discussion);
+	/**
+	 * Report if the section contains the correct lecture number.
+	 * 
+	 * @param section
+	 * @return
+	 */
+	public boolean isInLecture(Section section) {
+		return !section.isLecture() && section.getLectureSection_ID().equals(getSectionID());
 	}
-	public void addLab(Section lab) {
-		labs.add(lab);
+	
+	/*
+	 * ---- Add sections into vector ----
+	 */
+	
+	public void addDiscussion(Section section) {
+		if (isInLecture(section))
+			discussions.add(section);
 	}
-	public void addQuiz(Section quiz) {
-		quizzes.add(quiz);
+	public void addLab(Section section) {
+		if (isInLecture(section))
+			labs.add(section);
 	}
+	public void addQuiz(Section section) {
+		if (isInLecture(section))
+			quizzes.add(section);
+	}
+	
+	/*
+	 * ---- Getters and setters ---- 
+	 */
+	
 	public Vector<Section> getDiscussions() {
 		return discussions; 
 	}

@@ -116,6 +116,9 @@ public class Section {
 	public String getCourseID() {
 		return courseID;
 	}	
+	public String getLectureSection_ID() {
+		return lectureSection_ID;
+	}
 	public void setNumRegistered(int n) {
 		numRegistered = n; 
 	}
