@@ -77,12 +77,17 @@ public class ScheduleOptimization {
 		//System.out.println("labIndex: " + labIndex); 
 		//System.out.println("quizIndex: " + quizIndex); 
 		//System.out.println("state: " + state); 
-		//System.out.println("backtracking: " + backtrack + "\n");
+		System.out.println("backtracking: " + backtrack + "\n");
 		
 		//Base case returns
 		
 		//If a complete schedule has been created, courseIndex should be out of bounds
 		if (courseIndex >= courses.size()) {
+			
+			System.out.println("Finalized Schedule"); 
+			for (int i = 0; i < schedule.size(); i++) {
+				System.out.println(schedule.get(i).getSectionID());
+			}
 			return; 
 		}
 		
@@ -170,7 +175,7 @@ public class ScheduleOptimization {
 		//If any of the backtracking indexes != -1, handle all backtracking procedures
 		if (backtrack) {
 		
-			//System.out.println("Backtracking detected"); 
+			System.out.println("Backtracking detected"); 
 			//Replace the parameters with the backtracking indexes
 			
 			if (backtrackingLectureIndex != -1) {
@@ -306,7 +311,7 @@ public class ScheduleOptimization {
 		} else if (state == 3) {
 			if (quizIndex >= quizzes.size()) {
 				
-				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, false); 
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
 				//System.out.println("Line 178");
 				return; 
 			}
@@ -399,9 +404,6 @@ public class ScheduleOptimization {
 		}
 	}
 	
-	private void backtrackCheck(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state) {
-		
-	}
 	
 	
 	
@@ -412,7 +414,7 @@ public class ScheduleOptimization {
 	 */
 	private boolean noConflict(Section section) {
 		
-		boolean noConflict = false; 
+		boolean noConflict = true; 
 		
 		//Parse the days of the week
 		//If true, the section meets on that day
@@ -421,31 +423,70 @@ public class ScheduleOptimization {
 		//Iterate through the current schedule. If days are the same, then compare the times
 		for (Section s : schedule) {
 			boolean[] sDays = parseDays(s.getDay()); 
-			for (boolean d : days) {
-				for (boolean sd : sDays) {
-					if (d && sd) {
-						//Compare the starting and ending times
-						int[] start = parseTime(section.getStartTime()); 
-						int[] end = parseTime(section.getEndTime()); 
-						int[] sStart = parseTime(s.getStartTime()); 
-						int[] sEnd = parseTime(s.getEndTime()); 
+			for (int i = 0; i < 7; i++) {
+				if (days[i] && sDays[i]) {
+					//Compare the starting and ending times
+					int[] start = parseTime(section.getStartTime()); 
+					int[] end = parseTime(section.getEndTime()); 
+					int[] sStart = parseTime(s.getStartTime()); 
+					int[] sEnd = parseTime(s.getEndTime()); 
+					
+					int startTime = start[0] * 100 + start[1]; 
+					int endTime = end[0] * 100 + end[1]; 
+					int sStartTime = sStart[0] * 100 + sStart[1];
+					int sEndTime = sEnd[0] * 100 + sEnd[1]; 
+					
+					
+					System.out.println("startTime: " + startTime);
+					System.out.println("endTime: " + endTime);
+					System.out.println("sStartTime: " + sStartTime);
+					System.out.println("sEndTime: " + sEndTime);
+					
+					
+					//Check all possible counterexamples
+					
+					//Partial overlap and vice-versa
+					if ((startTime <= sStartTime && sStartTime <= endTime) && !section.getSectionID().equals(s.getSectionID())) {
+						noConflict = false; 
+						System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+						System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
 						
-						int startTime = start[0] * 100 + start[1]; 
-						int endTime = end[0] * 100 + end[1]; 
-						int sStartTime = sStart[0] * 100 + sStart[1];
-						int sEndTime = sEnd[0] * 100 + sEnd[1]; 
-						
-						
-						if (endTime < sStartTime) {
-							noConflict = true; 
-						}
-						
-						if (startTime > sEndTime) {
-							noConflict = true;
-						}
 					}
+					
+					if ((startTime <= sEndTime && sEndTime <= endTime) && !section.getSectionID().equals(s.getSectionID())) {
+						noConflict = false; 
+						System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+						System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
+					}
+					
+					//One completely contains the other and vice-versa
+					if ((sStartTime <= startTime && sEndTime >= endTime) && !section.getSectionID().equals(s.getSectionID())) {
+						noConflict = false; 
+						System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+						System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
+					}
+					
+					if ((startTime <= sStartTime && endTime >= sEndTime) && !section.getSectionID().equals(s.getSectionID())) {
+						noConflict = false; 
+						System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+						System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
+					}
+					
+					//They have the exact same time
+					if ((sStartTime == startTime || sEndTime == endTime) && !section.getSectionID().equals(s.getSectionID())) {
+						noConflict = false; 
+						System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
+						System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+					}
+					
+					
 				}
 			}
+				
+			
 		}
 		if (schedule.size() == 0) {
 			noConflict = true; 

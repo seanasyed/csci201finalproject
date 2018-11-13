@@ -5,6 +5,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema scheduling
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `scheduling` ;
 
 -- -----------------------------------------------------
 -- Schema scheduling
@@ -99,7 +100,6 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Schedule` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
-  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `studentUserName` VARCHAR(45) NOT NULL,
   `sectionID1` VARCHAR(45) NULL,
   `sectionID2` VARCHAR(45) NULL,
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
   `sectionID8` VARCHAR(45) NULL,
   `sectionID9` VARCHAR(45) NULL,
   `sectionID10` VARCHAR(45) NULL,
-  PRIMARY KEY (`ID`),
+  PRIMARY KEY (`studentUserName`),
   INDEX `fk_Schedule_Student1_idx` (`studentUserName` ASC) VISIBLE,
   CONSTRAINT `fk_Schedule_Student1`
     FOREIGN KEY (`studentUserName`)
