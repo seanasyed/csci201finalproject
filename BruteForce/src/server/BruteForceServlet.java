@@ -24,6 +24,7 @@ public class BruteForceServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) {
 		String callType = request.getParameter("callType");
+		System.out.println(callType + " called...");
 		if (callType == null) return;
 		bfh.handleRequest(callType, this, request, response);
 	}

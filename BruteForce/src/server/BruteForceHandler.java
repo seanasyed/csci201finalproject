@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +20,6 @@ import com.google.gson.Gson;
 import algorithm.ScheduleOptimization;
 import database.DatabaseHandler;
 import model.Course;
-import model.LectureSection;
 import model.Section;
 
 
@@ -35,23 +36,28 @@ public class BruteForceHandler {
 			String email = request.getParameter("email"); 
 			String password = request.getParameter("password"); 
 			Map<String, String> data = new HashMap<String, String>();
+			System.out.println("Trying to login...");
 			try {
-				if (email.equals("") || password.equals("")) {
-					data.put("result", "error");
-					data.put("message", "One of the fields is empty.");
+				String nextPage = "";
+				if (email == null || password == null) {
+					request.setAttribute("message", "One of the fields is empty.");
+					System.out.println("dispatching w/ attribute: " + "empty");
+		    		nextPage = "/login.jsp";
 				} else if (!dh.authenticateUser(email, password)) {
-					data.put("result", "error");
-					data.put("message", "Email and password do not match.");
-				} else {
-					System.out.println("Logged In");
-					data.put("result", "success");
-					data.put("redirectURL", "http://localhost:8080/BruteForce/index.jsp");
+					request.setAttribute("message", "Email and password do not match.");
+					System.out.println("dispatching w/ attribute: " + "dont match");
+		    		nextPage = "/login.jsp";
+				} else {					
+					request.setAttribute("email", email);
+			        nextPage = "/index.jsp";
 				}
-				String json = new Gson().toJson(data);
-				response.setContentType("application/json");
-				response.getWriter().write(json);
+				
+				RequestDispatcher dispatch = request.getRequestDispatcher(nextPage);
+				dispatch.forward(request, response);
 			} catch (IOException ioe) {
 				System.out.println(ioe.getMessage());
+			} catch (ServletException se) {
+				System.out.println(se.getMessage());
 			}
 		}
 		break;

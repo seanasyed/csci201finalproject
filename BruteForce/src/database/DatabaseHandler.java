@@ -43,7 +43,7 @@ public class DatabaseHandler {
 			// 2. Execute SQL query
 			resultSet = ps.executeQuery();
 			while (resultSet.next()) {
-				String storedPassword = resultSet.getString("pw");
+				String storedPassword = resultSet.getString("password");
 				return HashPassword.check(password, storedPassword);
 			}
 			return false;
@@ -110,10 +110,9 @@ public class DatabaseHandler {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		//hash the password
-		HashPassword hp= new HashPassword();
 		String hashedPassword = null;
 		try {
-			hashedPassword = hp.getSaltedHash(password);
+			hashedPassword = HashPassword.getSaltedHash(password);
 		} catch (Exception e1) {
 			System.out.println("Error: "+e1.getMessage());
 		}

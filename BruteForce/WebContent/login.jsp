@@ -1,6 +1,7 @@
-<!doctype html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -30,15 +31,12 @@
       <div class="collapse navbar-collapse" id="nav-items">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Search</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="schedule.html">My Schedule</a>
-          </li>
+
         </ul>
       </div>
     </div>
   </nav>
+  <span id="message" style="display:none;">${message}</span>
   <div class="container my-5">
   	<div class="row my-1">
       <div class="col-md-8 col-lg-6 mx-auto">
@@ -116,6 +114,10 @@
       $('#login-button').on('click', function (e) {
         login();
       });
+      console.log("message: <" + $('#message').text() + ">");
+      if($('#message').text() != '') {
+    	  alert($('#message').text());
+      }
     });
     function resetModal() {
       $('#register-form').remove();
@@ -185,7 +187,7 @@
     function login() {
     	var email = $('#email').val();
         var password = $('#password').val();
-    	var form = $('<form id="login-form" method="POST" action="/BruteForce" style="display:none;"></form>');
+    	var form = $('<form id="login-form" method="POST" action="BruteForce" style="display:none;"></form>');
     	var callTypeInput = $('<input type="text" name="callType">');
     	var emailInput = $('<input type="email" name="email">');
     	var passwordInput = $('<input type="password" name="password">');
