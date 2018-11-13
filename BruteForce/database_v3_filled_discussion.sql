@@ -128,6 +128,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Lab_Sections` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Lab_Sections` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `sectionID` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NULL,
   `start_time` VARCHAR(45) NULL,
@@ -139,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Lab_Sections` (
   `Building_ID` VARCHAR(4) NOT NULL,
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`sectionID`),
+  PRIMARY KEY (`ID`),
   INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
   INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Lab_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
@@ -167,6 +168,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Discussion_Sections` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Discussion_Sections` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `sectionID` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NULL,
   `start_time` VARCHAR(45) NULL,
@@ -178,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Discussion_Sections` (
   `Building_ID` VARCHAR(4) NOT NULL,
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`sectionID`),
+  PRIMARY KEY (`ID`),
   INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
   INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Disscussion_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
@@ -206,6 +208,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `scheduling`.`Quiz_Sections` ;
 
 CREATE TABLE IF NOT EXISTS `scheduling`.`Quiz_Sections` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `sectionID` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NULL,
   `start_time` VARCHAR(45) NULL,
@@ -217,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Quiz_Sections` (
   `Building_ID` VARCHAR(4) NOT NULL,
   `Course_ID` INT(11) NOT NULL,
   `Lecture_SectionID` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`sectionID`),
+  PRIMARY KEY (`ID`),
   INDEX `fk_Section_Building1_idx` (`Building_ID` ASC) VISIBLE,
   INDEX `fk_Section_Course1_idx` (`Course_ID` ASC) VISIBLE,
   INDEX `fk_Quiz_Sections_Lecture_Sections1_idx` (`Lecture_SectionID` ASC) VISIBLE,
