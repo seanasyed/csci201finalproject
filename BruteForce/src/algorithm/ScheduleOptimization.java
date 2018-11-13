@@ -48,7 +48,7 @@ public class ScheduleOptimization {
 		System.out.println("Courses size is " + courses.size());
 		
 		//Initial recursive call 
-		addCourse(0,0,0,0,0,0); 
+		addCourse(0,0,0,0,0,0, false); 
 		
 		
 		
@@ -57,7 +57,7 @@ public class ScheduleOptimization {
 	/**
 	 * Attempt to add a course into the schedule with a given state in terms of combination progression
 	 */
-	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state) {
+	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state, boolean backtrack) {
 		
 		System.out.println("courseIndex: " + courseIndex); 
 		System.out.println("lectureIndex: " + lectureIndex); 
@@ -83,8 +83,14 @@ public class ScheduleOptimization {
 		
 		
 		if (lectureIndex >= course.getLectureSections().size()) {
-			
-			addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+
+			//Remove all of the course's sections from the schedule
+			for (int i = 0; i < schedule.size(); i++) {
+				if (schedule.get(i).getCourseID().equals(course.getLectureSections().get(lectureIndex - 1).getCourseID())) {
+					schedule.remove(i); 
+				}
+			}
+			addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
 			return; 
 		}
 	
@@ -142,21 +148,40 @@ public class ScheduleOptimization {
 			}
 		}
 		
+		System.out.println(); 
+		System.out.println("backtrackingLectureIndex: " + backtrackingLectureIndex);
+		System.out.println("backtrackingDiscussionIndex: " + backtrackingDiscussionIndex);
+		System.out.println("backtrackingLabIndex: " + backtrackingLabIndex);
+		System.out.println("backtrackingQuizIndex: " + backtrackingQuizIndex);
+		
 		//If any of the backtracking indexes != -1, handle all backtracking procedures
-		if (backtrackingLectureIndex != -1 || backtrackingDiscussionIndex != -1 || 
-				backtrackingLabIndex != -1 || backtrackingQuizIndex != -1) {
-			
+		if (backtrack) {
+		
+			System.out.println("Backtracking detected"); 
 			//Replace the parameters with the backtracking indexes
-			lectureIndex = backtrackingLectureIndex; 
-			discussionIndex = backtrackingDiscussionIndex; 
-			labIndex = backtrackingLabIndex; 
-			quizIndex = backtrackingQuizIndex;
+			
+			if (backtrackingLectureIndex != -1) {
+				lectureIndex = backtrackingLectureIndex; 
+			}
+			
+			if (backtrackingDiscussionIndex != -1) {
+				discussionIndex = backtrackingDiscussionIndex; 
+			}
+			
+			if (backtrackingLabIndex != -1) {
+				labIndex = backtrackingLabIndex; 
+			}
+			
+			if (backtrackingQuizIndex != -1) {
+				quizIndex = backtrackingQuizIndex;
+			}
+			
 			
 			//Increment the quiz section
 			quizIndex++;
 			
 			//Set the state to 3
-			state = 3; 
+			state = 0; 
 			
 			//Remove all of the course's sections from the schedule
 			for (int i = 0; i < schedule.size(); i++) {
@@ -180,7 +205,7 @@ public class ScheduleOptimization {
 			System.out.println("endTime: " + endTime);
 			System.out.println("endTimeConstraint: " + endTimeConstraint);
 			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-				addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state);
+				addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state, false);
 				return; 
 			}
 			//iterate through each of the Vectors to check all other sections
@@ -189,7 +214,7 @@ public class ScheduleOptimization {
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
 				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-					addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state);
+					addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state, false);
 					return; 
 				}
 			}
@@ -199,7 +224,7 @@ public class ScheduleOptimization {
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
 				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state);
+					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state, false);
 					return; 
 				}
 			}
@@ -209,7 +234,7 @@ public class ScheduleOptimization {
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
 				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
-					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state);
+					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state, false);
 					return; 
 				}
 			}
@@ -242,14 +267,14 @@ public class ScheduleOptimization {
 		//1 - discussion
 		if (state == 1) {
 			if (discussionIndex >= discussions.size()) {
-				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1);
+				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1, false);
 				System.out.println("Line 163");
 				return; 
 			}
 		//2 - lab
 		} else if (state == 2) {
 			if (labIndex >= labs.size()) {
-				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1);
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1, false);
 				System.out.println("Line 170");
 				return; 
 			}
@@ -257,7 +282,7 @@ public class ScheduleOptimization {
 		} else if (state == 3) {
 			if (quizIndex >= quizzes.size()) {
 				
-				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, false); 
 				System.out.println("Line 178");
 				return; 
 			}
@@ -272,12 +297,18 @@ public class ScheduleOptimization {
 				
 				schedule.add(lecture); 
 				System.out.println("Line 192, size = " + schedule.size());
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1, false); 
 				
 				return; 
 			} else {
 				
-				addCourse(courseIndex - 1, 0, 0, 0, 0, 0); 
+				//Remove all of the course's sections from the schedule
+				for (int i = 0; i < schedule.size(); i++) {
+					if (schedule.get(i).getCourseID().equals(lecture.getCourseID())) {
+						schedule.remove(i); 
+					}
+				}
+				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
 				System.out.println("Line 197");
 				return; 
 			}
@@ -287,11 +318,11 @@ public class ScheduleOptimization {
 			if (noConflict(discussions.get(discussionIndex))) {
 				schedule.add(discussions.get(discussionIndex));
 				System.out.println("Line 206, size = " + schedule.size());
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2);
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2, false);
 				
 				return;
 			} else {
-				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1); 
+				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1, false); 
 				System.out.println("Line 210");
 				return; 
 			}
@@ -301,11 +332,11 @@ public class ScheduleOptimization {
 			if (noConflict(labs.get(labIndex))) {
 				schedule.add(labs.get(labIndex));
 				System.out.println("Line 219, size = " + schedule.size());
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3, false); 
 				
 				return; 
 			} else {
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2, false); 
 				System.out.println("Line 223");
 				return; 
 			}
@@ -316,11 +347,11 @@ public class ScheduleOptimization {
 			if (noConflict(quizzes.get(quizIndex))) {
 				schedule.add(quizzes.get(quizIndex)); 
 				System.out.println("Line 233, size = " + schedule.size());
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4, false); 
 				
 				return; 
 			} else {
-				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3); 
+				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3, false); 
 				System.out.println("Line 237");
 				return;  
 			}
@@ -328,7 +359,7 @@ public class ScheduleOptimization {
 		//4 - Done
 		else if (state == 4) {
 			System.out.println("Line 243");
-			addCourse(courseIndex + 1, 0, 0, 0, 0, 0); 
+			addCourse(courseIndex + 1, 0, 0, 0, 0, 0, false); 
 			return; 
 		}
 	}
