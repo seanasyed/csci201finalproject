@@ -163,6 +163,9 @@ public class BruteForceHandler {
 	            System.out.println("DistanceConstraint: " +  Double.parseDouble(distanceConstraint));
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(distanceConstraint));
 	            Vector<Section> vecSections = so.getSchedule();
+	            for (int i = 0; i < vecSections.size(); i++) {
+	            	System.out.println(vecSections.get(i).getCourseName() + " at " + vecSections.get(i).getBuildingID());
+	            }
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
 	            	data.put("valid", "false");
