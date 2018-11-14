@@ -23,11 +23,12 @@ public class ScheduleOptimization {
 
 	private Vector<Course> courses;
 	
+	private DatabaseHandler dbh = DatabaseHandler.getOneInstance();
+	
 	private Vector<Section> schedule; //Section IDs
 	private int startTimeConstraint = 0; 
 	private int endTimeConstraint = 0; 
 	private double distanceConstraint = 0; 
-	
 	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint, double distanceConstraint) {
 		
 		if (distanceConstraint != -1) {
@@ -655,12 +656,12 @@ public class ScheduleOptimization {
 		
 		for (int i = 0; i < schedule.size() - 1; i++) {
 <<<<<<< HEAD
-			double[] section1Coords = DatabaseHandler.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-			double[] section2Coords = DatabaseHandler.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+			double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
 =======
-			double[] section1Coords = new DatabaseHandler().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-			double[] section2Coords = new DatabaseHandler().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
->>>>>>> 4892f332d4f033fd12e7ef715a7bbc843bc63098
+			double[] section1Coords = dbh.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+			double[] section2Coords = dbh.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 			
 			a = 0; 
 			c = 0; 

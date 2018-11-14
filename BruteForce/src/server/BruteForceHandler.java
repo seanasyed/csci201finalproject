@@ -127,9 +127,18 @@ public class BruteForceHandler {
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
+<<<<<<< HEAD
+				String distanceConstraint = request.getParameter("distanceConstraint");
+				System.out.println("Distance: " + distanceConstraint);
+=======
 				
+				double distanceConstraint = Double.parseDouble(request.getParameter("distance")); 
+				System.out.println("distance in check_: " +distanceConstraint);
+				
+				
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 				//TODO: DISCUSS WITH FRANK
-	            System.out.println("submit_schedule");
+	            System.out.println("check_shedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
 	            Vector<Course> vecCourses = new Vector<Course>();
@@ -154,14 +163,18 @@ public class BruteForceHandler {
 	            } catch (JSONException je) {
 	                System.out.println("je:" + je.getMessage());
 	            }
-	            startTime = request.getParameter("startTime"); 
-	            endTime = request.getParameter("endTime");
 	            System.out.println("vecCourses:" + vecCourses);
 	            for(int i = 0; i < vecCourses.size(); i++) {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
+<<<<<<< HEAD
+	            if (distanceConstraint == null) distanceConstraint = "9999";
+	            System.out.println("DistanceConstraint: " +  Double.parseDouble(distanceConstraint));
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(distanceConstraint));
+=======
 	            
-	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
@@ -184,15 +197,19 @@ public class BruteForceHandler {
 			}
 			case "submit_schedule": {
 				//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
-				System.out.println("check_schedule");
+				System.out.println("subbmit_schedule");
 				String username = request.getParameter("username");
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
-				double distanceContraint = Double.parseDouble(request.getParameter("distanceConstraint")); 
+<<<<<<< HEAD
+				String distanceConstraint = request.getParameter("distanceConstraint"); 
+=======
+				double distanceConstraint = Double.parseDouble(request.getParameter("distance")); 
+				System.out.println("distance in submit_schedule: " +distanceConstraint);
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 				
 				//TODO: DISCUSS WITH FRANK
-	            System.out.println("submit_schedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
 	            Vector<Course> vecCourses = new Vector<Course>();
@@ -217,13 +234,17 @@ public class BruteForceHandler {
 	            } catch (JSONException je) {
 	                System.out.println("je:" + je.getMessage());
 	            }
-	            startTime = request.getParameter("startTime"); 
-	            endTime = request.getParameter("endTime");
 	            System.out.println("vecCourses:" + vecCourses);
 	            for(int i = 0; i < vecCourses.size(); i++) {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
+<<<<<<< HEAD
+	            if (distanceConstraint == null) distanceConstraint = "9999";
+	            System.out.println("DistanceConstraint: " +  Double.parseDouble(distanceConstraint));
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
+=======
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
@@ -278,12 +299,10 @@ public class BruteForceHandler {
 					e.printStackTrace();
 				}
 			}
-				
-				
 			default:
 				break;
 			}
 			
-		close();
+//		close();
 	}
  }

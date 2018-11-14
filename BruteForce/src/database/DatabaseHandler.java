@@ -81,25 +81,21 @@ public class DatabaseHandler {
 	 */
 	public double[] getLatitudeAndLongitude(String buildingID) {
 		double[] coords = new double[2]; 
-		
 		try {
-			ps = conn.prepareStatement("SELECT * FROM Building WHERE buildingID=?");
+			System.out.println("getting latitude starting... ");
+			ps = conn.prepareStatement("SELECT * FROM Building WHERE ID=?");
 			ps.setString(1, buildingID);
 			rs = ps.executeQuery(); 
+			System.out.println("getting latitude" + rs);
 			while(rs.next()) {
 				coords[0] = Double.parseDouble(rs.getString("latitude")); 
 				coords[1] = Double.parseDouble(rs.getString("longitude")); 
 			}
+			return coords; 
 		} catch (SQLException e) {
-<<<<<<< HEAD
-			// TODO Auto-generated catch block
-=======
-			//Auto-generated catch block
->>>>>>> 4892f332d4f033fd12e7ef715a7bbc843bc63098
 			e.printStackTrace();
-		}  
-		
-		return coords; 
+			return coords; 
+		}  		
 	}
 	
 	
