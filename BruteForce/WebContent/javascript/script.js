@@ -156,6 +156,7 @@ function reset() {
 	$('#course-list li').remove();
 	$('#start-time').val('');
 	$('#end-time').val('');
+	$('#distance').val('');
 	var checkButton = $('#check-button');
 	  checkButton.text('Check');
 	  checkButton.unbind("click");
@@ -178,7 +179,9 @@ function getSuggestions() {
       keyword: filter
     },
     success: function(result) {
+    	console.log(result);
       var data = JSON.parse(result);
+ 
       var texts = [];
       $("#course-list li span").each(function() {
         texts.push($(this).text());

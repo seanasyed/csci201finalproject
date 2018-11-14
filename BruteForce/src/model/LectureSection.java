@@ -52,15 +52,15 @@ public class LectureSection extends Section {
 	 */
 	
 	public void addDiscussion(Section section) {
-		if (isInLecture(section))
+		//if (isInLecture(section))
 			discussions.add(section);
 	}
 	public void addLab(Section section) {
-		if (isInLecture(section))
+		//if (isInLecture(section))
 			labs.add(section);
 	}
 	public void addQuiz(Section section) {
-		if (isInLecture(section))
+		//if (isInLecture(section))
 			quizzes.add(section);
 	}
 	

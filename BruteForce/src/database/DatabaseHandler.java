@@ -91,11 +91,10 @@ public class DatabaseHandler {
 				coords[0] = Double.parseDouble(rs.getString("latitude")); 
 				coords[1] = Double.parseDouble(rs.getString("longitude")); 
 			}
-			return coords; 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return coords; 
-		}  		
+		} 
+		return coords; 
 	}
 	
 	
@@ -276,13 +275,13 @@ public class DatabaseHandler {
 								rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				ps = conn.prepareStatement("SELECT * from Discussion_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
-				
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					Section dis = new Section(rs.getString("sectionID"), rs.getString("type"), 
 							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
 							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
+					System.out.println("Adding discussion:" + rs.getString("sectionID"));
 					lectureSection.addDiscussion(dis);
 				}
 				ps = conn.prepareStatement("SELECT * from Lab_Sections WHERE Lecture_SectionID=?;");
@@ -294,6 +293,7 @@ public class DatabaseHandler {
 							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
 							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
+					System.out.println("Adding lab:" + rs.getString("sectionID"));
 					lectureSection.addLab(lab);
 				}
 				ps = conn.prepareStatement("SELECT * from Quiz_Sections WHERE Lecture_SectionID=?;");
@@ -305,10 +305,20 @@ public class DatabaseHandler {
 							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
 							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("courseID"), courseName);
-					lectureSection.addQuiz(quiz);;
+					System.out.println("Adding quiz:" + rs.getString("sectionID"));
+					lectureSection.addQuiz(quiz);
 				}
 				course.addLectureSection(lectureSection);
 			}
+			System.out.println("Before returning a course:");
+			System.out.println("LectureSections # :" + course.getLectureSections().size());
+			Vector<LectureSection> sections = course.getLectureSections();
+			for (int i = 0; i < sections.size(); i++) {
+				System.out.println("Lecture: " + sections.get(i).getSectionID());
+				System.out.println("Discussion#:" + sections.get(i).getDiscussions().size());
+				System.out.println("Lab#:" + sections.get(i).getLabs().size());
+			}
+			//System.out.println("Before returning a course:");
 			return course;
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -330,6 +340,12 @@ public class DatabaseHandler {
 		if (conn == null) return null;
 		ArrayList<String> courses = new ArrayList<>();
 		try {
+			ps = conn.prepareStatement("SELECT major, number FROM Course WHERE major LIKE ?;");
+			ps.setString(1, keyword + "%");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				courses.add(rs.getString("major") + "-" + rs.getString("number"));
+			}
 			ps = conn.prepareStatement("SELECT major, number FROM Course WHERE major LIKE ?;");
 			ps.setString(1, keyword + "%");
 			rs = ps.executeQuery();
