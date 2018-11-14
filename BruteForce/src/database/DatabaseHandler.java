@@ -307,7 +307,7 @@ public class DatabaseHandler {
 		ArrayList<String> courses = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement("SELECT major, number FROM Course WHERE major LIKE ?;");
-			ps.setString(1, "%" + keyword + "%");
+			ps.setString(1, keyword + "%");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				courses.add(rs.getString("major") + "-" + rs.getString("number"));
@@ -390,6 +390,8 @@ public class DatabaseHandler {
 			while (rs.next()) {
 				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
+				System.out.println(courseName);
+				System.out.println(rs.toString());
 				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
 						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
