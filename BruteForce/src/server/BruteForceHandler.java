@@ -121,14 +121,12 @@ public class BruteForceHandler {
 			}
 			break;
 			case "check_schedule": {
-				//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 				System.out.println("check_schedule");
 				String username = request.getParameter("username");
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
 				
-				//TODO: DISCUSS WITH FRANK
 	            System.out.println("submit_schedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
@@ -183,15 +181,13 @@ public class BruteForceHandler {
 				break;
 			}
 			case "submit_schedule": {
-				//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 				System.out.println("check_schedule");
 				String username = request.getParameter("username");
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
 				double distanceContraint = Double.parseDouble(request.getParameter("distanceConstraint")); 
-				
-				//TODO: DISCUSS WITH FRANK
+		
 	            System.out.println("submit_schedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
@@ -274,7 +270,6 @@ public class BruteForceHandler {
 						System.out.println(ioe.getMessage());
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
