@@ -93,8 +93,12 @@ function checkCourseListOnServer() {
   var courseListJSON = JSON.stringify(courseList);
   var username = $('#username').text();
 <<<<<<< HEAD
+<<<<<<< HEAD
   var distance = $('#distance').val();
   console.log('distance:' + distance);
+=======
+  console.log('username is:' + username);
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 =======
   console.log('username is:' + username);
 >>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
@@ -106,7 +110,11 @@ function checkCourseListOnServer() {
       startTime: startTime,
       endTime: endTime,
 <<<<<<< HEAD
+<<<<<<< HEAD
       distanceConstraint: distance,
+=======
+      distance: distance,
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 =======
       distance: distance,
 >>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87

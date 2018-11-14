@@ -136,6 +136,9 @@ public class BruteForceHandler {
 				System.out.println("distance in check_: " +distanceConstraint);
 				
 				
+<<<<<<< HEAD
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
+=======
 >>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 				//TODO: DISCUSS WITH FRANK
 	            System.out.println("check_shedule");
@@ -174,6 +177,9 @@ public class BruteForceHandler {
 =======
 	            
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
+<<<<<<< HEAD
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
+=======
 >>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
@@ -203,7 +209,12 @@ public class BruteForceHandler {
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
 <<<<<<< HEAD
+<<<<<<< HEAD
 				String distanceConstraint = request.getParameter("distanceConstraint"); 
+=======
+				double distanceConstraint = Double.parseDouble(request.getParameter("distance")); 
+				System.out.println("distance in submit_schedule: " +distanceConstraint);
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 =======
 				double distanceConstraint = Double.parseDouble(request.getParameter("distance")); 
 				System.out.println("distance in submit_schedule: " +distanceConstraint);
@@ -239,9 +250,13 @@ public class BruteForceHandler {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
 <<<<<<< HEAD
+<<<<<<< HEAD
 	            if (distanceConstraint == null) distanceConstraint = "9999";
 	            System.out.println("DistanceConstraint: " +  Double.parseDouble(distanceConstraint));
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
+=======
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
+>>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 =======
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
 >>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
