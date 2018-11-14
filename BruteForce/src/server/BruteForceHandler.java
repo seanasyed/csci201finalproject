@@ -164,6 +164,8 @@ public class BruteForceHandler {
 	            		System.out.println("discussions: " +vecCourses.get(i).getLectureSections().get(j).getDiscussions());
 	            	}
 	            }
+	            if (startTime == null || startTime.equals("")) startTime = "00:01";
+	            if (endTime == null || endTime.equals("")) endTime = "23:59"; 
 	            if (distanceConstraint == null || distanceConstraint.equals("")) distanceConstraint = "9999";
 	            System.out.println("DistanceConstraint: " +  Double.parseDouble(distanceConstraint));
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(distanceConstraint));
@@ -233,6 +235,8 @@ public class BruteForceHandler {
 	            		System.out.println("discussions: " +vecCourses.get(i).getLectureSections().get(j).getDiscussions());
 	            	}
 	            }
+	            if (startTime == null || startTime.equals("")) startTime = "00:01";
+	            if (endTime == null || endTime.equals("")) endTime = "23:59";
 	            if (distanceConstraint == null || distanceConstraint.equals("")) distanceConstraint = "9999";
 	            System.out.println("DistanceConstraint: " +  Double.parseDouble(distanceConstraint));
 	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(distanceConstraint));
