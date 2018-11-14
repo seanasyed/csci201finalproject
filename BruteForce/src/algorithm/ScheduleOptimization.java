@@ -737,6 +737,7 @@ public class ScheduleOptimization {
 				}
 				
 				double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(earliest.getBuildingID()); 
+				System.out.println("secondEarliest:" + secondEarliest);
 				double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(secondEarliest.getBuildingID()); 
 	
 				a = 0; 

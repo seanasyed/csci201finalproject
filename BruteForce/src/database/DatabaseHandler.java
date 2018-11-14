@@ -602,4 +602,198 @@ public class DatabaseHandler {
 		
 		return ID;
 	}
+	/*
+	 * Returns a message(success or error) after registration
+	 */
+	public String registerSchedule(String username, Vector<Section> schedule) {
+		if (conn == null) return null;
+		ResultSet rs = null;
+		String message = "";
+		try {
+			for(Section s: schedule) {
+				String type = s.getType();
+				String sectionID = s.getSectionID();
+				/*
+				 * CHECK numRegistered the update
+				 * If numRegistered >= classCapacity, write an error message
+				 * else, register them
+				 */
+				switch (type) {
+				case "Lecture": {
+					ps = conn.prepareStatement("SELECT * FROM Lecture_Sections WHERE sectionID=?;");
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int registeredBefore = 0;
+					int classCapacity = 0;
+					while(rs.next()) {
+						registeredBefore = rs.getInt("numRegistered");
+						classCapacity = rs.getInt("classCapacity");
+					}
+					if (registeredBefore >= classCapacity) message += sectionID + " is already full\n";
+					else {
+						ps = conn.prepareStatement("UPDATE Lecture_Sections SET numRegistered= CASE WHEN (numRegistered<classCapacity) THEN numRegistered+1 ELSE classCapacity END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}
+				break;
+				case "Discussion": {
+					ps = conn.prepareStatement("SELECT * FROM Discussion_Sections WHERE sectionID=?;");
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int registeredBefore = 0;
+					int classCapacity = 0;
+					while(rs.next()) {
+						registeredBefore = rs.getInt("numRegistered");
+						classCapacity = rs.getInt("classCapacity");
+					}
+					if (registeredBefore >= classCapacity) message += sectionID + " is already full\n";
+					else {
+						ps = conn.prepareStatement("UPDATE Discussion_Sections SET numRegistered= CASE WHEN (numRegistered<classCapacity) THEN numRegistered+1 ELSE classCapacity END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}	
+				break;
+				case "Lab": {
+					ps = conn.prepareStatement("SELECT * FROM Lab_Sections WHERE sectionID=?;");
+
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int registeredBefore = 0;
+					int classCapacity = 0;
+					while(rs.next()) {
+						registeredBefore = rs.getInt("numRegistered");
+						classCapacity = rs.getInt("classCapacity");
+					}
+					if (registeredBefore >= classCapacity) message += sectionID + " is already full\n";
+					else {
+						ps = conn.prepareStatement("UPDATE Lab_Sections SET numRegistered= CASE WHEN (numRegistered<classCapacity) THEN numRegistered+1 ELSE classCapacity END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}
+				break;
+				case "Quiz": {
+					ps = conn.prepareStatement("SELECT * FROM Quiz_Sections WHERE sectionID=?;");
+
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int registeredBefore = 0;
+					int classCapacity = 0;
+					while(rs.next()) {
+						registeredBefore = rs.getInt("numRegistered");
+						classCapacity = rs.getInt("classCapacity");
+					}
+					if (registeredBefore >= classCapacity) message += sectionID + " is already full\n";
+					else {
+						ps = conn.prepareStatement("UPDATE Quiz_Sections SET numRegistered= CASE WHEN (numRegistered<classCapacity) THEN numRegistered+1 ELSE classCapacity END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}
+				break;
+				}
+			}
+			if (message.equals("")) {
+				ArrayList<String> sectionIDs = new ArrayList<>();
+				for (Section s: schedule) {
+					sectionIDs.add(s.getSectionID());
+				}
+				//CAN ONLY CREATE A NEW SCHEDULE IF A STUDENT SUCCESSFULLY UNREGISTERED FROM ORIGINAL SCHEDULE
+				if (unregister(username)) {
+					createSchedule(username, sectionIDs);
+					message = "Successfully registered";
+				} else {
+					message = "Couldn't unregister from sections from previous schedule.";
+				}
+			}
+			return message;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			message = "An error has occurred. Please register again.";
+			return message;
+		}
+		
+		
+		
+	}
+	public boolean unregister(String username) {
+		if (conn == null) return false;
+		ResultSet rs = null;
+		try {
+			Vector<Section> schedule = getSchedule(username);
+			for (Section s: schedule) {
+				String type = s.getType();
+				String sectionID = s.getSectionID();
+				switch (type) {
+				case "Lecture": {
+					ps = conn.prepareStatement("SELECT * FROM Lecture_Sections WHERE sectionID=?;");
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int numRegistered = 0;
+					while(rs.next()) {
+						numRegistered = rs.getInt("numRegistered");
+					}
+					if (numRegistered > 0) {
+						ps = conn.prepareStatement("UPDATE Lecture_Sections SET numRegistered= CASE WHEN (numRegistered>0) THEN numRegistered-1 END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}
+				break;
+				case "Discussion": {
+					ps = conn.prepareStatement("SELECT * FROM Discussion_Sections WHERE sectionID=?;");
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int numRegistered = 0;
+					while(rs.next()) {
+						numRegistered = rs.getInt("numRegistered");
+					}
+					if (numRegistered > 0) {
+						ps = conn.prepareStatement("UPDATE Discussion_Sections SET numRegistered= CASE WHEN (numRegistered>0) THEN numRegistered-1 END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}	
+				break;
+				case "Lab": {
+					ps = conn.prepareStatement("SELECT * FROM Lab_Sections WHERE sectionID=?;");
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int numRegistered = 0;
+					while(rs.next()) {
+						numRegistered = rs.getInt("numRegistered");
+					}
+					if (numRegistered > 0) {
+						ps = conn.prepareStatement("UPDATE Lab_Sections SET numRegistered= CASE WHEN (numRegistered>0) THEN numRegistered-1 END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}
+				break;
+				case "Quiz": {
+					ps = conn.prepareStatement("SELECT * FROM Quiz_Sections WHERE sectionID=?;");
+					ps.setString(1, sectionID);
+					rs = ps.executeQuery();
+					int numRegistered = 0;
+					while(rs.next()) {
+						numRegistered = rs.getInt("numRegistered");
+					}
+					if (numRegistered > 0) {
+						ps = conn.prepareStatement("UPDATE Quiz_Sections SET numRegistered= CASE WHEN (numRegistered>0) THEN numRegistered-1 END WHERE sectionID=?;");
+						ps.setString(1, sectionID);
+						ps.executeUpdate();
+					}
+				}
+				break;
+				}
+			}
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

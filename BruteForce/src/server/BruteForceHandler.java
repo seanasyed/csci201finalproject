@@ -51,7 +51,7 @@ public class BruteForceHandler {
 				System.out.println("Trying to login...");
 				try {
 					String nextPage = "";
-					if (email == null || password == null) {
+					if (email == null || email.equals("") || password == null || password.equals("")) {
 						request.setAttribute("message", "One of the fields is empty.");
 						System.out.println("dispatching w/ attribute: " + "empty");
 			    		nextPage = "/login.jsp";
@@ -249,21 +249,21 @@ public class BruteForceHandler {
 	            for (int i = 0; i < vecSections.size(); i++) {
 	            	sectionIDs.add(vecSections.get(i).getSectionID());
 	            }
-	            try {
-	            	if (!sectionIDs.isEmpty()) {
-	            		dh.createSchedule(username, sectionIDs);
-	    				data.put("result", "success");
-	    				data.put("message", "submission completed.");
-	            	} else {
-	            		data.put("result", "error");
-	    				data.put("message", "submission failed.");
-	            	}
+            	if (!sectionIDs.isEmpty()) {
+            		String message = dh.registerSchedule(username, vecSections);
+            		if (message.equals("Successfully registered")) {
+            			data.put("result", "success");
+        				data.put("message", "submission completed.");
+            		} else {
+            			data.put("result", "error");
+        				data.put("message", message);
+            		}
+            	} else {
+            		data.put("result", "error");
+    				data.put("message", "submission failed.");
+            	}
 					
-				} catch (SQLException e) {
-					e.printStackTrace();
-					data.put("result", "error");
-					data.put("message", "submission failed.");
-				}
+				
 	            response.setContentType("application/json");
 	            
 	            String json = new Gson().toJson(data);

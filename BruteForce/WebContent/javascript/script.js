@@ -202,7 +202,7 @@ function getSuggestions() {
 }
 
 function linkToSchedule() {
-	var form = $('<form id="schedule-form" method="POST" action="integrated_schedule.jsp" style="display:none;"></form>');
+	var form = $('<form target="_blank" id="schedule-form" method="POST" action="integrated_schedule.jsp" style="display:none;"></form>');
 	var input = $('<input type="text" name="username">');
 	input.val($('#username').text());
 	input.appendTo(form);
