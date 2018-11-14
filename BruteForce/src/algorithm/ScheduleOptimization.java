@@ -652,30 +652,116 @@ public class ScheduleOptimization {
 		double d = 0; 
 		double R = 6371000; 
 		
-		for (int i = 0; i < schedule.size() - 1; i++) {
+		Vector<Section> monday = new Vector<Section>();
+		Vector<Section> tuesday = new Vector<Section>();
+		Vector<Section> wednesday = new Vector<Section>();
+		Vector<Section> thursday = new Vector<Section>();
+		Vector<Section> friday = new Vector<Section>();
+		
+		Vector<Vector<Section>> week = new Vector<Vector<Section>>(); 
+		
+		
+		
+		for (int i = 0; i < schedule.size(); i++) {
+			
+			boolean[] days = parseDays(schedule.get(i).getDay()); 
+			if (days[1]) {
+				monday.add(schedule.get(i)); 
+			}
+			if (days[2]) {
+				tuesday.add(schedule.get(i)); 
+			}
+			if (days[3]) {
+				wednesday.add(schedule.get(i)); 
+			}
+			if (days[4]) {
+				thursday.add(schedule.get(i)); 
+			}
+			if (days[5]) {
+				friday.add(schedule.get(i)); 
+			}
 
-			double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i+1).getBuildingID()); 
-
-			a = 0; 
-			c = 0; 
-			d = 0; 
-			
-			deltaPhi = Math.abs(section1Coords[0] - section2Coords[0]); //Change in latitude
-			deltaLambda = Math.abs(section1Coords[1] - section2Coords[1]); //Change in longitude
-			
-			//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
-			a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
-			
-			//c = 2 ⋅ atan2( √a, √(1−a) )
-			c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
-			
-			//d = R ⋅ c
-			d = R * c; 
-			
-			totalDistanceInMeters += d; 
+//			double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+//			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i+1).getBuildingID()); 
+//
+//			a = 0; 
+//			c = 0; 
+//			d = 0; 
+//			
+//			deltaPhi = Math.abs(section1Coords[0] - section2Coords[0]); //Change in latitude
+//			deltaLambda = Math.abs(section1Coords[1] - section2Coords[1]); //Change in longitude
+//			
+//			//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+//			a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
+//			
+//			//c = 2 ⋅ atan2( √a, √(1−a) )
+//			c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
+//			
+//			//d = R ⋅ c
+//			d = R * c; 
+//			
+//			totalDistanceInMeters += d; 
 		}
 		
+		week.add(monday); 
+		week.add(tuesday); 
+		week.add(wednesday); 
+		week.add(thursday); 
+		week.add(friday); 
+		
+		for (Vector<Section> day : week) {
+			
+			//find the earliest time
+			//add distance between that time and the next time
+			//remove the earliest time
+			
+			while(day.size() > 1) {
+				
+				Section earliest = null; 
+				Section secondEarliest = null; 
+				
+				int minTime = Integer.MAX_VALUE - 2; 
+				int secondMinTime = Integer.MAX_VALUE; 
+				
+				for (Section s : day) {
+					if (parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1] < minTime) {
+						minTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+						earliest = s; 
+					} else if (parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1] < secondMinTime) {
+						secondEarliest = s; 
+						secondMinTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
+					}
+				}
+				
+				double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(earliest.getBuildingID()); 
+				double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(secondEarliest.getBuildingID()); 
+	
+				a = 0; 
+				c = 0; 
+				d = 0; 
+				
+				deltaPhi = Math.abs(section1Coords[0] - section2Coords[0]); //Change in latitude
+				deltaLambda = Math.abs(section1Coords[1] - section2Coords[1]); //Change in longitude
+				
+				//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+				a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
+				
+				//c = 2 ⋅ atan2( √a, √(1−a) )
+				c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
+				
+				//d = R ⋅ c
+				d = R * c; 
+				
+				totalDistanceInMeters += d; 
+				
+				for (int i = 0; i < day.size(); i++) {
+					if (day.get(i).getSectionID().equals(earliest.getSectionID())) {
+						day.remove(i); 
+					}
+				}
+				
+			}
+		}
 		
 		return totalDistanceInMeters / 1609.344; 
 	}
