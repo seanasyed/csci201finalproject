@@ -655,7 +655,7 @@ public class ScheduleOptimization {
 		for (int i = 0; i < schedule.size() - 1; i++) {
 
 			double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i+1).getBuildingID()); 
 
 			a = 0; 
 			c = 0; 
