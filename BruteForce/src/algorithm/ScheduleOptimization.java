@@ -30,7 +30,12 @@ public class ScheduleOptimization {
 	
 	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint, double distanceConstraint) {
 		
-		this.distanceConstraint = distanceConstraint;
+		if (distanceConstraint != -1) {
+			this.distanceConstraint = distanceConstraint;
+		} else {
+			this.distanceConstraint = Integer.MAX_VALUE; 
+		}
+		
 		
 		this.courses = courses; 
 		for (int i = 0; i < courses.size(); i++) {

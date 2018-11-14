@@ -74,6 +74,30 @@ public class DatabaseHandler {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param buildingID
+	 * @return the coordinates for a given buildingID
+	 */
+	public double[] getLatitudeAndLongitude(String buildingID) {
+		double[] coords = new double[2]; 
+		
+		try {
+			ps = conn.prepareStatement("SELECT * FROM Building WHERE buildingID=?");
+			ps.setString(1, buildingID);
+			rs = ps.executeQuery(); 
+			while(rs.next()) {
+				coords[0] = Double.parseDouble(rs.getString("latitude")); 
+				coords[1] = Double.parseDouble(rs.getString("longitude")); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		
+		return coords; 
+	}
+	
 	
 	/**
 	 * Report whether {@code username} matches {@code password}.
