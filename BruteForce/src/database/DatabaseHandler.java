@@ -5,111 +5,139 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import model.BuildingCandidate;
 import model.Course;
 import model.LectureSection;
 import model.Section;
 import model.User;
 
+//Use Singleton
 public class DatabaseHandler {
+	private Connection conn = null;
+	private ResultSet rs = null;
+	private Statement stmt = null;
+	private PreparedStatement ps = null;
 	
-	private Connection getConnection() throws Exception {
+	private static DatabaseHandler dbh;
+
+	// JDBC driver name and database URL
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String DB_URL = "jdbc:mysql://localhost/scheduling";
+
+	// Database credentials
+	private static final String USER = "root";
+	private static final String PASS = "root";
+
+	/*
+	 * ---- Private constructor ----
+	 */
+	private DatabaseHandler() {
+		// No code needs here.
+	}
+	
+	public static DatabaseHandler getOneInstance() {
+		if (dbh == null) dbh = new DatabaseHandler();
+		return dbh;
+	}
+	
+	public void connect() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://localhost/scheduling?useSSL=false", "root", "root");
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+		}
+	}
+
+	public void close() {
+		try {
+			if (rs != null) {
+				rs.close();
+				rs = null;
+			}
+			if (conn != null) {
+				conn.close();
+				conn = null;
+			}
+			if (stmt != null) {
+				stmt = null;
+			}
+		} catch (SQLException sqle) {
+			System.out.println("connection close error");
+			sqle.printStackTrace();
 		}
 	}
 	
-	/*
-	 * RETURN VALUE
-	 * TRUE: AUTHENTICATED
-	 * FALSE: NOT AUTHENTICATED
+	
+	/**
+	 * Report whether {@code username} matches {@code password}.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
 	 */
-	public boolean authenticateUser(String username, String password) {
+	public boolean isAuthenticated(String username, String password) {
 		
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		if (conn == null)
+			return false;
+
 		try {
-			conn = getConnection();
 			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=?");
 			ps.setString(1, username);
 			//we want to store hashed password
 			// 2. Execute SQL query
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				String storedPassword = resultSet.getString("password");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String storedPassword = rs.getString("password");
 				return HashPassword.check(password, storedPassword);
 			}
+			return false;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
-	/*
-	 * RETURN VALUE
-	 * TRUE: USER EXISTS
-	 * FALSE: USER DOES NOT EXIST
+
+	/**
+	 * Report whether user with {@code username} exists.
+	 * 
+	 * @param username
+	 * @return
 	 */
 	public boolean userExists(String username) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		if (conn == null)
+			return false;
+		
 		try {
-			conn = getConnection();
 			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=?;");
 			ps.setString(1, username);
 			
 			// 2. Execute SQL query
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				if (resultSet.getString("userName") != null) return true;
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				if (rs.getString("userName") != null) return true;
 			}
 			return false;
-		} catch (Exception e) {
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return false;
+		}catch (Exception e) {
 			e.printStackTrace();
-			return true;
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+			return false;
+		} 
 	}
 	
 	public void createUser(String username, String password, String fname, String lname) throws SQLException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		//hash the password
+		if (conn == null) return;
 		String hashedPassword = null;
 		try {
 			hashedPassword = HashPassword.getSaltedHash(password);
@@ -117,8 +145,6 @@ public class DatabaseHandler {
 			System.out.println("Error: "+e1.getMessage());
 		}
 		try {
-			conn = getConnection();
-			System.out.println("connected to the database");
 			ps = conn.prepareStatement("INSERT INTO Student (userName, password, firstName, lastName, isActive) VALUE (?, ?, ?, ?, 1) ON DUPLICATE KEY UPDATE username=?;");
 			ps.setString(1, username);
 			//we want to store the hashedpassword in DB
@@ -127,60 +153,39 @@ public class DatabaseHandler {
 			ps.setString(4, lname);
 			ps.setString(5, username);
 			ps.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
 	
-	/*
-	 * RETURN VALUE
-	 * USER: USER INSTANCE
-	 * NULL: USER INSTANCE UNABLE TO BE CREATED
+	/**
+	 * Return a user with {@code username} and {@code password}.
+	 * @param username
+	 * @param password
+	 * @return
 	 */
 	public User getUser(String username, String password) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		if (conn == null) return null;
+		
 		try {
-			conn = getConnection();
 			ps = conn.prepareStatement("SELECT * FROM Student WHERE userName=? AND password=?;");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			// 2. Execute SQL query
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				return new User(resultSet.getString("username"), resultSet.getString("firstName"), resultSet.getString("lastName"));
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				return new User(rs.getString("username"), rs.getString("firstName"), rs.getString("lastName"));
 			}
+			return null;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
 //	
 //	public void addCourse(int ID, String school, String major, String number, float units, String name, String description, int semester) {
@@ -215,149 +220,128 @@ public class DatabaseHandler {
 //		}
 //	}
 	
-	/*
-	 * RETURN VALUE
-	 * COURSE: COURSE INSTANCE
-	 * NULL: COURSE INSTANCE UNABLE TO BE CREATED
+
+	/**
+	 * Return a course object with {@code number} under {@code major}.
+	 * 
+	 * @param major
+	 * @param number
+	 * @return
 	 */
 	public Course getCourse(String major, String number) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		if (conn == null) return null;
+		
 		try {
-			conn = getConnection();
-			System.out.println("connected to database"); 
 			ps = conn.prepareStatement("SELECT * from Course JOIN Lecture_Sections ON Course.ID=Lecture_Sections.Course_ID WHERE Course.major=? AND Course.number=?;");
 			ps.setString(1, major);
 			ps.setString(2, number);
 			// 2. Execute SQL query
-			resultSet = ps.executeQuery();
+			rs = ps.executeQuery();
 			Course course = null;
-			while (resultSet.next()) {
+			while (rs.next()) {
 				if (course == null) {
-					course = new Course(resultSet.getInt("ID"), resultSet.getString("school"), resultSet.getString("major"), 
-							resultSet.getString("number"), resultSet.getFloat("units"), resultSet.getString("name"), 
-							resultSet.getString("description"), resultSet.getInt("semester"));
+					course = new Course(rs.getInt("ID"), rs.getString("school"), rs.getString("major"), 
+							rs.getString("number"), rs.getFloat("units"), rs.getString("name"), 
+							rs.getString("description"), rs.getInt("semester"));
 				}
-				String courseName = resultSet.getString("major") + "-" + resultSet.getString("number");
-				String sectionID = resultSet.getString("sectionID");
-				LectureSection lectureSection = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
-								resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-								resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-								resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				String courseName = rs.getString("major") + "-" + rs.getString("number");
+				String sectionID = rs.getString("sectionID");
+				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
+								rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+								rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+								rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				ps = conn.prepareStatement("SELECT * from Discussion_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
-				ResultSet disResultSet = ps.executeQuery();
-				while (disResultSet.next()) {
-					Section dis = new Section(disResultSet.getString("sectionID"), disResultSet.getString("type"), 
-							disResultSet.getString("type"), disResultSet.getString("start_time"), disResultSet.getString("end_time"), 
-							disResultSet.getString("day"), disResultSet.getString("instructor"),disResultSet.getInt("numRegistered"), 
-							disResultSet.getInt("classCapacity"), disResultSet.getString("Building_ID"), disResultSet.getString("Course_ID"), courseName);
+				
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					Section dis = new Section(rs.getString("sectionID"), rs.getString("type"), 
+							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 					lectureSection.addDiscussion(dis);
 				}
 				ps = conn.prepareStatement("SELECT * from Lab_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
-				ResultSet labResultSet = ps.executeQuery();
-				while (labResultSet.next()) {
-					Section lab = new Section(labResultSet.getString("sectionID"), labResultSet.getString("type"), 
-							labResultSet.getString("type"), labResultSet.getString("start_time"), labResultSet.getString("end_time"), 
-							labResultSet.getString("day"), labResultSet.getString("instructor"),labResultSet.getInt("numRegistered"), 
-							labResultSet.getInt("classCapacity"), labResultSet.getString("Building_ID"), labResultSet.getString("Course_ID"), courseName);
+				
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					Section lab = new Section(rs.getString("sectionID"), rs.getString("type"), 
+							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 					lectureSection.addLab(lab);
 				}
 				ps = conn.prepareStatement("SELECT * from Quiz_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
-				ResultSet quizResultSet = ps.executeQuery();
-				while (quizResultSet.next()) {
-					Section quiz = new Section(quizResultSet.getString("sectionID"), quizResultSet.getString("type"), 
-							quizResultSet.getString("type"), quizResultSet.getString("start_time"), quizResultSet.getString("end_time"), 
-							quizResultSet.getString("day"), quizResultSet.getString("instructor"),quizResultSet.getInt("numRegistered"), 
-							quizResultSet.getInt("classCapacity"), quizResultSet.getString("Building_ID"), quizResultSet.getString("courseID"), courseName);
+				
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					Section quiz = new Section(rs.getString("sectionID"), rs.getString("type"), 
+							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("courseID"), courseName);
 					lectureSection.addQuiz(quiz);;
 				}
 				course.addLectureSection(lectureSection);
 			}
 			return course;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
 		}
 	}
-	/*
-	 * RETURN VALUE
-	 * ArrayList<String>: NAMES OF COURSES THAT CONTAIN KEYWORD AS PREFIX
-	 * NULL: NO RESULT
+
+	/**
+	 * Return a list of course names or null.
+	 * 
+	 * @param keyword
+	 * @return
 	 */
 	public ArrayList<String> getCourseNames(String keyword) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		
+		if (conn == null) return null;
 		ArrayList<String> courses = new ArrayList<>();
 		try {
-			conn = getConnection();
-			System.out.println("connected to database");
 			ps = conn.prepareStatement("SELECT major, number FROM Course WHERE major LIKE ?;");
 			ps.setString(1, "%" + keyword + "%");
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				courses.add(resultSet.getString("major") + "-" + resultSet.getString("number"));
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				courses.add(rs.getString("major") + "-" + rs.getString("number"));
 			}
 			return courses;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
+	
 	public void createSchedule(String username, ArrayList<String> sectionIDs) throws SQLException {
-		Connection conn = null;
-		PreparedStatement ps = null;
+		
+		if (conn == null) return;
 		try {
-			conn = getConnection();
-			System.out.println("connected to the database");
-			String stmt = "INSERT INTO Schedule (studentUserName ";
+			String sql = "INSERT INTO Schedule (studentUserName ";
 			for (int i = 0; i < sectionIDs.size(); i++) {
-				stmt += ", sectionID" + String.valueOf(i+1);
+				sql += ", sectionID" + String.valueOf(i+1);
 			}
-			stmt += ") VALUE (?";
+			sql += ") VALUE (?";
 			for (int i = 0; i < sectionIDs.size(); i++) {
-				stmt += ", ?";
+				sql += ", ?";
 			}
-			stmt += ") ON DUPLICATE KEY UPDATE ";
+			sql += ") ON DUPLICATE KEY UPDATE ";
 			for (int i = 0; i < sectionIDs.size(); i++) {
-				stmt += "sectionID" + String.valueOf(i+1) + "=?";
-				if (i < sectionIDs.size() - 1) stmt += ",";
+				sql += "sectionID" + String.valueOf(i+1) + "=?";
+				if (i < sectionIDs.size() - 1) sql += ",";
 			}
-			stmt += ";";
-			System.out.println("statement: " + stmt);
-			ps = conn.prepareStatement(stmt);
+			sql += ";";
+			System.out.println("statement: " + sql);
+			ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				ps.setString(i+2, sectionIDs.get(i));
@@ -366,143 +350,111 @@ public class DatabaseHandler {
 				ps.setString(i + sectionIDs.size()+2, sectionIDs.get(i));
 			}
 			ps.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
+	
 	public String getCourseNameByID(String courseID) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		
+		if (conn == null) return null;
+		
 		try {
-			conn = getConnection();
-			System.out.println("connected to the database");
 			ps = conn.prepareStatement("SELECT * FROM Course WHERE ID=?;");
 			ps.setString(1, courseID);
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				String major = resultSet.getString("major");
-				String number = resultSet.getString("number");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String major = rs.getString("major");
+				String number = rs.getString("number");
 				if (major != null && number != null) return major + "-" + number;
 			}
 			return null;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
+	
 	public Section getSectionByID(String ID) {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		if (conn == null) return null;
+		
 		try {
-			conn = getConnection();
-			System.out.println("connected to the database");
-			
 			ps = conn.prepareStatement("SELECT * FROM Lecture_Sections WHERE sectionID=?;");
 			ps.setString(1, ID);
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				String courseID = resultSet.getString("Course_ID");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
-				LectureSection lectureSection = new LectureSection(resultSet.getString("sectionID"), resultSet.getString("type"), 
-						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
+						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+						rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				if (lectureSection != null) return lectureSection;
 			}
 			
 			ps = conn.prepareStatement("SELECT * FROM Discussion_Sections WHERE sectionID=?;");
 			ps.setString(1, ID);
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				String courseID = resultSet.getString("Course_ID");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
-				Section disSection = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
-						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				Section disSection = new Section(rs.getString("sectionID"), rs.getString("type"), 
+						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+						rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				if (disSection != null) return disSection;
 			}
 			
 			ps = conn.prepareStatement("SELECT * FROM Lab_Sections WHERE sectionID=?;");
 			ps.setString(1, ID);
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				String courseID = resultSet.getString("Course_ID");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
-				Section labSection = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
-						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				Section labSection = new Section(rs.getString("sectionID"), rs.getString("type"), 
+						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+						rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				if (labSection != null) return labSection;
 			}
 			
 			ps = conn.prepareStatement("SELECT * FROM Quiz_Sections WHERE sectionID=?;");
 			ps.setString(1, ID);
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				String courseID = resultSet.getString("Course_ID");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
-				Section quizSection = new Section(resultSet.getString("sectionID"), resultSet.getString("type"), 
-						resultSet.getString("type"), resultSet.getString("start_time"), resultSet.getString("end_time"), 
-						resultSet.getString("day"), resultSet.getString("instructor"),resultSet.getInt("numRegistered"), 
-						resultSet.getInt("classCapacity"), resultSet.getString("Building_ID"), resultSet.getString("Course_ID"), courseName);
+				Section quizSection = new Section(rs.getString("sectionID"), rs.getString("type"), 
+						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+						rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				if (quizSection != null) return quizSection;
 			}
+			return null;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		}
+		} 
 	}
+	
 	public Vector<Section> getSchedule(String username) throws SQLException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		if (conn == null) return null;
 		Vector<Section> schedule = new Vector<>();
 		try {
-			conn = getConnection();
-			System.out.println("connected to the database");
 			ps = conn.prepareStatement("SELECT * FROM Schedule WHERE studentUserName=?;");
 			ps.setString(1, username);
-			resultSet = ps.executeQuery();
-			while (resultSet.next()) {
+			rs = ps.executeQuery();
+			while (rs.next()) {
 				for (int i = 0; i < 10; i++) {
-					String sectionID = resultSet.getString("sectionID" + String.valueOf(i+1));
+					String sectionID = rs.getString("sectionID" + String.valueOf(i+1));
 					if (sectionID != null) {
 						Section section = getSectionByID(sectionID);
 						if (section != null) schedule.add(section);
@@ -510,20 +462,97 @@ public class DatabaseHandler {
 				}
 			}
 			return schedule;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} finally {
-			try {
-				if (ps != null) {
-					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
+		} 
+	}
+
+	public void addCourse(Course course) {
+		if (conn == null)
+			return;
+		String sql = "";
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT * FROM Course WHERE major= " + "'" 
+					+ course.getMajor() + "' AND number='" + course.getNumber() + "'";
+			rs = stmt.executeQuery(sql);
+			// Check whether the course has been stored
+			if (!rs.next()) {
+				sql = course.insertDBString();
+				stmt.executeUpdate(sql);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(sql);
 		}
+	}
+
+	public void addBuilding(BuildingCandidate building) {
+		if (conn == null)
+			return;
+		String sql = "";
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT * FROM Building WHERE ID= " + "'" 
+					+ building.getID() + "'";
+			rs = stmt.executeQuery(sql);
+			// Check whether the building has been stored
+			if (!rs.next()) {
+				sql = building.insertDBString();
+				stmt.executeUpdate(sql);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(sql);
+		}
+	}
+	
+	public void addSection(Section section) {
+		if (conn == null)
+			return;
+		String sql = "";
+		try {
+			stmt = conn.createStatement();
+			sql = section.getSelectDBString();
+			rs = stmt.executeQuery(sql);
+			// Check whether the section has been stored
+			if (!rs.next()) {
+				sql = section.insertDBString();
+				stmt.executeUpdate(sql);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(sql);
+		}
+	}
+
+	/**
+	 * Report the course id of {@code course}.
+	 * 
+	 * @param course
+	 * @return either a positive integer, or -1 if not existed, or -2 connection loss.
+	 */
+	public int getCourseId(Course course) {
+		if (conn == null) return -2;
+		int ID = -1;
+		String sql = "";
+		try {
+			stmt = conn.createStatement();
+			sql = "SELECT * FROM Course WHERE major= " + "'" 
+					+ course.getMajor() + "' AND number='" + course.getNumber() + "'";
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				ID = Integer.parseInt(rs.getString("ID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println(sql);
+		}
+		
+		return ID;
 	}
 }
