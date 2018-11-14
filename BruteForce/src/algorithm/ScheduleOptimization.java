@@ -665,6 +665,9 @@ public class ScheduleOptimization {
 		for (int i = 0; i < schedule.size(); i++) {
 			
 			boolean[] days = parseDays(schedule.get(i).getDay()); 
+			
+			System.out.println(days[1] + " " + days[2] + " " + days[3] + " " + days[4] + " " + days[5]);
+
 			if (days[1]) {
 				monday.add(schedule.get(i)); 
 			}
