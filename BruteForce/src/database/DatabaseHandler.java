@@ -335,9 +335,9 @@ public class DatabaseHandler {
 				sql += ", ?";
 			}
 			sql += ") ON DUPLICATE KEY UPDATE ";
-			for (int i = 0; i < sectionIDs.size(); i++) {
+			for (int i = 0; i < 10; i++) {
 				sql += "sectionID" + String.valueOf(i+1) + "=?";
-				if (i < sectionIDs.size() - 1) sql += ",";
+				if (i < 9) sql += ",";
 			}
 			sql += ";";
 			System.out.println("statement: " + sql);
@@ -348,6 +348,9 @@ public class DatabaseHandler {
 			}
 			for (int i = 0; i < sectionIDs.size(); i++) {
 				ps.setString(i + sectionIDs.size()+2, sectionIDs.get(i));
+			}
+			for (int i = sectionIDs.size(); i < 10; i++) {
+				ps.setString(i + sectionIDs.size()+2, null);
 			}
 			ps.executeUpdate();
 		} catch (SQLException e1) {
@@ -360,14 +363,14 @@ public class DatabaseHandler {
 	public String getCourseNameByID(String courseID) {
 		
 		if (conn == null) return null;
-		
+		ResultSet temp = null;
 		try {
 			ps = conn.prepareStatement("SELECT * FROM Course WHERE ID=?;");
 			ps.setString(1, courseID);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				String major = rs.getString("major");
-				String number = rs.getString("number");
+			temp = ps.executeQuery();
+			while (temp.next()) {
+				String major = temp.getString("major");
+				String number = temp.getString("number");
 				if (major != null && number != null) return major + "-" + number;
 			}
 			return null;
@@ -383,19 +386,20 @@ public class DatabaseHandler {
 	public Section getSectionByID(String ID) {
 		if (conn == null) return null;
 		
+		ResultSet temp = null;
 		try {
 			ps = conn.prepareStatement("SELECT * FROM Lecture_Sections WHERE sectionID=?;");
 			ps.setString(1, ID);
-			rs = ps.executeQuery();
+			temp = ps.executeQuery();
 			while (rs.next()) {
-				String courseID = rs.getString("Course_ID");
+				String courseID = temp.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
 				System.out.println(courseName);
-				System.out.println(rs.toString());
-				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
-						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
-						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
-						rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
+				System.out.println("sectionID is... " + rs.getString("type"));
+				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), temp.getString("type"), 
+						temp.getString("type"), temp.getString("start_time"), temp.getString("end_time"), 
+						temp.getString("day"), temp.getString("instructor"),temp.getInt("numRegistered"), 
+						temp.getInt("classCapacity"), temp.getString("Building_ID"), temp.getString("Course_ID"), courseName);
 				if (lectureSection != null) return lectureSection;
 			}
 			
@@ -457,6 +461,7 @@ public class DatabaseHandler {
 			while (rs.next()) {
 				for (int i = 0; i < 10; i++) {
 					String sectionID = rs.getString("sectionID" + String.valueOf(i+1));
+					System.out.println("finding section: " + sectionID);
 					if (sectionID != null) {
 						Section section = getSectionByID(sectionID);
 						if (section != null) schedule.add(section);
