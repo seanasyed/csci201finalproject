@@ -682,6 +682,7 @@ public class ScheduleOptimization {
 	
 	public Vector<Section> getSchedule() {
 		
+		System.out.println("Total walking distance: " + getWalkingDistance());
 		if (getWalkingDistance() > distanceConstraint) {
 			schedule.clear(); 
 		}
