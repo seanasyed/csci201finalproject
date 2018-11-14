@@ -2,6 +2,7 @@ package algorithm;
 
 import java.util.Vector;
 
+import database.DatabaseHandler;
 import model.Course;
 import model.LectureSection;
 import model.Section;
@@ -25,8 +26,16 @@ public class ScheduleOptimization {
 	private Vector<Section> schedule; //Section IDs
 	private int startTimeConstraint = 0; 
 	private int endTimeConstraint = 0; 
+	private double distanceConstraint = 0; 
 	
-	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint) {
+	public ScheduleOptimization(Vector<Course> courses, String startTimeConstraint, String endTimeConstraint, double distanceConstraint) {
+		
+		if (distanceConstraint != -1) {
+			this.distanceConstraint = distanceConstraint;
+		} else {
+			this.distanceConstraint = Integer.MAX_VALUE; 
+		}
+		
 		
 		this.courses = courses; 
 		for (int i = 0; i < courses.size(); i++) {
@@ -630,7 +639,57 @@ public class ScheduleOptimization {
 		return time; 
 	}
 	
+	/*
+	 * Helper method to determine the walking distance for a given schedule based on the coordinates of each Section
+	 */
+	private double getWalkingDistance() { 
+		//convert miles to m 
+		double distanceConstraintInMeters = distanceConstraint * 1609.344;
+		double totalDistanceInMeters = 0;  
+		double deltaPhi = 0; 
+		double deltaLambda = 0; 
+		double a = 0; 
+		double c = 0; 
+		double d = 0; 
+		int R = 6371000; 
+		
+		for (int i = 0; i < schedule.size() - 1; i++) {
+<<<<<<< HEAD
+			double[] section1Coords = DatabaseHandler.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+			double[] section2Coords = DatabaseHandler.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+=======
+			double[] section1Coords = new DatabaseHandler().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+			double[] section2Coords = new DatabaseHandler().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
+>>>>>>> 4892f332d4f033fd12e7ef715a7bbc843bc63098
+			
+			a = 0; 
+			c = 0; 
+			d = 0; 
+			
+			deltaPhi = Math.abs(section1Coords[0] - section2Coords[0]); //Change in latitude
+			deltaLambda = Math.abs(section1Coords[1] - section2Coords[1]); //Change in longitude
+			
+			//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+			a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
+			
+			//c = 2 ⋅ atan2( √a, √(1−a) )
+			c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
+			
+			//d = R ⋅ c
+			d = R * c; 
+			
+			totalDistanceInMeters += d; 
+		}
+		
+		
+		return totalDistanceInMeters / 1609.344; 
+	}
+	
 	public Vector<Section> getSchedule() {
+		
+		if (getWalkingDistance() > distanceConstraint) {
+			schedule.clear(); 
+		}
 		return schedule; 
 	}
 }
