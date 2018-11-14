@@ -745,9 +745,11 @@ public class ScheduleOptimization {
 				
 				//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
 				a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
+				System.out.println("a = " + a);
 				
 				//c = 2 ⋅ atan2( √a, √(1−a) )
 				c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
+				System.out.println("c = " + c);
 				
 				//d = R ⋅ c
 				d = R * c; 
