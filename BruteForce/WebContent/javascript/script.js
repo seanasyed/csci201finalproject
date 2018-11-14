@@ -81,6 +81,10 @@ function checkCourseListOnServer() {
   var courseList = [];
   var startTime = $("#start-time").val();
   var endTime = $("#end-time").val();
+
+  var distance = $("#distance").val();
+  console.log("distance: " + distance);
+  
   for (var i = 0; i < $("#course-list").children().length; i++) {
     var text = $("#course-list").children()[i].innerText;
     text = text.replace(/\n/gi, "");
@@ -88,7 +92,7 @@ function checkCourseListOnServer() {
   }
   var courseListJSON = JSON.stringify(courseList);
   var username = $('#username').text();
-  console.log('username:' + username);
+  console.log('username is:' + username);
   $.ajax({
     url: "BruteForce",
     data: {
@@ -96,6 +100,7 @@ function checkCourseListOnServer() {
       username: username,
       startTime: startTime,
       endTime: endTime,
+      distance: distance,
       courseList: courseListJSON
     },
     success: function(result) {
