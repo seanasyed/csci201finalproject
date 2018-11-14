@@ -121,13 +121,19 @@ public class BruteForceHandler {
 			}
 			break;
 			case "check_schedule": {
+				//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 				System.out.println("check_schedule");
 				String username = request.getParameter("username");
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
 				
-	            System.out.println("submit_schedule");
+				double distanceConstraint = Double.parseDouble(request.getParameter("distance")); 
+				System.out.println("distance in check_: " +distanceConstraint);
+				
+				
+				//TODO: DISCUSS WITH FRANK
+	            System.out.println("check_shedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
 	            Vector<Course> vecCourses = new Vector<Course>();
@@ -159,7 +165,7 @@ public class BruteForceHandler {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
 	            
-	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
@@ -181,13 +187,16 @@ public class BruteForceHandler {
 				break;
 			}
 			case "submit_schedule": {
+				//TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 				System.out.println("check_schedule");
 				String username = request.getParameter("username");
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
-				double distanceContraint = Double.parseDouble(request.getParameter("distanceConstraint")); 
-		
+				double distanceConstraint = Double.parseDouble(request.getParameter("distance")); 
+				System.out.println("distance in submit_schedule: " +distanceConstraint);
+				
+				//TODO: DISCUSS WITH FRANK
 	            System.out.println("submit_schedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
@@ -219,7 +228,7 @@ public class BruteForceHandler {
 	            for(int i = 0; i < vecCourses.size(); i++) {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
-	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, distanceConstraint);
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
@@ -270,6 +279,7 @@ public class BruteForceHandler {
 						System.out.println(ioe.getMessage());
 					}
 				} catch (SQLException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
