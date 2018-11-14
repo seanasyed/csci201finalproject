@@ -81,10 +81,6 @@ function checkCourseListOnServer() {
   var courseList = [];
   var startTime = $("#start-time").val();
   var endTime = $("#end-time").val();
-
-  var distance = $("#distance").val();
-  console.log("distance: " + distance);
-  
   for (var i = 0; i < $("#course-list").children().length; i++) {
     var text = $("#course-list").children()[i].innerText;
     text = text.replace(/\n/gi, "");
@@ -92,16 +88,8 @@ function checkCourseListOnServer() {
   }
   var courseListJSON = JSON.stringify(courseList);
   var username = $('#username').text();
-<<<<<<< HEAD
-<<<<<<< HEAD
   var distance = $('#distance').val();
   console.log('distance:' + distance);
-=======
-  console.log('username is:' + username);
->>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
-=======
-  console.log('username is:' + username);
->>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
   $.ajax({
     url: "BruteForce",
     data: {
@@ -109,15 +97,7 @@ function checkCourseListOnServer() {
       username: username,
       startTime: startTime,
       endTime: endTime,
-<<<<<<< HEAD
-<<<<<<< HEAD
       distanceConstraint: distance,
-=======
-      distance: distance,
->>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
-=======
-      distance: distance,
->>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
       courseList: courseListJSON
     },
     success: function(result) {

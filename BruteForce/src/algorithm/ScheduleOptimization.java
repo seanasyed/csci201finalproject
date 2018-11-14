@@ -23,8 +23,6 @@ public class ScheduleOptimization {
 
 	private Vector<Course> courses;
 	
-	private DatabaseHandler dbh = DatabaseHandler.getOneInstance();
-	
 	private Vector<Section> schedule; //Section IDs
 	private int startTimeConstraint = 0; 
 	private int endTimeConstraint = 0; 
@@ -655,18 +653,8 @@ public class ScheduleOptimization {
 		int R = 6371000; 
 		
 		for (int i = 0; i < schedule.size() - 1; i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 			double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
 			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-=======
-			double[] section1Coords = dbh.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-			double[] section2Coords = dbh.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
->>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
-=======
-			double[] section1Coords = dbh.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-			double[] section2Coords = dbh.getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
->>>>>>> 5d05a3cf00184c198244b2cacb6175f04185fe87
 			
 			a = 0; 
 			c = 0; 
