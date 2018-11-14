@@ -74,6 +74,30 @@ public class DatabaseHandler {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param buildingID
+	 * @return the coordinates for a given buildingID
+	 */
+	public double[] getLatitudeAndLongitude(String buildingID) {
+		double[] coords = new double[2]; 
+		
+		try {
+			ps = conn.prepareStatement("SELECT * FROM Building WHERE buildingID=?");
+			ps.setString(1, buildingID);
+			rs = ps.executeQuery(); 
+			while(rs.next()) {
+				coords[0] = Double.parseDouble(rs.getString("latitude")); 
+				coords[1] = Double.parseDouble(rs.getString("longitude")); 
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		
+		return coords; 
+	}
+	
 	
 	/**
 	 * Report whether {@code username} matches {@code password}.
@@ -386,20 +410,20 @@ public class DatabaseHandler {
 	public Section getSectionByID(String ID) {
 		if (conn == null) return null;
 		
-		ResultSet temp = null;
+		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement("SELECT * FROM Lecture_Sections WHERE sectionID=?;");
 			ps.setString(1, ID);
-			temp = ps.executeQuery();
+			rs = ps.executeQuery();
 			while (rs.next()) {
-				String courseID = temp.getString("Course_ID");
+				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
 				System.out.println(courseName);
 				System.out.println("sectionID is... " + rs.getString("type"));
-				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), temp.getString("type"), 
-						temp.getString("type"), temp.getString("start_time"), temp.getString("end_time"), 
-						temp.getString("day"), temp.getString("instructor"),temp.getInt("numRegistered"), 
-						temp.getInt("classCapacity"), temp.getString("Building_ID"), temp.getString("Course_ID"), courseName);
+				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
+						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
+						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
+						rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				if (lectureSection != null) return lectureSection;
 			}
 			

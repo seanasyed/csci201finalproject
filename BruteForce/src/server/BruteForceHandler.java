@@ -160,7 +160,8 @@ public class BruteForceHandler {
 	            for(int i = 0; i < vecCourses.size(); i++) {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
-	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
+	            
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
@@ -188,6 +189,7 @@ public class BruteForceHandler {
 				String startTime = request.getParameter("startTime"); 
 				String endTime = request.getParameter("endTime");
 				String courseListJSON = request.getParameter("courseList");
+				double distanceContraint = Double.parseDouble(request.getParameter("distanceConstraint")); 
 				
 				//TODO: DISCUSS WITH FRANK
 	            System.out.println("submit_schedule");
@@ -221,7 +223,7 @@ public class BruteForceHandler {
 	            for(int i = 0; i < vecCourses.size(); i++) {
 	            	System.out.println("Course: " + vecCourses.get(i));
 	            }
-	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime);
+	            ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime, Double.parseDouble(request.getParameter("distanceConstraint")));
 	            Vector<Section> vecSections = so.getSchedule();
 	            Map<String, String> data = new HashMap<String, String>();
 	            if (vecSections.size() <= 0) {
