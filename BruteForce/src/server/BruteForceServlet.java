@@ -14,8 +14,6 @@ public class BruteForceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BruteForceHandler bfh;
 	//private BruteForceThread bft;
-	//TODO Establish connection to database
-	//TODO Schedule optimization
 	
 	public BruteForceServlet() {
 		super();
