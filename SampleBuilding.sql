@@ -2,7 +2,7 @@
 -- Query: SELECT * FROM scheduling.building
 LIMIT 0, 50000
 
--- Date: 2018-11-13 13:53
+-- Date: 2018-11-13 21:47
 */
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('ABA','Anna Bing Arnold Child Care Center','		2715 University Avenue',-118.28076,34.02835);
 INSERT INTO `building` (`ID`,`fullName`,`address`,`longitude`,`latitude`) VALUES ('ABM','American Button Manufacturing Building','',-118.27626,34.02565);
