@@ -753,6 +753,7 @@ public class ScheduleOptimization {
 				d = R * c; 
 				
 				totalDistanceInMeters += d; 
+				System.out.println("Distance from one section to another in meters: " + d);
 				
 				for (int i = 0; i < day.size(); i++) {
 					if (day.get(i).getSectionID().equals(earliest.getSectionID())) {
