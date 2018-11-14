@@ -55,9 +55,9 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						<input type="text" id="start-time" class=
-						"form-control timepicker" placeholder="Start Time">
+						<input type="text" id="start-time" class="form-control timepicker" placeholder="Start Time">
 						<input type="text" id="end-time" class="form-control timepicker" placeholder="End Time">
+						<input type="text" id="distance" class="form-control" placeholder="Distance">
 					</div>
 				</div>
 				<div class="row">
