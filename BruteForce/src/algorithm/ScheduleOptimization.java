@@ -728,8 +728,13 @@ public class ScheduleOptimization {
 				
 				for (Section s : day) {
 					if (parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1] < minTime) {
+						
+						secondEarliest = earliest; 
+						secondMinTime = minTime; 
+						
 						minTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
 						earliest = s; 
+						
 					} else if (parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1] < secondMinTime) {
 						secondEarliest = s; 
 						secondMinTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
