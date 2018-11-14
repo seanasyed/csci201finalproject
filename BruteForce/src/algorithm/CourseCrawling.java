@@ -197,26 +197,32 @@ public class CourseCrawling {
 			if (type.contains("Lecture")) type = "Lecture";
 			// Process time {[x]x:xx-[x]x:xx(a/p)m}
 			String[] times = processTime(getInnerHTMLByClassName(tmp, "time"));	
-			// Process days
-			String days = processDays(getInnerHTMLByClassName(tmp, "days").toUpperCase());
-			// Process instructor
-			String instructor = processInstructor(getInnerHTMLByClassName(tmp, "instructor"));
-			// Process class capacity
-			String classCapacityString = getInnerHTMLByClassName(tmp, "registered");
-			classCapacityString = classCapacityString.substring(classCapacityString.indexOf("of ") + 3);
-			classCapacityString = classCapacityString.substring(0, classCapacityString.indexOf("<"));
-			int classCapacity = classCapacityString.contains(":") || classCapacityString.contains(" ") ? 0 : Integer.parseInt(classCapacityString);
-			String building_ID = tmp.contains("\"map\"") ? getInnerHTMLByClassName(tmp, "map").substring(0,3) : "TBA";
-			
-			Section section = new Section(sectionID, type, times[0], times[1], days,
-					instructor, building_ID, classCapacity, courseID);
-			// Add lecture id
-			if (section.isLecture()) {
-				lectures.add(section);
-				lectureSection_IDs.add(sectionID);
-			} else {
-				// Add a new section object
-				sections.add(section);
+			if (times != null) {
+				// Process days
+				String days = processDays(getInnerHTMLByClassName(tmp, "days").toUpperCase());
+				if (days != null) {
+					// Process instructor
+					String instructor = processInstructor(getInnerHTMLByClassName(tmp, "instructor"));
+					// Process class capacity
+					String classCapacityString = getInnerHTMLByClassName(tmp, "registered");
+					classCapacityString = classCapacityString.substring(classCapacityString.indexOf("of ") + 3);
+					classCapacityString = classCapacityString.substring(0, classCapacityString.indexOf("<"));
+					int classCapacity = classCapacityString.contains(":") || classCapacityString.contains(" ") ? 0 : Integer.parseInt(classCapacityString);
+					if (classCapacity > 0) {
+						String building_ID = tmp.contains("\"map\"") ? getInnerHTMLByClassName(tmp, "map").substring(0,3) : "TBA";
+						
+						Section section = new Section(sectionID, type, times[0], times[1], days,
+								instructor, building_ID, classCapacity, courseID);
+						// Add lecture id
+						if (section.isLecture()) {
+							lectures.add(section);
+							lectureSection_IDs.add(sectionID);
+						} else {
+							// Add a new section object
+							sections.add(section);
+						}
+					}
+				}
 			}
 		}
 		
