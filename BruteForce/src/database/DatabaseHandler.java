@@ -35,7 +35,7 @@ public class DatabaseHandler {
 	/*
 	 * ---- Private constructor ----
 	 */
-	private DatabaseHandler() {
+	public DatabaseHandler() {
 		// No code needs here.
 	}
 	
@@ -91,7 +91,7 @@ public class DatabaseHandler {
 				coords[1] = Double.parseDouble(rs.getString("longitude")); 
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			//Auto-generated catch block
 			e.printStackTrace();
 		}  
 		
