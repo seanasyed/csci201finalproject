@@ -192,6 +192,7 @@ public class ScheduleOptimization {
 			System.out.println("Backtracking lab index: " + backtrackingLabIndex);
 			System.out.println();
 			//Replace the parameters with the backtracking indexes
+			state = -1; 
 			
 			if (backtrackingLectureIndex != -1) {
 				
@@ -201,6 +202,7 @@ public class ScheduleOptimization {
 				discussions = lecture.getDiscussions(); 
 				labs = lecture.getLabs(); 
 				quizzes = lecture.getQuizzes(); 
+				state = 0; 
 			}
 			
 			if (backtrackingDiscussionIndex != -1) {
@@ -226,16 +228,22 @@ public class ScheduleOptimization {
 			if (quizzes.size() > 0) {
 				
 				System.out.println("Quizzes is being incremented for backtracking");
-				state = 3;
+				if (state == -1) {
+					state = 3; 
+				}
 				quizIndex++; 
 			} else if (labs.size() > 0) {
 				System.out.println("Labs is being incremented for backtracking");
 				labIndex++; 
-				state = 2;
+				if (state == -1) {
+					state = 2; 
+				}
 			} else if (discussions.size() > 0) {
 				
 				System.out.println("Discussions is being incremented for backtracking");
-				state = 1;
+				if (state == -1) {
+					state = 1; 
+				}
 				discussionIndex++; 
 			} else {
 				
