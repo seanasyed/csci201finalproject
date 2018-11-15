@@ -40,7 +40,7 @@ public class ScheduleOptimization {
 		for (int i = 0; i < courses.size(); i++) {
 			//System.out.println(courses.get(i).getName());
 			for (int j = 0; j < courses.get(i).getLectureSections().size(); j++) {
-				//System.out.println(courses.get(i).getLectureSections().get(j).getSectionID());
+				System.out.println(courses.get(i).getLectureSections().get(0).getCourseName() + " " + courses.get(i).getLectureSections().get(j).getSectionID());
 			}
 			//System.out.println();
 		}
