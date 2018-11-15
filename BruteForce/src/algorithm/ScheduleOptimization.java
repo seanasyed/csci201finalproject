@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 package algorithm;
 
 import java.util.Vector;
@@ -808,4 +806,3 @@ public class ScheduleOptimization {
 		return schedule; 
 	}
 }
->>>>>>> 2f088bf4c015cd2434932cc21fab75bcf30cf222
