@@ -271,7 +271,7 @@ INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `
 INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
 	VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', -118.2839584351, 34.0212898254);
 INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
-	VALUES ('NA', '', '', '', NULL, NULL);
+	VALUES ('NA', '', '', NULL, NULL);
 INSERT INTO 'scheduling'.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
 	VALUES ('SAL','Computer Center at Salvatori Computer Scie...','',-118.28956,34.01970);
 INSERT INTO 'scheduling'.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
