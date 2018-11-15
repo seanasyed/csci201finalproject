@@ -23,7 +23,7 @@ public class ScheduleOptimization {
 
 	private Vector<Course> courses;
 	
-	private Vector<Section> schedule; //Section IDs
+	private Vector<Section> schedule; 
 	private int startTimeConstraint = 0; 
 	private int endTimeConstraint = 0; 
 	private double distanceConstraint = 0; 
@@ -43,7 +43,7 @@ public class ScheduleOptimization {
 				System.out.println(courses.get(i).getLectureSections().get(0).getCourseName() + " " + courses.get(i).getLectureSections().get(j).getSectionID());
 			}
 			//System.out.println();
-		}
+		} 
 		
 		if (!startTimeConstraint.equals("")) {
 			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1];
@@ -71,6 +71,7 @@ public class ScheduleOptimization {
 		//System.out.println("Courses size is " + courses.size());
 		
 		//Initial recursive call 
+		
 		addCourse(0,0,0,0,0,0, false); 
 		
 		
@@ -186,43 +187,85 @@ public class ScheduleOptimization {
 		//If any of the backtracking indexes != -1, handle all backtracking procedures
 		if (backtrack) {
 		
-			//System.out.println("Backtracking detected"); 
+			System.out.println("Backtracking detected"); 
+			System.out.println("Backtracking lecture index: " + backtrackingLectureIndex);
+			System.out.println("Backtracking discussion index: " + backtrackingDiscussionIndex);
+			System.out.println("Backtracking lab index: " + backtrackingLabIndex);
+			System.out.println();
 			//Replace the parameters with the backtracking indexes
+			state = -1; 
 			
 			if (backtrackingLectureIndex != -1) {
+				
+				System.out.println("Lecture index changed, adjusting other Vectors accordingly");
 				lectureIndex = backtrackingLectureIndex; 
 				lecture = lectures.get(lectureIndex); 
 				discussions = lecture.getDiscussions(); 
 				labs = lecture.getLabs(); 
 				quizzes = lecture.getQuizzes(); 
+				state = 0; 
 			}
 			
 			if (backtrackingDiscussionIndex != -1) {
+				
+				System.out.println("Discussion index changed");
 				discussionIndex = backtrackingDiscussionIndex; 
 			}
 			
 			if (backtrackingLabIndex != -1) {
+				
+				System.out.println("Lab index changed");
 				labIndex = backtrackingLabIndex; 
 			}
 			
 			if (backtrackingQuizIndex != -1) {
+				
+				System.out.println("Quiz index changed");
 				quizIndex = backtrackingQuizIndex;
 			}
 			
 			
 			//Increment the farthest section
 			if (quizzes.size() > 0) {
+				
+				System.out.println("Quizzes is being incremented for backtracking");
+				if (state == -1) {
+					state = 3; 
+				}
 				quizIndex++; 
 			} else if (labs.size() > 0) {
-				labIndex++; 
+				System.out.println("Labs is being incremented for backtracking");
+				labIndex++;
+				if (state == -1) {
+					state = 2; 
+				}
 			} else if (discussions.size() > 0) {
+				
+				System.out.println("Discussions is being incremented for backtracking");
+				if (state == -1) {
+					state = 1; 
+				}
 				discussionIndex++; 
 			} else {
+				
+				System.out.println("Lectures is being incremented for backtracking");
+				state = 0;
 				lectureIndex++; 
+				
+				if (lectureIndex <= lectures.size()) {
+					lecture = lectures.get(lectureIndex); 
+					
+					discussions = lecture.getDiscussions(); 
+					labs = lecture.getLabs(); 
+					quizzes = lecture.getQuizzes(); 
+				}
 			}
 			
+			discussions = lecture.getDiscussions(); 
+			labs = lecture.getLabs(); 
+			quizzes = lecture.getQuizzes(); 
+			
 			//Set the state to 3
-			state = 0; 
 			
 			//Remove all of the course's sections from the schedule
 			for (int i = 0; i < schedule.size(); i++) {
@@ -230,6 +273,8 @@ public class ScheduleOptimization {
 					schedule.remove(i); 
 				}
 			}
+			
+			
 			
 		}
 		
@@ -330,6 +375,8 @@ public class ScheduleOptimization {
 		//2 - lab
 		} else if (state == 2) {
 			if (labIndex >= labs.size()) {
+				
+				System.out.println("Could not add " + labs.get(0).getCourseName() + " lab to schedule");
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1, false);
 				//System.out.println("Line 170");
 				return; 
@@ -353,7 +400,7 @@ public class ScheduleOptimization {
 				
 				schedule.add(lecture); 
 				//System.out.println("Line 192, size = " + schedule.size());
-				//System.out.println("Added lecture section to course " + lecture.getCourseName());
+				System.out.println("Added lecture section to course " + lecture.getCourseName());
 				//System.out.println("Increasing state to 1\n");
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1, false); 
 				
@@ -372,7 +419,7 @@ public class ScheduleOptimization {
 					}
 				}
 				//System.out.println();
-				//System.out.println("Reverting to previous course with backtrack = true\n");
+				System.out.println("Could not add " + course.getName() + ". Reverting to previous course with backtrack = true\n");
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
 				//System.out.println("Line 197");
 				return; 
@@ -395,6 +442,8 @@ public class ScheduleOptimization {
 		//2 - Lab
 		else if (state == 2) {
 			if (noConflict(labs.get(labIndex))) {
+				
+				System.out.println("Successfully added lab section for " + labs.get(0).getCourseName());
 				schedule.add(labs.get(labIndex));
 				//System.out.println("Line 219, size = " + schedule.size());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3, false); 
@@ -424,8 +473,8 @@ public class ScheduleOptimization {
 		//4 - Done
 		else if (state == 4) {
 			//System.out.println("Line 243");
-			//System.out.println("Completed adding course " + lecture.getCourseName());
-			//System.out.println("Moving onto next course\n");
+			System.out.println("Completed adding course " + lecture.getCourseName());
+			System.out.println("Moving onto next course\n");
 			addCourse(courseIndex + 1, 0, 0, 0, 0, 0, false); 
 			return; 
 		}
