@@ -186,10 +186,16 @@ public class ScheduleOptimization {
 		//If any of the backtracking indexes != -1, handle all backtracking procedures
 		if (backtrack) {
 		
-			//System.out.println("Backtracking detected"); 
+			System.out.println("Backtracking detected"); 
+			System.out.println("Backtracking lecture index: " + backtrackingLectureIndex);
+			System.out.println("Backtracking discussion index: " + backtrackingDiscussionIndex);
+			System.out.println("Backtracking lab index: " + backtrackingLabIndex);
+			System.out.println();
 			//Replace the parameters with the backtracking indexes
 			
 			if (backtrackingLectureIndex != -1) {
+				
+				System.out.println("Lecture index changed, adjusting other Vectors accordingly");
 				lectureIndex = backtrackingLectureIndex; 
 				lecture = lectures.get(lectureIndex); 
 				discussions = lecture.getDiscussions(); 
@@ -198,31 +204,47 @@ public class ScheduleOptimization {
 			}
 			
 			if (backtrackingDiscussionIndex != -1) {
+				
+				System.out.println("Discussion index changed");
 				discussionIndex = backtrackingDiscussionIndex; 
 			}
 			
 			if (backtrackingLabIndex != -1) {
+				
+				System.out.println("Lab index changed");
 				labIndex = backtrackingLabIndex; 
 			}
 			
 			if (backtrackingQuizIndex != -1) {
+				
+				System.out.println("Quiz index changed");
 				quizIndex = backtrackingQuizIndex;
 			}
 			
 			
 			//Increment the farthest section
 			if (quizzes.size() > 0) {
+				
+				System.out.println("Quizzes is being incremented for backtracking");
+				state = 3;
 				quizIndex++; 
 			} else if (labs.size() > 0) {
+				System.out.println("Labs is being incremented for backtracking");
 				labIndex++; 
+				state = 2
 			} else if (discussions.size() > 0) {
+				
+				System.out.println("Discussions is being incremented for backtracking");
+				state = 1
 				discussionIndex++; 
 			} else {
+				
+				System.out.println("Lectures is being incremented for backtracking");
+				state = 0
 				lectureIndex++; 
 			}
 			
 			//Set the state to 3
-			state = 0; 
 			
 			//Remove all of the course's sections from the schedule
 			for (int i = 0; i < schedule.size(); i++) {
