@@ -396,6 +396,8 @@ public class ScheduleOptimization {
 		//0 - Lecture
 		if (state == 0) {
 			//System.out.println("In state 0");
+			
+			
 			if (noConflict(lecture)) {
 				
 				schedule.add(lecture); 
@@ -406,7 +408,7 @@ public class ScheduleOptimization {
 				
 				return; 
 			} else {
-				
+				System.out.println("Could not add lecture section to course " + lecture.getCourseName());
 				//Remove all of the course's sections from the schedule
 				
 				//System.out.println("Preparing for backtracking\n");
@@ -434,6 +436,8 @@ public class ScheduleOptimization {
 				
 				return;
 			} else {
+				
+				System.out.println("Could not add discussion to " + lecture.getCourseName());
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1, false); 
 				//System.out.println("Line 210");
 				return; 
@@ -450,6 +454,8 @@ public class ScheduleOptimization {
 				
 				return; 
 			} else {
+				
+				System.out.println("Could not add lab to " + lecture.getCourseName());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2, false); 
 				//System.out.println("Line 223");
 				return; 
@@ -465,6 +471,8 @@ public class ScheduleOptimization {
 				
 				return; 
 			} else {
+				
+				System.out.println("Could not add quiz to " + lecture.getCourseName());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3, false); 
 				//System.out.println("Line 237");
 				return;  
