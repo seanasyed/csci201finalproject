@@ -235,6 +235,7 @@ public class ScheduleOptimization {
 			} else if (labs.size() > 0) {
 				System.out.println("Labs is being incremented for backtracking");
 				labIndex++; 
+				labIndex++; 
 				if (state == -1) {
 					state = 2; 
 				}
