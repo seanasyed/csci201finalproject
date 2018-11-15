@@ -260,6 +260,10 @@ public class ScheduleOptimization {
 				}
 			}
 			
+			discussions = lecture.getDiscussions(); 
+			labs = lecture.getLabs(); 
+			quizzes = lecture.getQuizzes(); 
+			
 			//Set the state to 3
 			
 			//Remove all of the course's sections from the schedule
