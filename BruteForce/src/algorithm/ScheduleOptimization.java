@@ -231,16 +231,16 @@ public class ScheduleOptimization {
 			} else if (labs.size() > 0) {
 				System.out.println("Labs is being incremented for backtracking");
 				labIndex++; 
-				state = 2
+				state = 2;
 			} else if (discussions.size() > 0) {
 				
 				System.out.println("Discussions is being incremented for backtracking");
-				state = 1
+				state = 1;
 				discussionIndex++; 
 			} else {
 				
 				System.out.println("Lectures is being incremented for backtracking");
-				state = 0
+				state = 0;
 				lectureIndex++; 
 			}
 			
