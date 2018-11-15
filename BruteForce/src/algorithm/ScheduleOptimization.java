@@ -45,6 +45,8 @@ public class ScheduleOptimization {
 			//System.out.println();
 		}
 		
+		return; 
+		
 		if (!startTimeConstraint.equals("")) {
 			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1];
 		}
@@ -234,8 +236,7 @@ public class ScheduleOptimization {
 				quizIndex++; 
 			} else if (labs.size() > 0) {
 				System.out.println("Labs is being incremented for backtracking");
-				labIndex++; 
-				labIndex++; 
+				labIndex++;
 				if (state == -1) {
 					state = 2; 
 				}
