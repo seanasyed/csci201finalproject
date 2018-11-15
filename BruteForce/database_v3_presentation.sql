@@ -327,7 +327,7 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 
---INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
+-- INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
 --	VALUES ('', 'Lecture', '', '', '', '', 0, , '', );	
 
 ------------------- CSCI -------------------------------
@@ -343,7 +343,7 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 	
 -- 109	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('', 'Lecture', '', '', '', '', 0, , 'NA', 1003);	
+	VALUES ('', 'Lecture', '', '', '', '', 0, 80, 'NA', 1003);	
 
 -- 170
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
@@ -353,11 +353,11 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 	
 -- 201	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('NA6', 'Lecture', '', '', '', '', 0, , 'NA', 1005);	
+	VALUES ('NA6', 'Lecture', '', '', '', '', 0, 80, 'NA', 1005);	
 
 -- 270	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('NA7', 'Lecture', '', '', '', '', 0, , 'NA', 1006);	
+	VALUES ('NA7', 'Lecture', '', '', '', '', 0, 80, 'NA', 1006);	
 
 ------------------- EE ---------------------------------
 -- 109
@@ -366,17 +366,17 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 
 -- 202	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('NA3', 'Lecture', '', '', '', '', 0, , 'NA', 1102);	
+	VALUES ('NA3', 'Lecture', '', '', '', '', 0, 90, 'NA', 1102);	
 
 -- 250	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('NA4', 'Lecture', '', '', '', '', 0, , 'NA', 1103);	
+	VALUES ('NA4', 'Lecture', '', '', '', '', 0, 90, 'NA', 1103);	
 
 
 ------------------- WRIT -------------------------------
 -- 120	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('NA0', 'Lecture', '', '', '', '', 0, , 'NA', 2001);	
+	VALUES ('NA0', 'Lecture', '', '', '', '', 0, 90, 'NA', 2001);	
 
 -- 150
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
@@ -384,7 +384,7 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 
 -- 340 	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('NA1', 'Lecture', '', '', '', '', 0, , 'NA', 2003);
+	VALUES ('NA1', 'Lecture', '', '', '', '', 0, 90, 'NA', 2003);
 
 
 COMMIT;
@@ -398,7 +398,7 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 
---INSERT INTO `scheduling`.`Discussion_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
+-- INSERT INTO `scheduling`.`Discussion_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
 --	VALUES ('', '', '', '', '', NULL, , , '', , '');
 
 
@@ -419,7 +419,7 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 
---INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
+-- INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
 --	VALUES ('', '', '', '', '', NULL, , , '', , '');
 
 ------------------- CSCI --------------------------------
@@ -451,7 +451,7 @@ COMMIT;
 START TRANSACTION;
 USE `scheduling`;
 
---INSERT INTO `scheduling`.`Quiz_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
+-- INSERT INTO `scheduling`.`Quiz_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
 --	VALUES ('', '', '', '', '', NULL, , , '', , '');
 
 ------------------- CSCI --------------------------------
