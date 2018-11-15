@@ -304,7 +304,7 @@ public class DatabaseHandler {
 					Section quiz = new Section(rs.getString("sectionID"), rs.getString("type"), 
 							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
-							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("courseID"), courseName);
+							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 					System.out.println("Adding quiz:" + rs.getString("sectionID"));
 					lectureSection.addQuiz(quiz);
 				}
