@@ -33,29 +33,36 @@ public class ICS {
 
 	private static final String FILENAME = "/term-20183.ics", FOLDERNAME = "downloads/";
 
+	private static final String ROOT = "D:\\USC\\CSCI201L\\csci201finalproject\\BruteForce\\WebContent";
+
 	private String username;
 
 	public ICS(String username) {
-		this.username = username;
+
+		this.username = username.substring(0, username.indexOf("@"));
+		System.out.println("username=" + this.username);
 
 	}
 
 	private void initialize() {
 
-		if (!(new File(FOLDERNAME + username).exists())) {
+		System.out.println(ROOT + "/" + FOLDERNAME + username);
+		while (!(new File(ROOT + "/" + FOLDERNAME + username).exists())) {
 			try {
 				// Create the folder
-				(new File(FOLDERNAME + username)).mkdir();
+				(new File(ROOT + "/" + FOLDERNAME + username)).mkdirs();
+				System.out.println("Created folder!");
 
 			} catch (SecurityException se) {
 				se.printStackTrace();
 			}
-			try {
-				// Update out
-				out = new PrintWriter(FOLDERNAME + username + FILENAME);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		}
+		try {
+			// Update out
+			out = new PrintWriter(ROOT + "/" + FOLDERNAME + username + FILENAME);
+			System.out.println("Created out!");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -84,26 +91,40 @@ public class ICS {
 	 * @param section;
 	 */
 	private void writeEvent(Section section) {
+		String currentTime = LocalDate.now(ZoneId.of("America/Los_Angeles")).format(DateTimeFormatter.BASIC_ISO_DATE)
+				+ "T" + LocalTime.now(ZoneId.of("America/Los_Angeles")).format(DateTimeFormatter.ofPattern("HHmmss"));
 		// Begin event
 		out.println("BEGIN:VEVENT");
 		// Create time
-		out.println("CREATED:"
-				+ LocalDate.now(ZoneId.of("America/Los_Angeles")).format(DateTimeFormatter.BASIC_ISO_DATE) + "T"
-				+ LocalTime.now(ZoneId.of("America/Los_Angeles")).format(DateTimeFormatter.ofPattern("HHmmss")));
+		out.println("CREATED:" + currentTime);
 		// Update UID
 		out.println("UID:20183-" + section.getSectionID() + "-" + section.getBuildingID() + username + "@my.usc.edu");
 		// Add rule
 		out.println("RRULE:FREQ=WEEKLY;INTERVAL=1;UNTIL=20181212T000000;BYDAY=" + processDays(section));
-		out.println("EXDATE;TZID=America/Los_Angeles:20181123T140000\n"
-				+ "DTEND;TZID=America/Los_Angeles:20180824T155000\n" + "TRANSP:OPAQUE");
+		out.println("EXDATE;TZID=America/Los_Angeles:20181123T" + processTime(section.getStartTime()) + "\n"
+				+ "DTEND;TZID=America/Los_Angeles:20180824T" + processTime(section.getEndTime()) + "\n"
+				+ "TRANSP:OPAQUE");
 		// Add summary
 		out.println("SUMMARY:" + section.getCourseName() + " (" + section.getType() + ")");
 		// Add time rule
-		out.println("DTSTART;TZID=America/Los_Angeles:20180824T140000\n"
-				+ "DTSTAMP;TZID=America/Los_Angeles:20181114T224212");
+		out.println("DTSTART;TZID=America/Los_Angeles:20180824T" + processTime(section.getStartTime()) + "\n"
+				+ "DTSTAMP;TZID=America/Los_Angeles:" + currentTime);
 		// End event
 		out.println("SEQUENCE:0\nEND:VEVENT");
 
+	}
+
+	/**
+	 * TODO Add your method description here.
+	 * 
+	 * @param startTime
+	 * @return
+	 */
+	private String processTime(String time) {
+		int i = time.indexOf(":");
+
+		return time.substring(0, i).length() > 1 ? time.substring(0, i) + time.substring(i + 1) + "00"
+				: "0" + time.substring(0, i) + time.substring(i + 1) + "00";
 	}
 
 	/**

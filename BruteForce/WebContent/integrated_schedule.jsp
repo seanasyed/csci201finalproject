@@ -74,7 +74,7 @@
 		      //printSchedule(result);
 		      downloadLink += result;
 		      console.log("Download link is: " + downloadLink);
-		      window.open(downloadLink, _blank);
+		      window.open(downloadLink, '_blank');
 		      
     		}
 		  });
