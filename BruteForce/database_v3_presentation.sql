@@ -112,13 +112,8 @@ CREATE TABLE IF NOT EXISTS `scheduling`.`Schedule` (
   `sectionID8` VARCHAR(45) NULL,
   `sectionID9` VARCHAR(45) NULL,
   `sectionID10` VARCHAR(45) NULL,
-  PRIMARY KEY (`studentUserName`),
-  INDEX `fk_Schedule_Student1_idx` (`studentUserName` ASC) VISIBLE,
-  CONSTRAINT `fk_Schedule_Student1`
-    FOREIGN KEY (`studentUserName`)
-    REFERENCES `scheduling`.`Student` (`userName`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`studentUserName`)
+  )
 ENGINE = InnoDB;
 
 
@@ -250,14 +245,14 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 -- Data for table `scheduling`.`Student`
 -- -----------------------------------------------------
-START TRANSACTION;
-USE `scheduling`;
-INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) 
-	VALUES ('seansyed', 'root', 'Sean', 'Syed', 1);
-INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) 
-	VALUES ('gaoxing', 'root', 'Xing', 'Gao', 1);
+-- START TRANSACTION;
+-- USE `scheduling`;
+-- INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) 
+-- 	VALUES ('seansyed', 'root', 'Sean', 'Syed', 1);
+-- INSERT INTO `scheduling`.`Student` (`userName`, `password`, `firstName`, `lastName`, `isActive`) 
+-- 	VALUES ('gaoxing', 'root', 'Xing', 'Gao', 1);
 
-COMMIT;
+-- COMMIT;
 
 
 -- -----------------------------------------------------
@@ -425,10 +420,10 @@ USE `scheduling`;
 
 -- ----------------- CSCI --------------------------------
 -- 104
-INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3010', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3000');				
-INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3010', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3001');				
+-- INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
+-- 	VALUES ('3010', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3000');				
+-- INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
+-- 	VALUES ('3010', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3001');				
 	
 INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
 	VALUES ('3011', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3000');				
@@ -477,10 +472,10 @@ COMMIT;
 -- -----------------------------------------------------
 -- Data for table `scheduling`.`Schedule`
 -- -----------------------------------------------------
-START TRANSACTION;
-USE `scheduling`;
-INSERT INTO `scheduling`.`Schedule` (`studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) 
-	VALUES ('seansyed', '3000', '3011', '3005', '3020', '3030', NULL, NULL, NULL, NULL, NULL);
+-- START TRANSACTION;
+-- USE `scheduling`;
+-- INSERT INTO `scheduling`.`Schedule` (`studentUserName`, `sectionID1`, `sectionID2`, `sectionID3`, `sectionID4`, `sectionID5`, `sectionID6`, `sectionID7`, `sectionID8`, `sectionID9`, `sectionID10`) 
+-- 	VALUES ('seansyed', '3000', '3011', '3005', '3020', '3030', NULL, NULL, NULL, NULL, NULL);
 
-COMMIT;
+-- COMMIT;
 
