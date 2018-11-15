@@ -72,8 +72,7 @@ public class ScheduleOptimization {
 		
 		//Initial recursive call 
 		
-		return;
-		//TODO addCourse(0,0,0,0,0,0, false); 
+		addCourse(0,0,0,0,0,0, false); 
 		
 		
 		
