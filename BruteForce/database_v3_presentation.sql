@@ -378,7 +378,7 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
 	VALUES ('6000', 'Lecture', '10:00', '11:20', 'TH', 'Jessi Johnson', 0, 15, 'VKC', 2002);	
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('6001', 'Lecture', '14:00', '15:20', 'TH', 'Jessi Johnson', 0, 15, 'VKC', 2002);		
+	VALUES ('6001', 'Lecture', '14:00', '15:20', 'MW', 'Jessi Johnson', 0, 15, 'VKC', 2002);		
 
 -- 340 	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
