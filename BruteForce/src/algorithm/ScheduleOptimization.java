@@ -43,9 +43,7 @@ public class ScheduleOptimization {
 				System.out.println(courses.get(i).getLectureSections().get(0).getCourseName() + " " + courses.get(i).getLectureSections().get(j).getSectionID());
 			}
 			//System.out.println();
-		}
-		
-		return; 
+		} 
 		
 		if (!startTimeConstraint.equals("")) {
 			this.startTimeConstraint = parseTime(startTimeConstraint)[0] * 100 + parseTime(startTimeConstraint)[1];
@@ -73,7 +71,9 @@ public class ScheduleOptimization {
 		//System.out.println("Courses size is " + courses.size());
 		
 		//Initial recursive call 
-		addCourse(0,0,0,0,0,0, false); 
+		
+		return;
+		//TODO addCourse(0,0,0,0,0,0, false); 
 		
 		
 		
