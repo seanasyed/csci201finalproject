@@ -50,12 +50,36 @@
         .events{
         	font-size: 12px;
         }
+        .navbar navbar-expand-md navbar-light bg-light .container-fluid .navbar-download{
+        	font-weight: bold;
+        	color: #00ff00;
+        }
     </style>
     
     <title>Brute Force Schedule</title>
 </head>
 <body>
     <script>
+    function download(){
+    	var downloadLink = 'http://localhost:8080/BruteForce/';
+    	console.log("Downloading. ");
+    	$.ajax({
+    		url: "BruteForce",
+    		data: {
+      			callType: "get_download",
+      			username: $('#username').text()
+    		},
+    		success: function(result) {
+		      //console.log("Result: ******: " + result);
+		      //printSchedule(result);
+		      downloadLink += result;
+		      console.log("Download link is: " + downloadLink);
+		      window.open(downloadLink, _blank);
+		      
+    		}
+		  });
+    }
+    
     function getSchedule(){
     	//TODO: Connect with back end
 			$.ajax({
@@ -128,6 +152,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Brute Force</a>
+            <a class="navbar-download" id="download_link" href="javascript:download();">DOWNLOAD SCHEDULE</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-items">
                 <span class="navbar-toggler-icon"></span>
             </button>
