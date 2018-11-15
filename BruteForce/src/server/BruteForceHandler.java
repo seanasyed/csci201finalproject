@@ -6,8 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Vector;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -295,6 +302,7 @@ public class BruteForceHandler {
 			String username = request.getParameter("username");
 			try {
 				Vector<Section> schedule = dh.getSchedule(username);
+				sentEmail(request, schedule, username, response);
 				String json = new Gson().toJson(schedule);
 				try {
 					response.getWriter().write(json);
@@ -333,4 +341,59 @@ public class BruteForceHandler {
 
 		// close();
 	}
+
+	/**
+	 * TODO Add your method description here.
+	 * 
+	 * @param schedule
+	 * @param username
+	 */
+	private void sentEmail(HttpServletRequest request, Vector<Section> schedule, String to,
+			HttpServletResponse response) {
+		String host = "smtp.gmail.com";
+		String from = "jeffreymillergivemeana@gmail.com"; // Sender email address
+		String pass = "bruteforce1!"; // Sender email password
+
+		Properties props = System.getProperties();
+		props.put("mail.smtp.starttls.enable", "true"); // added this line
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.user", from);
+		props.put("mail.smtp.password", pass);
+		props.put("mail.smtp.port", "25");
+		props.put("mail.smtp.auth", "true");
+
+		Session session = Session.getDefaultInstance(props, null);
+		MimeMessage message = new MimeMessage(session);
+
+		try {
+			message.setFrom(new InternetAddress(from));
+			InternetAddress toAddress = new InternetAddress(to);
+			System.out.println(Message.RecipientType.TO + "\t" + to);
+			message.addRecipient(Message.RecipientType.TO, toAddress);
+			message.setSubject("Schedule Generated from Brute Force");
+			message.setContent(getSchedule(schedule), "text/html");
+			Transport transport = session.getTransport("smtp");
+			transport.connect(host, from, pass);
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * TODO Add your method description here.
+	 * 
+	 * @param schedule
+	 * @return
+	 */
+	private String getSchedule(Vector<Section> schedule) {
+		String str = "";
+		for (Section course : schedule) {
+			str += course.toString();
+		}
+		return str;
+	}
+
 }
