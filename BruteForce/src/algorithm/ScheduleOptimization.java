@@ -250,6 +250,14 @@ public class ScheduleOptimization {
 				System.out.println("Lectures is being incremented for backtracking");
 				state = 0;
 				lectureIndex++; 
+				
+				if (lectureIndex <= lectures.size()) {
+					lecture = lectures.get(lectureIndex); 
+					
+					discussions = lecture.getDiscussions(); 
+					labs = lecture.getLabs(); 
+					quizzes = lecture.getQuizzes(); 
+				}
 			}
 			
 			//Set the state to 3
@@ -260,6 +268,8 @@ public class ScheduleOptimization {
 					schedule.remove(i); 
 				}
 			}
+			
+			
 			
 		}
 		
