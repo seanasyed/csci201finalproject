@@ -23,7 +23,7 @@ public class ScheduleOptimization {
 
 	private Vector<Course> courses;
 	
-	private Vector<Section> schedule; //Section IDs
+	private Vector<Section> schedule; 
 	private int startTimeConstraint = 0; 
 	private int endTimeConstraint = 0; 
 	private double distanceConstraint = 0; 
@@ -330,6 +330,8 @@ public class ScheduleOptimization {
 		//2 - lab
 		} else if (state == 2) {
 			if (labIndex >= labs.size()) {
+				
+				System.out.println("Could not add " + labs.get(0).getCourseName() + " lab to schedule");
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1, false);
 				//System.out.println("Line 170");
 				return; 
@@ -353,7 +355,7 @@ public class ScheduleOptimization {
 				
 				schedule.add(lecture); 
 				//System.out.println("Line 192, size = " + schedule.size());
-				//System.out.println("Added lecture section to course " + lecture.getCourseName());
+				System.out.println("Added lecture section to course " + lecture.getCourseName());
 				//System.out.println("Increasing state to 1\n");
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1, false); 
 				
@@ -372,7 +374,7 @@ public class ScheduleOptimization {
 					}
 				}
 				//System.out.println();
-				//System.out.println("Reverting to previous course with backtrack = true\n");
+				System.out.println("Could not add " + course.getName() + ". Reverting to previous course with backtrack = true\n");
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
 				//System.out.println("Line 197");
 				return; 
@@ -395,6 +397,8 @@ public class ScheduleOptimization {
 		//2 - Lab
 		else if (state == 2) {
 			if (noConflict(labs.get(labIndex))) {
+				
+				System.out.println("Successfully added lab section for " + labs.get(0).getCourseName());
 				schedule.add(labs.get(labIndex));
 				//System.out.println("Line 219, size = " + schedule.size());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3, false); 
@@ -424,8 +428,8 @@ public class ScheduleOptimization {
 		//4 - Done
 		else if (state == 4) {
 			//System.out.println("Line 243");
-			//System.out.println("Completed adding course " + lecture.getCourseName());
-			//System.out.println("Moving onto next course\n");
+			System.out.println("Completed adding course " + lecture.getCourseName());
+			System.out.println("Moving onto next course\n");
 			addCourse(courseIndex + 1, 0, 0, 0, 0, 0, false); 
 			return; 
 		}
