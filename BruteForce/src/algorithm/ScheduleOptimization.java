@@ -61,6 +61,9 @@ public class ScheduleOptimization {
 			this.endTimeConstraint = 2359;
 		}
 		
+		System.out.println("startTimeConstraint: " + startTimeConstraint); 
+		System.out.println("endTimeConstraint: " + endTimeConstraint);
+		
 		schedule = new Vector<Section>(); 
 		
 		//System.out.println("startTimeConstraint: " + startTimeConstraint);
@@ -241,7 +244,13 @@ public class ScheduleOptimization {
 			//System.out.println("startTimeConstraint: " + startTimeConstraint);
 			//System.out.println("endTime: " + endTime);
 			//System.out.println("endTimeConstraint: " + endTimeConstraint);
+<<<<<<< HEAD
 			if (startTime <= startTimeConstraint || endTime >= endTimeConstraint) {
+=======
+			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+				
+				System.out.println("Could not add " + lecture.getCourseName() + " lecture starting at " + startTime); 
+>>>>>>> 03561cf1a40a7bde506bbdc66d738f12a902c478
 				addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state, false);
 				return; 
 			}
@@ -250,7 +259,13 @@ public class ScheduleOptimization {
 				startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
+<<<<<<< HEAD
 				if (startTime <= startTimeConstraint || endTime >= endTimeConstraint) {
+=======
+				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					
+					System.out.println("Could not add " + s.getCourseName() + " discussion starting at " + startTime);
+>>>>>>> 03561cf1a40a7bde506bbdc66d738f12a902c478
 					addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state, false);
 					return; 
 				}
@@ -260,7 +275,13 @@ public class ScheduleOptimization {
 				startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
+<<<<<<< HEAD
 				if (startTime <= startTimeConstraint || endTime >= endTimeConstraint) {
+=======
+				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					
+					System.out.println("Could not add " + s.getCourseName() + " lab starting at " + startTime);
+>>>>>>> 03561cf1a40a7bde506bbdc66d738f12a902c478
 					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state, false);
 					return; 
 				}
@@ -270,7 +291,13 @@ public class ScheduleOptimization {
 				startTime = parseTime(s.getStartTime())[0] * 100 + parseTime(s.getStartTime())[1]; 
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
+<<<<<<< HEAD
 				if (startTime <= startTimeConstraint || endTime >= endTimeConstraint) {
+=======
+				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					
+					System.out.println("Could not add " + s.getCourseName() + " quiz starting at " + startTime);
+>>>>>>> 03561cf1a40a7bde506bbdc66d738f12a902c478
 					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state, false);
 					return; 
 				}
