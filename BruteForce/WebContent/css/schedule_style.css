@@ -348,20 +348,20 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-6"],
 .cd-schedule [data-event="event-6"] .header-bg {
-  background: #c0ba00;
+  background: #d8b852;
 }
 
 .cd-schedule .single-event[data-event="event-6"]:hover {
-  background: #cec801;
+  background: #FCD55F;
 }
 
 .cd-schedule .single-event[data-event="event-7"],
 .cd-schedule [data-event="event-7"] .header-bg {
-  background: #326f37;
+  background: #386647;
 }
 
 .cd-schedule .single-event[data-event="event-7"]:hover {
-  background: #3d8642;
+  background: #4a865c;
 }
 
 .cd-schedule .single-event[data-event="event-8"],
