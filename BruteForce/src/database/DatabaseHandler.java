@@ -254,7 +254,7 @@ public class DatabaseHandler {
 	 */
 	public Course getCourse(String major, String number) {
 		if (conn == null) return null;
-		
+		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement("SELECT * from Course JOIN Lecture_Sections ON Course.ID=Lecture_Sections.Course_ID WHERE Course.major=? AND Course.number=?;");
 			ps.setString(1, major);
@@ -270,43 +270,41 @@ public class DatabaseHandler {
 				}
 				String courseName = rs.getString("major") + "-" + rs.getString("number");
 				String sectionID = rs.getString("sectionID");
+				System.out.println("ADDING LECTURE SECTION: " + sectionID);
 				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
 								rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 								rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
 								rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
 				ps = conn.prepareStatement("SELECT * from Discussion_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					Section dis = new Section(rs.getString("sectionID"), rs.getString("type"), 
-							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
-							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
-							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
-					System.out.println("Adding discussion:" + rs.getString("sectionID"));
+				ResultSet disRs = ps.executeQuery();
+				while (disRs.next()) {
+					Section dis = new Section(disRs.getString("sectionID"), disRs.getString("type"), 
+							disRs.getString("type"), disRs.getString("start_time"), disRs.getString("end_time"), 
+							disRs.getString("day"), disRs.getString("instructor"),disRs.getInt("numRegistered"), 
+							disRs.getInt("classCapacity"), disRs.getString("Building_ID"), disRs.getString("Course_ID"), courseName);
 					lectureSection.addDiscussion(dis);
 				}
 				ps = conn.prepareStatement("SELECT * from Lab_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
 				
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					Section lab = new Section(rs.getString("sectionID"), rs.getString("type"), 
-							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
-							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
-							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
-					System.out.println("Adding lab:" + rs.getString("sectionID"));
+				ResultSet labRs = ps.executeQuery();
+				while (labRs.next()) {
+					Section lab = new Section(labRs.getString("sectionID"), labRs.getString("type"), 
+							labRs.getString("type"), labRs.getString("start_time"), labRs.getString("end_time"), 
+							labRs.getString("day"), labRs.getString("instructor"),labRs.getInt("numRegistered"), 
+							labRs.getInt("classCapacity"), labRs.getString("Building_ID"), labRs.getString("Course_ID"), courseName);
 					lectureSection.addLab(lab);
 				}
 				ps = conn.prepareStatement("SELECT * from Quiz_Sections WHERE Lecture_SectionID=?;");
 				ps.setString(1, sectionID);
 				
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					Section quiz = new Section(rs.getString("sectionID"), rs.getString("type"), 
-							rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
-							rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
-							rs.getInt("classCapacity"), rs.getString("Building_ID"), rs.getString("Course_ID"), courseName);
-					System.out.println("Adding quiz:" + rs.getString("sectionID"));
+				ResultSet quizRs = ps.executeQuery();
+				while (quizRs.next()) {
+					Section quiz = new Section(quizRs.getString("sectionID"), quizRs.getString("type"), 
+							quizRs.getString("type"), quizRs.getString("start_time"), quizRs.getString("end_time"), 
+							quizRs.getString("day"), quizRs.getString("instructor"),quizRs.getInt("numRegistered"), 
+							quizRs.getInt("classCapacity"), quizRs.getString("Building_ID"), quizRs.getString("Course_ID"), courseName);
 					lectureSection.addQuiz(quiz);
 				}
 				course.addLectureSection(lectureSection);
