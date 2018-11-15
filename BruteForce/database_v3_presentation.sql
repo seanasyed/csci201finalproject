@@ -436,7 +436,7 @@ INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end
 -- ----------------- EE ----------------------------------
 -- 109 
 INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3110', 'Lab', '14:00', '15:50', 'W', '', 0, 100, 'VHE', 1101, '3100');
+	VALUES ('3110', 'Lab', '16:00', '17:50', 'W', '', 0, 100, 'VHE', 1101, '3100');
 
 
 COMMIT;
