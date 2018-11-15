@@ -303,7 +303,7 @@ Main Components
 .cd-schedule .single-event[data-event="event-1"],
 .cd-schedule [data-event="event-1"] .header-bg {
   /* this is used to set a background color for the event and the modal window */
-  background: #577F92;
+  background: #618da1;
 }
 
 .cd-schedule .single-event[data-event="event-1"]:hover {
@@ -312,7 +312,7 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-2"],
 .cd-schedule [data-event="event-2"] .header-bg {
-  background: #443453;
+  background: #513e63;
 }
 
 .cd-schedule .single-event[data-event="event-2"]:hover {
@@ -321,7 +321,7 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-3"],
 .cd-schedule [data-event="event-3"] .header-bg {
-  background: #A2B9B2;
+  background: #b1c4be;
 }
 
 .cd-schedule .single-event[data-event="event-3"]:hover {
@@ -330,7 +330,7 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-4"],
 .cd-schedule [data-event="event-4"] .header-bg {
-  background: #f6b067;
+  background: #f7bd7f;
 }
 
 .cd-schedule .single-event[data-event="event-4"]:hover {
@@ -339,20 +339,20 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-5"],
 .cd-schedule [data-event="event-5"] .header-bg {
-  background: #980400;
+  background: #a2002c;
 }
 
 .cd-schedule .single-event[data-event="event-5"]:hover {
-  background: #ae0401;
+  background: #a2002c;
 }
 
 .cd-schedule .single-event[data-event="event-6"],
 .cd-schedule [data-event="event-6"] .header-bg {
-  background: #d8b852;
+  background: #f3d66f;
 }
 
 .cd-schedule .single-event[data-event="event-6"]:hover {
-  background: #FCD55F;
+  background: #f3d66f;
 }
 
 .cd-schedule .single-event[data-event="event-7"],
@@ -361,12 +361,12 @@ Main Components
 }
 
 .cd-schedule .single-event[data-event="event-7"]:hover {
-  background: #4a865c;
+  background: #386647;
 }
 
 .cd-schedule .single-event[data-event="event-8"],
 .cd-schedule [data-event="event-8"] .header-bg {
-  background: #c66baa;
+  background: #d873ba;
 }
 
 .cd-schedule .single-event[data-event="event-8"]:hover {
@@ -375,7 +375,7 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-9"],
 .cd-schedule [data-event="event-9"] .header-bg {
-  background: #424242;
+  background: #5e5e5e;
 }
 
 .cd-schedule .single-event[data-event="event-9"]:hover {
@@ -384,7 +384,7 @@ Main Components
 
 .cd-schedule .single-event[data-event="event-10"],
 .cd-schedule [data-event="event-10"] .header-bg {
-  background: #929292;
+  background: #a9a9a9;
 }
 
 .cd-schedule .single-event[data-event="event-10"]:hover {
