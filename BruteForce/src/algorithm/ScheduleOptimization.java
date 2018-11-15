@@ -61,6 +61,9 @@ public class ScheduleOptimization {
 			this.endTimeConstraint = 2359;
 		}
 		
+		System.out.println("startTimeConstraint: " + startTimeConstraint); 
+		System.out.println("endTimeConstraint: " + endTimeConstraint);
+		
 		schedule = new Vector<Section>(); 
 		
 		//System.out.println("startTimeConstraint: " + startTimeConstraint);
@@ -242,6 +245,8 @@ public class ScheduleOptimization {
 			//System.out.println("endTime: " + endTime);
 			//System.out.println("endTimeConstraint: " + endTimeConstraint);
 			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+				
+				System.out.println("Could not add " + lecture.getCourseName() + " lecture starting at " + startTime); 
 				addCourse(courseIndex, lectureIndex + 1, discussionIndex, labIndex, quizIndex, state, false);
 				return; 
 			}
@@ -251,6 +256,8 @@ public class ScheduleOptimization {
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
 				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					
+					System.out.println("Could not add " + s.getCourseName() + " discussion starting at " + startTime);
 					addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, state, false);
 					return; 
 				}
@@ -261,6 +268,8 @@ public class ScheduleOptimization {
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
 				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					
+					System.out.println("Could not add " + s.getCourseName() + " lab starting at " + startTime);
 					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, state, false);
 					return; 
 				}
@@ -271,6 +280,8 @@ public class ScheduleOptimization {
 				endTime = parseTime(s.getEndTime())[0] * 100 + parseTime(s.getEndTime())[1]; 
 				
 				if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
+					
+					System.out.println("Could not add " + s.getCourseName() + " quiz starting at " + startTime);
 					addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, state, false);
 					return; 
 				}
