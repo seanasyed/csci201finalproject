@@ -335,7 +335,7 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
 	VALUES ('3000', 'Lecture', '8:00', '8:50', 'MWF', 'Mark Redekopp', 0, 100, 'GFS', 1002);	 		-- ROOM
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('3001', 'Lecture', '11:30', '12:20', 'MWF', 'Andrew Goodney', 0, 100, 'GFS', 1002);		-- ROOM
+	VALUES ('3001', 'Lecture', '13:00', '13:50', 'MWF', 'Andrew Goodney', 0, 100, 'GFS', 1002);		-- ROOM
 	
 -- 109	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
@@ -343,9 +343,9 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 
 -- 170
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('3005', 'Lecture', '12:00', '13:20', 'MW', 'Michael Shindler', 0, 100, 'MHP', 1004);		-- ROOM
+	VALUES ('3005', 'Lecture', '11:30', '12:50', 'MW', 'Michael Shindler', 0, 100, 'MHP', 1004);		-- ROOM
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('3006', 'Lecture', '14:00', '15:20', 'TH', 'Michael Shindler', 0, 100, 'MHP', 1004);		-- ROOM
+	VALUES ('3006', 'Lecture', '13:30', '14:50', 'TH', 'Michael Shindler', 0, 100, 'MHP', 1004);		-- ROOM
 	
 -- 201	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
@@ -358,7 +358,7 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 -- ----------------- EE ---------------------------------
 -- 109
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('3100', 'Lecture', '12:00', '12:50', 'TH', '', 44, 45, 'VHE', 1101);					-- ROOM
+	VALUES ('3100', 'Lecture', '12:00', '13:20', 'TH', '', 43, 45, 'VHE', 1101);					-- ROOM
     
 -- 202	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
@@ -376,7 +376,9 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 
 -- 150
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('6000', 'Lecture', '10:00', '11:20', 'TH', 'Jessi Johnson', 0, 15, 'VKC', 2002);		
+	VALUES ('6000', 'Lecture', '10:00', '11:20', 'TH', 'Jessi Johnson', 0, 15, 'VKC', 2002);	
+INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
+	VALUES ('6001', 'Lecture', '14:00', '15:20', 'TH', 'Jessi Johnson', 0, 15, 'VKC', 2002);		
 
 -- 340 	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
@@ -400,9 +402,9 @@ USE `scheduling`;
 
 ------------------- 170 --------------------------------
 INSERT INTO `scheduling`.`Discussion_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3030', 'Discussion', '13:00', '15:50', 'F', NULL, 0, 100, 'SLH', 1004, '3005');		
+	VALUES ('3030', 'Discussion', '14:00', '15:50', 'F', NULL, 0, 100, 'SLH', 1004, '3005');		
 INSERT INTO `scheduling`.`Discussion_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3030', 'Discussion', '13:00', '15:50', 'F', NULL, 0, 100, 'SLH', 1004, '3006');		
+	VALUES ('3030', 'Discussion', '14:00', '15:50', 'F', NULL, 0, 100, 'SLH', 1004, '3006');		
 
 COMMIT;
 
@@ -426,9 +428,9 @@ USE `scheduling`;
 -- 	VALUES ('3010', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3001');				
 	
 INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3011', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3000');				
+	VALUES ('3011', 'Lab', '15:30', '17:20', 'T', '', 0, 100, 'SAL', 1002, '3000');				
 INSERT INTO `scheduling`.`Lab_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`, `Lecture_SectionID`) 
-	VALUES ('3011', 'Lab', '15:00', '16:50', 'T', '', 0, 100, 'SAL', 1002, '3001');				
+	VALUES ('3011', 'Lab', '15:30', '17:20', 'T', '', 0, 100, 'SAL', 1002, '3001');				
 
 	
 -- ----------------- EE ----------------------------------
