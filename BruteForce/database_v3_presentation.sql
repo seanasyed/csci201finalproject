@@ -272,13 +272,13 @@ INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `
 	VALUES ('VKC', 'Von KleinSmid Center', '3518 Trousdale Parkway, Los Angeles, CA 90089', -118.2839584351, 34.0212898254);
 INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
 	VALUES ('NA', '', '', NULL, NULL);
-INSERT INTO 'scheduling'.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
 	VALUES ('SAL','Computer Center at Salvatori Computer Scie...','',-118.28956,34.01970);
-INSERT INTO 'scheduling'.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
 	VALUES ('VHE','Vivian Hall','',-118.28819,34.02016);
-INSERT INTO 'scheduling'.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`) 
 	VALUES ('SGM','Seeley G. Mudd Building','',-118.28918,34.02110);
-INSERT INTO 'scheduling'.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`)
+INSERT INTO `scheduling`.`Building` (`ID`, `fullName`, `address`, `longitude`, `latitude`)
 	VALUES ('SLH','Stauffer Science Lecture Hall','',-118.28748,34.01968);
 COMMIT;
 
