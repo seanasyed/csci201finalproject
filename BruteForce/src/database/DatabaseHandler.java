@@ -721,6 +721,9 @@ public class DatabaseHandler {
 		ResultSet rs = null;
 		try {
 			Vector<Section> schedule = getSchedule(username);
+			ps = conn.prepareStatement("DELETE FROM Schedule WHERE studentUserName=?;");
+			ps.setString(1, username);
+			ps.executeUpdate();
 			for (Section s: schedule) {
 				String type = s.getType();
 				String sectionID = s.getSectionID();
@@ -787,9 +790,7 @@ public class DatabaseHandler {
 				break;
 				}
 			}
-			ps = conn.prepareStatement("DELETE FROM Schedule WHERE studentUserName=?;");
-			ps.setString(1, username);
-			ps.executeUpdate();
+			
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
