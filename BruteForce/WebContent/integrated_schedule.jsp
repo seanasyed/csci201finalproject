@@ -60,6 +60,18 @@
 </head>
 <body>
     <script>
+    function closeTab(){
+    	var r = confirm("Are you sure you want to leave the schedule page? ");
+    	if (r==true){
+    		window.close();
+    	}
+    	else {
+    		return;
+    	}
+    	
+    };
+    
+    
     function download(){
     	var downloadLink = 'http://localhost:8080/BruteForce/';
     	console.log("Downloading. ");
@@ -70,15 +82,19 @@
       			username: $('#username').text()
     		},
     		success: function(result) {
+    			if (result.length == 0){
+    				return;
+    			}
 		      //console.log("Result: ******: " + result);
 		      //printSchedule(result);
 		      downloadLink += result;
+		      
 		      console.log("Download link is: " + downloadLink);
-		      window.open(downloadLink, _blank);
+		      window.open(downloadLink, '_blank');
 		      
     		}
 		  });
-    }
+    };
     
     function getSchedule(){
     	//TODO: Connect with back end
@@ -151,7 +167,7 @@
     </h1>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Brute Force</a>
+            <a class="navbar-brand" href="javascript:closeTab();" id="indexLink">Brute Force</a>
             <a class="navbar-download" id="download_link" href="javascript:download();">DOWNLOAD SCHEDULE</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-items">
                 <span class="navbar-toggler-icon"></span>
