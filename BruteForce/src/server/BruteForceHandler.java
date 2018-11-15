@@ -130,7 +130,6 @@ public class BruteForceHandler {
 				String distanceConstraint = request.getParameter("distanceConstraint");
 				System.out.println("Distance: " + distanceConstraint);
 				//TODO: DISCUSS WITH FRANK
-	            System.out.println("submit_schedule");
 	            //get courses
 	            courseListJSON = request.getParameter("courseList");
 	            Vector<Course> vecCourses = new Vector<Course>();
@@ -164,6 +163,7 @@ public class BruteForceHandler {
 	            		System.out.println("discussions: " +vecCourses.get(i).getLectureSections().get(j).getDiscussions());
 	            	}
 	            }
+	            dh.unregister(username);
 	            if (startTime == null || startTime.equals("")) startTime = "00:01";
 	            if (endTime == null || endTime.equals("")) endTime = "23:59"; 
 	            if (distanceConstraint == null || distanceConstraint.equals("")) distanceConstraint = "9999";

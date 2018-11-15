@@ -358,7 +358,7 @@ INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, 
 -- ----------------- EE ---------------------------------
 -- 109
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 
-	VALUES ('3100', 'Lecture', '12:00', '12:50', 'TH', '', 0, 45, 'VHE', 1101);					-- ROOM
+	VALUES ('3100', 'Lecture', '12:00', '12:50', 'TH', '', 44, 45, 'VHE', 1101);					-- ROOM
     
 -- 202	FILLER
 INSERT INTO `scheduling`.`Lecture_Sections` (`sectionID`, `type`, `start_time`, `end_time`, `day`, `instructor`, `numRegistered`, `classCapacity`, `Building_ID`, `Course_ID`) 

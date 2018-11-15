@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Vector;
 
 import model.BuildingCandidate;
@@ -701,12 +702,8 @@ public class DatabaseHandler {
 					sectionIDs.add(s.getSectionID());
 				}
 				//CAN ONLY CREATE A NEW SCHEDULE IF A STUDENT SUCCESSFULLY UNREGISTERED FROM ORIGINAL SCHEDULE
-				if (unregister(username)) {
-					createSchedule(username, sectionIDs);
-					message = "Successfully registered";
-				} else {
-					message = "Couldn't unregister from sections from previous schedule.";
-				}
+				createSchedule(username, sectionIDs);
+				message = "Successfully registered";
 			}
 			return message;
 		} catch (SQLException e) {
@@ -790,6 +787,9 @@ public class DatabaseHandler {
 				break;
 				}
 			}
+			ps = conn.prepareStatement("DELETE FROM Schedule WHERE studentUserName=?;");
+			ps.setString(1, username);
+			ps.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
