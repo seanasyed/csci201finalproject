@@ -2,12 +2,13 @@
 /**
  * Group 14
  * 
- * Sean Syed
- * Eric Duguay
- * Gao Xing
- * Sangjun Lee
- * Yiyang Hou
-
+ * CP: Aya Shimizu (ashimizu@usc.edu)
+ * Yiyang Hou (yiyangh@usc.edu)
+ * Sean Syed (seansyed@usc.edu)
+ * Eric Duguay (eduguay@usc.edu)
+ * Xing Gao (gaoxing@usc.edu)
+ * Sangjun Lee (sangjun@usc.edu)
+ * 
  */
 
 package algorithm;
