@@ -1,3 +1,15 @@
+
+/**
+ * Group 14
+ * 
+ * Sean Syed
+ * Eric Duguay
+ * Gao Xing
+ * Sangjun Lee
+ * Yiyang Hou
+
+ */
+
 package algorithm;
 
 import java.util.Vector;

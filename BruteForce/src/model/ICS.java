@@ -33,7 +33,7 @@ public class ICS {
 
 	private static final String FILENAME = "/term-20183.ics", FOLDERNAME = "downloads/";
 
-	private static final String ROOT = "D:\\USC\\CSCI201L\\csci201finalproject\\BruteForce\\WebContent";
+	private static final String ROOT = "/Users/seansyed/Documents/Code/School/csci201finalproject/BruteForce/WebContent";
 
 	private String username;
 
