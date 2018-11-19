@@ -50,11 +50,11 @@ public class ScheduleOptimization {
 		
 		this.courses = courses; 
 		for (int i = 0; i < courses.size(); i++) {
-			//System.out.println(courses.get(i).getName());
+			
 			for (int j = 0; j < courses.get(i).getLectureSections().size(); j++) {
 				System.out.println(courses.get(i).getLectureSections().get(0).getCourseName() + " " + courses.get(i).getLectureSections().get(j).getSectionID());
 			}
-			//System.out.println();
+			
 		} 
 		
 		if (!startTimeConstraint.equals("")) {
@@ -73,14 +73,12 @@ public class ScheduleOptimization {
 			this.endTimeConstraint = 2359;
 		}
 		
-		//System.out.println("startTimeConstraint: " + startTimeConstraint); 
-		//System.out.println("endTimeConstraint: " + endTimeConstraint);
+		
 		
 		schedule = new Vector<Section>(); 
 		
 		System.out.println("startTimeConstraint: " + startTimeConstraint);
 		System.out.println("endTimeConstraint: " + endTimeConstraint + "\n"); 
-		//System.out.println("Courses size is " + courses.size());
 		
 		//Initial recursive call 
 		
@@ -95,23 +93,11 @@ public class ScheduleOptimization {
 	 */
 	private void addCourse(int courseIndex, int lectureIndex, int discussionIndex, int labIndex, int quizIndex, int state, boolean backtrack) {
 		
-		//System.out.println("courseIndex: " + courseIndex); 
-		//System.out.println("lectureIndex: " + lectureIndex); 
-		//System.out.println("discussionIndex: " + discussionIndex);
-		//System.out.println("labIndex: " + labIndex); 
-		//System.out.println("quizIndex: " + quizIndex); 
-		//System.out.println("state: " + state); 
-		//System.out.println("backtracking: " + backtrack + "\n");
-		
 		//Base case returns
 		
 		//If a complete schedule has been created, courseIndex should be out of bounds
 		if (courseIndex >= courses.size()) {
 			
-			//System.out.println("Finalized Schedule"); 
-			for (int i = 0; i < schedule.size(); i++) {
-				//System.out.println(schedule.get(i).getSectionID());
-			}
 			return; 
 		}
 		
@@ -189,12 +175,6 @@ public class ScheduleOptimization {
 				}
 			}
 		}
-		
-		//System.out.println(); 
-		//System.out.println("backtrackingLectureIndex: " + backtrackingLectureIndex);
-		//System.out.println("backtrackingDiscussionIndex: " + backtrackingDiscussionIndex);
-		//System.out.println("backtrackingLabIndex: " + backtrackingLabIndex);
-		//System.out.println("backtrackingQuizIndex: " + backtrackingQuizIndex);
 		
 		//If any of the backtracking indexes != -1, handle all backtracking procedures
 		if (backtrack) {
@@ -297,11 +277,6 @@ public class ScheduleOptimization {
 			startTime = parseTime(lecture.getStartTime())[0] * 100 + parseTime(lecture.getStartTime())[1]; 
 			endTime = parseTime(lecture.getEndTime())[0] * 100 + parseTime(lecture.getEndTime())[1]; 
 			
-			//System.out.println("startTime: " + startTime);
-			//System.out.println("startTimeConstraint: " + startTimeConstraint);
-			//System.out.println("endTime: " + endTime);
-			//System.out.println("endTimeConstraint: " + endTimeConstraint);
-
 			if (startTime < startTimeConstraint || endTime > endTimeConstraint) {
 				
 				System.out.println("Could not add " + lecture.getCourseName() + " lecture starting at " + startTime); 
@@ -358,19 +333,19 @@ public class ScheduleOptimization {
 		if (discussions.size() == 0 && state == 1) {
 			
 			state++; 
-			//System.out.println("143: State = " + state); 
+			
 		}
 		
 		if (labs.size() == 0 && state == 2) {
 			 
 			state ++; 
-			//System.out.println("149: State = " + state);
+			
 		}
 		
 		if (quizzes.size() == 0 && state == 3) {
 		
 			state++; 
-			//System.out.println("155: State = " + state);
+
 		}
 		
 		//Check to see if the state's appropriate index is out of bounds
@@ -381,7 +356,7 @@ public class ScheduleOptimization {
 		if (state == 1) {
 			if (discussionIndex >= discussions.size()) {
 				addCourse(courseIndex, lectureIndex + 1, 0, 0, 0, state - 1, false);
-				//System.out.println("Line 163");
+	
 				return; 
 			}
 		//2 - lab
@@ -390,7 +365,7 @@ public class ScheduleOptimization {
 				
 				System.out.println("Could not add " + labs.get(0).getCourseName() + " lab to schedule");
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, 0, 0, state - 1, false);
-				//System.out.println("Line 170");
+			
 				return; 
 			}
 		//3 - quiz
@@ -398,24 +373,23 @@ public class ScheduleOptimization {
 			if (quizIndex >= quizzes.size()) {
 				
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
-				//System.out.println("Line 178");
 				return; 
 			}
 		}
 
 		//Handle each state
-		//System.out.println("State = " + state);
+		
 		//0 - Lecture
 		if (state == 0) {
-			//System.out.println("In state 0");
+			
 			
 			
 			if (noConflict(lecture)) {
 				
 				schedule.add(lecture); 
-				//System.out.println("Line 192, size = " + schedule.size());
+				
 				System.out.println("Added lecture section to course " + lecture.getCourseName());
-				//System.out.println("Increasing state to 1\n");
+				
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 1, false); 
 				
 				return; 
@@ -423,19 +397,18 @@ public class ScheduleOptimization {
 				System.out.println("Could not add lecture section to course " + lecture.getCourseName());
 				//Remove all of the course's sections from the schedule
 				
-				//System.out.println("Preparing for backtracking\n");
+				
 				for (int i = 0; i < schedule.size(); i++) {
-					//System.out.println("Scheduled section course: " + schedule.get(i).getCourseName()); 
-					//System.out.println("Current course: " + lecture.getCourseName());
+					
 					if (schedule.get(i).getCourseID().equals(lecture.getCourseID())) {
-						//System.out.println("Removing section from course " + lecture.getCourseName());
+						
 						schedule.remove(i); 
 					}
 				}
-				//System.out.println();
+				
 				System.out.println("Could not add " + course.getName() + ". Reverting to previous course with backtrack = true\n");
 				addCourse(courseIndex - 1, 0, 0, 0, 0, 0, true); 
-				//System.out.println("Line 197");
+				
 				return; 
 			}
 		}
@@ -443,7 +416,7 @@ public class ScheduleOptimization {
 		else if (state == 1) {
 			if (noConflict(discussions.get(discussionIndex))) {
 				schedule.add(discussions.get(discussionIndex));
-				//System.out.println("Line 206, size = " + schedule.size());
+				
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 2, false);
 				
 				return;
@@ -451,7 +424,7 @@ public class ScheduleOptimization {
 				
 				System.out.println("Could not add discussion to " + lecture.getCourseName());
 				addCourse(courseIndex, lectureIndex, discussionIndex + 1, labIndex, quizIndex, 1, false); 
-				//System.out.println("Line 210");
+				
 				return; 
 			}
 		}
@@ -461,7 +434,7 @@ public class ScheduleOptimization {
 				
 				System.out.println("Successfully added lab section for " + labs.get(0).getCourseName());
 				schedule.add(labs.get(labIndex));
-				//System.out.println("Line 219, size = " + schedule.size());
+				
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 3, false); 
 				
 				return; 
@@ -469,16 +442,16 @@ public class ScheduleOptimization {
 				
 				System.out.println("Could not add lab to " + lecture.getCourseName());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex + 1, quizIndex, 2, false); 
-				//System.out.println("Line 223");
+				
 				return; 
 			}
 		}
 		//3 - Quiz
 		else if (state == 3) {
-			//System.out.println("State is 3");
+			
 			if (noConflict(quizzes.get(quizIndex))) {
 				schedule.add(quizzes.get(quizIndex)); 
-				//System.out.println("Line 233, size = " + schedule.size());
+				
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex, 4, false); 
 				
 				return; 
@@ -486,13 +459,13 @@ public class ScheduleOptimization {
 				
 				System.out.println("Could not add quiz to " + lecture.getCourseName());
 				addCourse(courseIndex, lectureIndex, discussionIndex, labIndex, quizIndex + 1, 3, false); 
-				//System.out.println("Line 237");
+				
 				return;  
 			}
 		}
 		//4 - Done
 		else if (state == 4) {
-			//System.out.println("Line 243");
+			
 			System.out.println("Completed adding course " + lecture.getCourseName());
 			System.out.println("Moving onto next course\n");
 			addCourse(courseIndex + 1, 0, 0, 0, 0, 0, false); 
@@ -533,49 +506,38 @@ public class ScheduleOptimization {
 					int sEndTime = sEnd[0] * 100 + sEnd[1]; 
 					
 					
-					//System.out.println("startTime: " + startTime);
-					//System.out.println("endTime: " + endTime);
-					//System.out.println("sStartTime: " + sStartTime);
-					//System.out.println("sEndTime: " + sEndTime);
-					
 					
 					//Check all possible counterexamples
 					
 					//Partial overlap and vice-versa
 					if ((startTime <= sStartTime && sStartTime <= endTime) && !section.getSectionID().equals(s.getSectionID())) {
 						noConflict = false; 
-						//System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
-						//System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
 						
 					}
 					
 					if ((startTime <= sEndTime && sEndTime <= endTime) && !section.getSectionID().equals(s.getSectionID())) {
 						noConflict = false; 
-						//System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
-						//System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
 						
 					}
 					
 					//One completely contains the other and vice-versa
 					if ((sStartTime <= startTime && sEndTime >= endTime) && !section.getSectionID().equals(s.getSectionID())) {
 						noConflict = false; 
-						//System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
-						//System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
 						
 					}
 					
 					if ((startTime <= sStartTime && endTime >= sEndTime) && !section.getSectionID().equals(s.getSectionID())) {
 						noConflict = false; 
-						//System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
-						//System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
 						
 					}
 					
 					//They have the exact same time
 					if ((sStartTime == startTime || sEndTime == endTime) && !section.getSectionID().equals(s.getSectionID())) {
 						noConflict = false; 
-						//System.out.println("Conflict found between " + section.getCourseName() + " and " + s.getCourseName() + "\n");
-						//System.out.println("Section IDs " + section.getSectionID() + " and " + s.getSectionID());
+						
 					}
 					
 					
@@ -605,92 +567,6 @@ public class ScheduleOptimization {
 		for (int i = 0; i < 7; i++) {
 			days[i] = false; 
 		}
-		
-//		//Case where section meets on MWF
-//		if (dayString.equals("MWF")) {
-//			days[1] = true; 
-//			days[3] = true; 
-//			days[5] = true; 
-//		} 
-//		
-//		//Case where section meets twice a week
-//		else if (dayString.indexOf(",") != -1) {
-//			
-//			//Sunday
-//			if (dayString.indexOf("Sun") != -1) {
-//				days[0] = true; 
-//			}
-//			
-//			//Monday
-//			if (dayString.indexOf("Mon") != -1) {
-//				days[1] = true; 
-//			}
-//			
-//			//Tuesday
-//			if (dayString.indexOf("Tues") != -1) {
-//				days[2] = true; 
-//			}
-//			
-//			//Wednesday
-//			if (dayString.indexOf("Wed") != -1) {
-//				days[3] = true; 
-//			}
-//			
-//			//Thursday
-//			if (dayString.indexOf("Thurs") != -1) {
-//				days[4] = true; 
-//			}
-//			
-//			//Friday
-//			if (dayString.indexOf("Fri") != -1) {
-//				days[5] = true; 
-//			}
-//			
-//			//Saturday
-//			if (dayString.indexOf("Sat") != -1) {
-//				days[6] = true; 
-//			}
-//		}
-//		
-//		//Case where section meets once a week
-//		else {
-//			
-//			//Sunday
-//			if (dayString.equals("Sunday")) {
-//				days[0] = true; 
-//			}
-//			
-//			//Monday
-//			if (dayString.equals("Monday")) {
-//				days[1] = true; 
-//			}
-//			
-//			//Tuesday
-//			if (dayString.equals("Tuesday")) {
-//				days[2] = true; 
-//			}
-//			
-//			//Wednesday
-//			if (dayString.equals("Wednesday")) {
-//				days[3] = true; 
-//			}
-//			
-//			//Thursday
-//			if (dayString.equals("Thursday")) {
-//				days[4] = true; 
-//			}
-//			
-//			//Friday
-//			if (dayString.equals("Friday")) {
-//				days[5] = true; 
-//			}
-//			
-//			//Saturday
-//			if (dayString.equals("Saturday")) {
-//				days[6] = true; 
-//			}
-//			
-//		}
 		
 		if (dayString.indexOf("M") != -1) {
 			days[1] = true; 
@@ -754,7 +630,7 @@ public class ScheduleOptimization {
 			
 			boolean[] days = parseDays(schedule.get(i).getDay()); 
 			
-			//System.out.println(days[1] + " " + days[2] + " " + days[3] + " " + days[4] + " " + days[5]);
+			
 
 			if (days[1]) {
 				monday.add(schedule.get(i)); 
@@ -771,27 +647,6 @@ public class ScheduleOptimization {
 			if (days[5]) {
 				friday.add(schedule.get(i)); 
 			}
-
-//			double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i).getBuildingID()); 
-//			double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(schedule.get(i+1).getBuildingID()); 
-//
-//			a = 0; 
-//			c = 0; 
-//			d = 0; 
-//			
-//			deltaPhi = Math.abs(section1Coords[0] - section2Coords[0]); //Change in latitude
-//			deltaLambda = Math.abs(section1Coords[1] - section2Coords[1]); //Change in longitude
-//			
-//			//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
-//			a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
-//			
-//			//c = 2 ⋅ atan2( √a, √(1−a) )
-//			c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
-//			
-//			//d = R ⋅ c
-//			d = R * c; 
-//			
-//			totalDistanceInMeters += d; 
 		}
 		
 		week.add(monday); 
@@ -830,7 +685,6 @@ public class ScheduleOptimization {
 				}
 				
 				double[] section1Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(earliest.getBuildingID()); 
-				//System.out.println("secondEarliest: " + secondEarliest);
 				double[] section2Coords = new DatabaseHandler().getOneInstance().getLatitudeAndLongitude(secondEarliest.getBuildingID()); 
 	
 				a = 0; 
@@ -842,17 +696,17 @@ public class ScheduleOptimization {
 				
 				//a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
 				a = Math.pow(Math.sin(deltaPhi / 2), 2) + ((Math.cos(section1Coords[0]) * Math.cos(section2Coords[0]) * Math.pow(Math.sin(deltaLambda / 2), 2)));
-				//System.out.println("a = " + a);
+				
 				
 				//c = 2 ⋅ atan2( √a, √(1−a) )
 				c = 2 * Math.atan2(Math.pow(a, 0.5), Math.pow(1 - a, 0.5)); 
-				//System.out.println("c = " + c);
+				
 				
 				//d = R ⋅ c
 				d = R * c; 
 				
 				totalDistanceInMeters += d; 
-				//System.out.println("Distance from one section to another in meters: " + d);
+				
 				
 				for (int i = 0; i < day.size(); i++) {
 					if (day.get(i).getSectionID().equals(earliest.getSectionID())) {
@@ -868,7 +722,7 @@ public class ScheduleOptimization {
 	
 	public Vector<Section> getSchedule() {
 		
-		//System.out.println("Total walking distance: " + getWalkingDistance());
+		
 		if (getWalkingDistance() > distanceConstraint) {
 			schedule.clear(); 
 		}
