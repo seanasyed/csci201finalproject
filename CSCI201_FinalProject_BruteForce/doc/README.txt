@@ -1,4 +1,4 @@
-# csci201finalproject
+﻿# csci201finalproject
 ## Team Info
 Team Name: Brute Force (Group 14)
 
@@ -43,7 +43,7 @@ The main goal of our project is to create an web application which is able to pa
 16. A schedule will display if the user has the schedule.
 17. Upon successfully having displayed the schedule, click on “Download Schedule” button.
 18. The button will link to a download of an ics file.
-19. The user will receive an email with the ics file attached.
+19. The user will receive an email with a summary of the schedule.
 
 ## Limitations
 ### Front-End
