@@ -1,16 +1,13 @@
 /**
- * Name: Xing Gao
- * USCID: 1504356084
- * Email: gaoxing@usc.edu
- * Course: CSCI 201L
- * Term: Fall 2018
- * Assignment: TODO Add your number here.
+ * Group 14
  * 
- * Description: 
- * 			TODO Add your description here.
+ * CP: Aya Shimizu (ashimizu@usc.edu)
+ * Yiyang Hou (yiyangh@usc.edu)
+ * Sean Syed (seansyed@usc.edu)
+ * Eric Duguay (eduguay@usc.edu)
+ * Xing Gao (gaoxing@usc.edu)
+ * Sangjun Lee (sangjun@usc.edu)
  * 
- * File Created at: Nov 14, 2018, 9:08:22 PM
- *
  */
 package model;
 
@@ -23,10 +20,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
-/**
- * @author XXX
- *
- */
 public class ICS {
 
 	private PrintWriter out = null;

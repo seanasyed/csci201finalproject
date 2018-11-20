@@ -1,13 +1,17 @@
+/**
+ * Group 14
+ * 
+ * CP: Aya Shimizu (ashimizu@usc.edu)
+ * Yiyang Hou (yiyangh@usc.edu)
+ * Sean Syed (seansyed@usc.edu)
+ * Eric Duguay (eduguay@usc.edu)
+ * Xing Gao (gaoxing@usc.edu)
+ * Sangjun Lee (sangjun@usc.edu)
+ * 
+ */
+
 package model;
 
-/**
- * @author Group 14 - Brute Force - Eric Duguay (eduguay@usc.edu) - Xing Gao
- *         (gaoxing@usc.edu) - Yiyang Hou (yiyangh@usc.edu) - Sangjun Lee
- *         (sangjun@usc.edu) - Sean Syed (seansyed@usc.edu)
- * @course CSCI 201
- * @assignment Final Project
- *
- */
 public class Section {
 
 	/*
