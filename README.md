@@ -24,5 +24,8 @@ The main goal of our project is to create an web application which is able to pa
 ## Limitations
 1. TODO: Add Your Limitation 1
 
+## About Program Functionalities
+The functionalities of our program include login/register users, search courses, arrange schedule based on starting time, end time and weekly walk distance, check whether the desired schedule is valid, submit valid schedule, view valid schedule in a time table, and download the schedule into an ICS format. Our program runs as a web application, where users can enjoy responsive, easy-to-use interfaces to plan their desired schedule for semesters in USC. If their desired schedule is not valid, they will be unregistered from the database and arrange a new schedule. Users can view their schedules on the website or download it to view in exterior applications such as Google Calendar or Apple Calendar.
+
 ## About Schedule Optimization
 Our scheduling algorithm is a derivative of the N-Queens problem and uses it to create a valid schedule without any collisions. Factors taken into account include class sizes, as well as section dependencies that may arise due to the various nuances of courses offered. For instance, lecture sections may have specific discussion, lab, or quiz sections. Constraints unique to our application include a manual time constraint specified by the user, as well as a weekly walking distance constraint. A schedule is not considered valid unless it conforms to both of those constraints. 
