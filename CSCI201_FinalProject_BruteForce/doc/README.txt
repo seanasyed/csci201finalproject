@@ -30,6 +30,8 @@ in which there is space available for them at the time of their respective regis
 - SampleLab.sql
 - SampleQuiz.sql
 
+Make sure both your username and password are `root`.
+
 2. Ensure all of the scripts were executed without any errors.
 
 3. Launch Eclipse and open the project `CSCI201_FinalProject_BruteForce` in `csci201finalproject` folder. Change constant variable `ROOT` in `ICS.java` file under 
