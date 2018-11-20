@@ -123,7 +123,6 @@
       $('#login-button').on('click', function (e) {
         login();
       });
-      console.log("message: <" + $('#message').text() + ">");
       if($('#message').text() != '') {
     	  alert($('#message').text());
       }
@@ -165,7 +164,6 @@
         },
         dataType: "json",
         success: function (result) {
-          console.log(result);
           //Result must include:
           //Whether the user was successfully created or not
           // $('#registerModal').modal('dispose');

@@ -67,24 +67,6 @@ function addCourseToList(courseName) {
   });
   $("#course-list").append(item);
 }
-/*
- * FUNCTIONS FOR COMMUNICATING WITH THE SERVER
- *
- */
-var addUser = (email, fname, lname) => {
-  $.ajax({
-    url: "BruteForce",
-    data: {
-      callType: "add_user",
-      email: email,
-      fname: fname,
-      lname: lname
-    },
-    success: function(result) {
-      console.log(result);
-    }
-  });
-};
 
 function checkCourseListOnServer() {
   var courseList = [];
@@ -98,7 +80,6 @@ function checkCourseListOnServer() {
   var courseListJSON = JSON.stringify(courseList);
   var username = $("#username").text();
   var distance = $("#distance").val();
-  console.log("distance:" + distance);
   $.ajax({
     url: "BruteForce",
     data: {
@@ -155,7 +136,6 @@ var submitCourseListToServer = () => {
       courseList: courseListJSON
     },
     success: function(result) {
-      console.log(result);
       alert(result.message);
       reset();
     }
@@ -188,7 +168,6 @@ function getSuggestions() {
       keyword: filter
     },
     success: function(result) {
-      console.log(result);
       var data = JSON.parse(result);
 
       var texts = [];
