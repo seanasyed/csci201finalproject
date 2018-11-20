@@ -83,7 +83,6 @@ var addUser = (email, fname, lname) => {
       lname: lname
     },
     success: function(result) {
-      console.log(result);
     }
   });
 };
@@ -101,7 +100,6 @@ function checkCourseListOnServer() {
   var courseListJSON = JSON.stringify(courseList);
   var username = $('#username').text();
   var distance = $('#distance').val();
-  console.log('distance:' + distance);
   
   //ajax call type check schedule to check whether course list is valid
   $.ajax({
@@ -163,7 +161,6 @@ var submitCourseListToServer = () => {
 	      courseList: courseListJSON
 	    },
 	    success: function(result) {
-	    	console.log(result);
 	    	alert(result.message);
 	    	reset();
 	    }
@@ -201,7 +198,6 @@ function getSuggestions() {
       keyword: filter
     },
     success: function(result) {
-    	console.log(result);
       var data = JSON.parse(result);
  
       var texts = [];
