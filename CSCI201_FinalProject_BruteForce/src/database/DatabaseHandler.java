@@ -95,11 +95,9 @@ public class DatabaseHandler {
 	public double[] getLatitudeAndLongitude(String buildingID) {
 		double[] coords = new double[2]; 
 		try {
-			System.out.println("getting latitude starting... ");
 			ps = conn.prepareStatement("SELECT * FROM Building WHERE ID=?");
 			ps.setString(1, buildingID);
 			rs = ps.executeQuery(); 
-			System.out.println("getting latitude" + rs);
 			while(rs.next()) {
 				coords[0] = Double.parseDouble(rs.getString("latitude")); 
 				coords[1] = Double.parseDouble(rs.getString("longitude")); 
@@ -223,40 +221,6 @@ public class DatabaseHandler {
 			return null;
 		} 
 	}
-//	
-//	public void addCourse(int ID, String school, String major, String number, float units, String name, String description, int semester) {
-//		Connection conn = null;
-//		PreparedStatement ps = null;
-//		try {
-//			conn = getConnection();
-//			ps = conn.prepareStatement("INSERT INTO Course (ID, school, major, number, units, name, description, semester) VALUE (?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE ID=?;");
-//			ps.setInt(1, ID);
-//			ps.setString(2, school);
-//			ps.setString(3, major);
-//			ps.setString(4, number);
-//			ps.setFloat(5, units);
-//			ps.setString(6, name);
-//			ps.setString(7, description);
-//			ps.setInt(8, semester);
-//			ps.setInt(9, ID);
-//			ps.executeUpdate();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (ps != null) {
-//					ps.close();
-//				}
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			} catch (SQLException sqle) {
-//				System.out.println("sqle: " + sqle.getMessage());
-//			}
-//		}
-//	}
-	
-
 	/**
 	 * Return a course object with {@code number} under {@code major}.
 	 * 
@@ -282,7 +246,6 @@ public class DatabaseHandler {
 				}
 				String courseName = rs.getString("major") + "-" + rs.getString("number");
 				String sectionID = rs.getString("sectionID");
-				System.out.println("ADDING LECTURE SECTION: " + sectionID);
 				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
 								rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 								rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
@@ -321,15 +284,7 @@ public class DatabaseHandler {
 				}
 				course.addLectureSection(lectureSection);
 			}
-			System.out.println("Before returning a course:");
-			System.out.println("LectureSections # :" + course.getLectureSections().size());
 			Vector<LectureSection> sections = course.getLectureSections();
-			for (int i = 0; i < sections.size(); i++) {
-				System.out.println("Lecture: " + sections.get(i).getSectionID());
-				System.out.println("Discussion#:" + sections.get(i).getDiscussions().size());
-				System.out.println("Lab#:" + sections.get(i).getLabs().size());
-			}
-			//System.out.println("Before returning a course:");
 			return course;
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -391,7 +346,6 @@ public class DatabaseHandler {
 				if (i < 9) sql += ",";
 			}
 			sql += ";";
-			System.out.println("statement: " + sql);
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			for (int i = 0; i < sectionIDs.size(); i++) {
@@ -445,8 +399,6 @@ public class DatabaseHandler {
 			while (rs.next()) {
 				String courseID = rs.getString("Course_ID");
 				String courseName = getCourseNameByID(courseID);
-				System.out.println(courseName);
-				System.out.println("sectionID is... " + rs.getString("type"));
 				LectureSection lectureSection = new LectureSection(rs.getString("sectionID"), rs.getString("type"), 
 						rs.getString("type"), rs.getString("start_time"), rs.getString("end_time"), 
 						rs.getString("day"), rs.getString("instructor"),rs.getInt("numRegistered"), 
@@ -512,7 +464,6 @@ public class DatabaseHandler {
 			while (rs.next()) {
 				for (int i = 0; i < 10; i++) {
 					String sectionID = rs.getString("sectionID" + String.valueOf(i+1));
-					System.out.println("finding section: " + sectionID);
 					if (sectionID != null) {
 						Section section = getSectionByID(sectionID);
 						if (section != null) schedule.add(section);
@@ -545,7 +496,6 @@ public class DatabaseHandler {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(sql);
 		}
 	}
 
@@ -565,7 +515,6 @@ public class DatabaseHandler {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(sql);
 		}
 	}
 	
@@ -584,7 +533,6 @@ public class DatabaseHandler {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(sql);
 		}
 	}
 
@@ -608,7 +556,6 @@ public class DatabaseHandler {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println(sql);
 		}
 		
 		return ID;
