@@ -1,3 +1,12 @@
+/*
+	Group 14
+	CP: Aya Shimizu (ashimizu@usc.edu)
+    Yiyang Hou (yiyangh@usc.edu)
+    Sean Syed (seansyed@usc.edu)
+    Eric Duguay (eduguay@usc.edu)
+    Xing Gao (gaoxing@usc.edu)
+    Sangjun Lee (sangjun@usc.edu)
+*/
 $(document).ready(function() {
   $("#add-button").click(function(event) {
     var keyword = $("#search-box").val();
@@ -16,29 +25,29 @@ $(document).ready(function() {
   $("input.timepicker").timepicker({
     timeFormat: "HH:mm"
   });
-  $('#scheduleLink').click(function(event) {
-	  linkToSchedule();
+  $("#scheduleLink").click(function(event) {
+    linkToSchedule();
   });
 });
 /*
  * FUNCTIONS FOR ADDING AN ITEM TO THE LIST
- * 
+ *
  */
 function addCourseToList(courseName) {
   //CREATE A LIST ITEM
   var item = $(
     '<li id="' +
-    courseName.toUpperCase() +
+      courseName.toUpperCase() +
       '"class="list-group-item d-flex justify-content-between"></li>'
   );
   var form = $(
     '<form id="' +
-    courseName +
+      courseName +
       'Form" target="_blank" name="detailForm" method= "GET" action = "detail.jsp" ></form>'
   );
   var input = $(
     '<input style="display: none;" name="courseName" value="' +
-    courseName +
+      courseName +
       '"></input>"'
   );
   input.appendTo(form);
@@ -60,7 +69,7 @@ function addCourseToList(courseName) {
 }
 /*
  * FUNCTIONS FOR COMMUNICATING WITH THE SERVER
- * 
+ *
  */
 var addUser = (email, fname, lname) => {
   $.ajax({
@@ -87,9 +96,9 @@ function checkCourseListOnServer() {
     courseList.push(text);
   }
   var courseListJSON = JSON.stringify(courseList);
-  var username = $('#username').text();
-  var distance = $('#distance').val();
-  console.log('distance:' + distance);
+  var username = $("#username").text();
+  var distance = $("#distance").val();
+  console.log("distance:" + distance);
   $.ajax({
     url: "BruteForce",
     data: {
@@ -101,68 +110,68 @@ function checkCourseListOnServer() {
       courseList: courseListJSON
     },
     success: function(result) {
-      if (result.valid == 'false') {
-    	  alert('Invalid Schedule');
-    	  $('#course-list li').remove();
-    	  $('#start-time').val('');
-    	  $('#end-time').val('');
+      if (result.valid == "false") {
+        alert("Invalid Schedule");
+        $("#course-list li").remove();
+        $("#start-time").val("");
+        $("#end-time").val("");
       } else {
-    	  alert('The schedule is valid. Click submit to continue.')
-    	  var checkButton = $('#check-button');
-    	  checkButton.text('Submit');
-    	  checkButton.unbind("click");
-    	  checkButton.click(function(event) {
-    		  submitCourseListToServer();
-    	  });
+        alert("The schedule is valid. Click submit to continue.");
+        var checkButton = $("#check-button");
+        checkButton.text("Submit");
+        checkButton.unbind("click");
+        checkButton.click(function(event) {
+          submitCourseListToServer();
+        });
       }
     }
   });
-};
+}
 
 var submitCourseListToServer = () => {
-	var checkButton = $('#check-button');
-	checkButton.click(function(event) {
-		checkCourseListToServer();
-	});
-	var courseList = [];
-	  var startTime = $("#start-time").val();
-	  var endTime = $("#end-time").val();
-	  for (var i = 0; i < $("#course-list").children().length; i++) {
-	    var text = $("#course-list").children()[i].innerText;
-	    text = text.replace(/\n/gi, "");
-	    courseList.push(text);
-	  }
-	  var username = $('#username').text();
-	  var courseListJSON = JSON.stringify(courseList);
-	  var distance = $('#distance').val();
-	  $.ajax({
-	    url: "BruteForce",
-	    data: {
-	      callType: "submit_schedule",
-	      username: username,
-	      startTime: startTime,
-	      endTime: endTime,
-	      distanceConstraint: distance,
-	      courseList: courseListJSON
-	    },
-	    success: function(result) {
-	    	console.log(result);
-	    	alert(result.message);
-	    	reset();
-	    }
-	  });
+  var checkButton = $("#check-button");
+  checkButton.click(function(event) {
+    checkCourseListToServer();
+  });
+  var courseList = [];
+  var startTime = $("#start-time").val();
+  var endTime = $("#end-time").val();
+  for (var i = 0; i < $("#course-list").children().length; i++) {
+    var text = $("#course-list").children()[i].innerText;
+    text = text.replace(/\n/gi, "");
+    courseList.push(text);
+  }
+  var username = $("#username").text();
+  var courseListJSON = JSON.stringify(courseList);
+  var distance = $("#distance").val();
+  $.ajax({
+    url: "BruteForce",
+    data: {
+      callType: "submit_schedule",
+      username: username,
+      startTime: startTime,
+      endTime: endTime,
+      distanceConstraint: distance,
+      courseList: courseListJSON
+    },
+    success: function(result) {
+      console.log(result);
+      alert(result.message);
+      reset();
+    }
+  });
 };
 function reset() {
-	$('#course-list li').remove();
-	$('#start-time').val('');
-	$('#end-time').val('');
-	$('#distance').val('');
-	var checkButton = $('#check-button');
-	  checkButton.text('Check');
-	  checkButton.unbind("click");
-	  checkButton.click(function(event) {
-		  checkCourseListOnServer();
-	  });
+  $("#course-list li").remove();
+  $("#start-time").val("");
+  $("#end-time").val("");
+  $("#distance").val("");
+  var checkButton = $("#check-button");
+  checkButton.text("Check");
+  checkButton.unbind("click");
+  checkButton.click(function(event) {
+    checkCourseListOnServer();
+  });
 }
 function getSuggestions() {
   var ul = $("#suggestion-box");
@@ -179,9 +188,9 @@ function getSuggestions() {
       keyword: filter
     },
     success: function(result) {
-    	console.log(result);
+      console.log(result);
       var data = JSON.parse(result);
- 
+
       var texts = [];
       $("#course-list li span").each(function() {
         texts.push($(this).text());
@@ -202,11 +211,12 @@ function getSuggestions() {
 }
 
 function linkToSchedule() {
-	var form = $('<form target="_blank" id="schedule-form" method="POST" action="integrated_schedule.jsp" style="display:none;"></form>');
-	var input = $('<input type="text" name="username">');
-	input.val($('#username').text());
-	input.appendTo(form);
-	form.appendTo($('body'));
-	form.submit();
+  var form = $(
+    '<form target="_blank" id="schedule-form" method="POST" action="integrated_schedule.jsp" style="display:none;"></form>'
+  );
+  var input = $('<input type="text" name="username">');
+  input.val($("#username").text());
+  input.appendTo(form);
+  form.appendTo($("body"));
+  form.submit();
 }
-
