@@ -36,10 +36,8 @@
     <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
      crossorigin="anonymous">
-     
-    
-    <link rel="stylesheet" href="css/schedule_reset.css"> <!-- CSS reset -->
-    <link rel="stylesheet" href="css/schedule_style.css"> <!-- Resource style -->
+    <link rel="stylesheet" href="css/schedule_reset.css"> 
+    <link rel="stylesheet" href="css/schedule_style.css"> <!-- Template adopted and derived from https://codyhouse.co/gem/schedule-template -->
     
     <style>
     	body{
