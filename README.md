@@ -19,6 +19,7 @@ The main goal of our project is to create an web application which is able to pa
 
 ## How to Run the Program
 1. Launch MySQL Workbench and open and run the following script files respectively:
+- databasev3.sql
 - SampleBuilding.sql
 - SampleCourse.sql
 - SampleLecture.sql
