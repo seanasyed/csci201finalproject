@@ -19,12 +19,12 @@ The main goal of our project is to create an web application which is able to pa
 
 ## How to Run the Program
 1. Launch MySQL Workbench and open and run the following script files respectively:
-..* SampleBuilding.sql
-..* SampleCourse.sql
-..* SampleLecture.sql
-..* SampleDiscussion.sql
-..* SampleLab.sql
-..* SampleQuiz.sql
+- SampleBuilding.sql
+- SampleCourse.sql
+- SampleLecture.sql
+- SampleDiscussion.sql
+- SampleLab.sql
+- SampleQuiz.sql
 2. Ensure all of the scripts were executed without any errors.
 3. Launch Eclipse and open the project “BruteForce” in “csci201finalproject” folder.
 4. Go to WebContent and open “login.jsp”
