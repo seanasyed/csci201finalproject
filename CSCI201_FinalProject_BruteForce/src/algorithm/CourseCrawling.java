@@ -10,7 +10,6 @@
  * 
  */
 
-
 package algorithm;
 
 import java.io.BufferedReader;
@@ -28,11 +27,20 @@ import model.BuildingCandidate;
 
 public class CourseCrawling {
 
+	/**
+	 * Time out value for networking connection.
+	 */
 	private static final int TIMEOUT = 2000000;
+	/**
+	 * Store urls, names, and colleges of each course.
+	 */
 	private List<String> courseLinks, names, schools;
 	private String currentSchool = "";
 	private DatabaseHandler dbh;
 
+	/**
+	 * Constructor.
+	 */
 	public CourseCrawling() {
 		courseLinks = new ArrayList<>();
 		names = new ArrayList<>();
@@ -80,6 +88,12 @@ public class CourseCrawling {
 		dbh.close();
 	}
 
+	/**
+	 * 
+	 * Update buildings from {@code link}.
+	 * 
+	 * @param link
+	 */
 	private void crawlBuildingJS(String link) {
 		try {
 			BufferedReader reader = getReader(link);
@@ -128,6 +142,14 @@ public class CourseCrawling {
 
 	}
 
+	/**
+	 * 
+	 * Report a BufferedReader object for {@code link}.
+	 * 
+	 * @param link
+	 * @return
+	 * @throws IOException
+	 */
 	public static BufferedReader getReader(String link) throws IOException {
 		BufferedReader reader = null, tmp = null;
 		try {

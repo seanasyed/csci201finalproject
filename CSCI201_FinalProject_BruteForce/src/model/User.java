@@ -12,18 +12,26 @@
 
 package model;
 
-import java.util.Vector;
-
 public class User {
+	/*
+	 * ---- Private members ----
+	 */
 	private String username;
-	private String fName; 
+	private String fName;
 	private String lName;
 
+	/*
+	 * ---- Constructors ----
+	 */
 	public User(String username, String fName, String lName) {
 		this.username = username;
 		this.fName = fName;
 		this.lName = lName;
 	}
+
+	/*
+	 * ---- Getters and Setters ----
+	 */
 	public String getUsername() {
 		return username;
 	}

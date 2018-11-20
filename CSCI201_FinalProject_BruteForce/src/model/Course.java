@@ -15,24 +15,33 @@ package model;
 import java.util.Vector;
 
 public class Course {
+	/*
+	 * ---- Private members ----
+	 */
 	private int ID;
-	private String school; 
+	private String school;
 	private String major;
-	private String number; 
-	private float units; 
+	private String number;
+	private float units;
 	private String name;
 	private String description;
 	private int semester;
-	private Vector<LectureSection> lectureSections; 
-	
+	private Vector<LectureSection> lectureSections;
+
+	/*
+	 * ---- Class Constants ----
+	 */
 	private static final int MAX_MAJOR = 45, MAX_NAME = 100;
 	private static final int DEFAULT_SEMESTER = 1;
-	
-	public Course(int ID, String school, String major, String number, float units, String name, 
-					String description, int semester) {
+
+	/*
+	 * ---- Constructors ----
+	 */
+	public Course(int ID, String school, String major, String number, float units, String name, String description,
+			int semester) {
 		this.ID = ID;
-		this.school = school; 
-		this.major = major; 
+		this.school = school;
+		this.major = major;
 		this.number = number;
 		this.units = units;
 		this.name = name;
@@ -40,35 +49,69 @@ public class Course {
 		this.semester = semester;
 		this.lectureSections = new Vector<LectureSection>();
 	}
-	
+
 	/**
-	 * Constructor for web crawling. 
+	 * Constructor for web crawling.
 	 * 
 	 * @param school
 	 * @param major
 	 */
 	public Course(String school, String major) {
 		this(0, school, major, null, 0, null, null, DEFAULT_SEMESTER);
-		if (school.contains(" ")) this.school = school.substring(0, school.indexOf(" "));
-		if (major.length() > MAX_MAJOR) this.major = major.substring(0, MAX_MAJOR);
-		
-	} 
-	
+		if (school.contains(" "))
+			this.school = school.substring(0, school.indexOf(" "));
+		if (major.length() > MAX_MAJOR)
+			this.major = major.substring(0, MAX_MAJOR);
+
+	}
+
+	/*
+	 * ---- Other methods ----
+	 */
 	public void addLectureSection(LectureSection lectureSection) {
 		lectureSections.add(lectureSection);
 	}
+
 	public boolean lectureSectionExists(String sectionID) {
 		for (int i = 0; i < lectureSections.size(); i++) {
-			if (lectureSections.get(i).getSectionID().equals(sectionID)) return true;
+			if (lectureSections.get(i).getSectionID().equals(sectionID))
+				return true;
 		}
 		return false;
 	}
+
+	public String insertDBString() {
+
+		if (number == null || name == null || description == null)
+			return null;
+
+		String base = "INSERT INTO `scheduling`.`Course` (" + "`school`, `major`, `number`, `units`, `name`, "
+				+ "`description`, `semester`)\n\tVALUES (";
+		school = school.replace('"', '\'');
+		base += "\"" + school + "\", ";
+		base += "\"" + major + "\", ";
+		base += "\"" + number + "\", ";
+		base += units + ", ";
+		name = name.replace('"', '\'');
+		base += "\"" + name + "\", ";
+		description = description.replace("\"", "'");
+		base += "\"" + description + "\", ";
+		base += semester + ");";
+
+		return base;
+	}
+
+	/*
+	 * ---- Getters and Setters ----
+	 */
 	public LectureSection getLectureSection(String sectionID) {
 		for (int i = 0; i < lectureSections.size(); i++) {
-			if (lectureSections.get(i).getSectionID().equals(sectionID)) return lectureSections.get(i);
+			if (lectureSections.get(i).getSectionID().equals(sectionID))
+				return lectureSections.get(i);
 		}
 		return null;
 	}
+
 	public int getID() {
 		return ID;
 	}
@@ -100,16 +143,20 @@ public class Course {
 	public int getSemester() {
 		return semester;
 	}
-	
+
 	public void setNumber(String number) {
 		this.number = number;
 	}
 
 	public void setName(String name) {
-		// Remove spaces from the name and make sure the length of the name is no larger than 100.
-		while (name.charAt(0) == ' ') name = name.substring(1);
-		while (name.charAt(name.length() - 1) == ' ') name = name.substring(0, name.length() - 1);
-		if (name.length() > MAX_NAME) name = name.substring(0, MAX_NAME - 3) + "...";
+		// Remove spaces from the name and make sure the length of the name is no larger
+		// than 100.
+		while (name.charAt(0) == ' ')
+			name = name.substring(1);
+		while (name.charAt(name.length() - 1) == ' ')
+			name = name.substring(0, name.length() - 1);
+		if (name.length() > MAX_NAME)
+			name = name.substring(0, MAX_NAME - 3) + "...";
 		this.name = name;
 	}
 
@@ -120,33 +167,14 @@ public class Course {
 	public void setUnits(float units) {
 		this.units = units;
 	}
-	
-	public String insertDBString() {
-		
-		if (number == null || name == null || description == null)
-			return null;
-		
-		String base = "INSERT INTO `scheduling`.`Course` ("
-				+ "`school`, `major`, `number`, `units`, `name`, "
-				+ "`description`, `semester`)\n\tVALUES (";
-		school = school.replace('"', '\'');
-		base += "\"" + school + "\", ";
-		base += "\"" + major + "\", ";
-		base += "\"" + number + "\", ";
-		base += units + ", ";
-		name = name.replace('"', '\'');
-		base += "\"" + name + "\", ";
-		description = description.replace("\"", "'");
-		base += "\"" + description + "\", ";
-		base += semester + ");";
-		
-		return base;
-	}
-	
+
 	public Vector<LectureSection> getLectureSections() {
-		return lectureSections; 
+		return lectureSections;
 	}
-	
+
+	/*
+	 * ---- Override methods ----
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -207,6 +235,5 @@ public class Course {
 		return "CourseCandidate [school=" + school + ", major=" + major + ", number=" + number + ", name=" + name
 				+ ", description=" + description + ", units=" + units + ", semester=" + semester + "]";
 	}
-	
-	
+
 }

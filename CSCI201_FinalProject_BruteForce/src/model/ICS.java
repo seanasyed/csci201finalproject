@@ -21,15 +21,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 public class ICS {
-
+	/*
+	 * ---- Private members ----
+	 */
 	private PrintWriter out = null;
-
-	private static final String FILENAME = "/term-20183.ics", FOLDERNAME = "downloads/";
-
-	private static final String ROOT = "/Users/seansyed/Documents/Code/School/csci201finalproject/BruteForce/WebContent";
-
 	private String username;
 
+	/*
+	 * ---- Class Constants ----
+	 */
+	private static final String FILENAME = "/term-20183.ics", FOLDERNAME = "downloads/";
+
+	/**
+	 * Root url = Location + "/CSCI201_FinalProject_BruteForce/WebContent"
+	 */
+	private static final String ROOT = "D:/USC/CSCI201L/csci201finalproject/CSCI201_FinalProject_BruteForce/WebContent";
+
+	/*
+	 * ---- Constructors ----
+	 */
 	public ICS(String username) {
 
 		this.username = username.substring(0, username.indexOf("@"));
@@ -37,6 +47,10 @@ public class ICS {
 
 	}
 
+	/**
+	 * 
+	 * Set up files and folders.
+	 */
 	private void initialize() {
 
 		System.out.println(ROOT + "/" + FOLDERNAME + username);
@@ -59,10 +73,19 @@ public class ICS {
 		}
 	}
 
+	/**
+	 * Close write out stream.
+	 */
 	private void close() {
 		out.close();
 	}
 
+	/**
+	 * Print {@code courses} into file.
+	 * 
+	 * @param courses
+	 * @return
+	 */
 	public String print(Vector<Section> courses) {
 		initialize();
 
@@ -79,7 +102,7 @@ public class ICS {
 	}
 
 	/**
-	 * TODO Add your method description here.
+	 * Write out a section event to ics file.
 	 * 
 	 * @param section;
 	 */
@@ -108,7 +131,7 @@ public class ICS {
 	}
 
 	/**
-	 * TODO Add your method description here.
+	 * Update {@code time} to HHmmss format.
 	 * 
 	 * @param startTime
 	 * @return
@@ -121,7 +144,7 @@ public class ICS {
 	}
 
 	/**
-	 * TODO Add your method description here.
+	 * Report the day of {@code section} in Basic ISO Date format.
 	 * 
 	 * @param section
 	 * @return
@@ -142,7 +165,7 @@ public class ICS {
 	}
 
 	/**
-	 * TODO Add your method description here.
+	 * Write footer into ics file.
 	 */
 	private void writeFooter() {
 		out.println("END:VCALENDAR");
@@ -150,7 +173,7 @@ public class ICS {
 	}
 
 	/**
-	 * TODO Add your method description here.
+	 * Write header into ics file.
 	 */
 	private void writeHeader() {
 		out.println("BEGIN:VCALENDAR\n" + "CALSCALE:GREGORIAN\n" + "VERSION:2.0\n" + "X-WR-CALNAME:Fall 2018 Classes\n"

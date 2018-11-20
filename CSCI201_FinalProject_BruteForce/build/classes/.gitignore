@@ -1,3 +1,5 @@
-/server/
-/model/
+/.DS_Store
+/algorithm/
 /database/
+/model/
+/server/

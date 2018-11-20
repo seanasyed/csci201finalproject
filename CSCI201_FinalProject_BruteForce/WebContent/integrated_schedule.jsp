@@ -77,7 +77,8 @@
     
     //"DOWNLOAD SCHEDULE" button
     function download(){
-    	var downloadLink = 'http://localhost:8080/BruteForce/';
+    	// Update downloadlink if host has been changed
+    	var downloadLink = 'http://localhost:8080/CSCI201_FinalProject_BruteForce/';
     	console.log("Downloading. ");
     	$.ajax({
     		url: "BruteForce",
@@ -102,7 +103,6 @@
     
     //use ajax call to connect with back end
     function getSchedule(){
-    	//TODO: Connect with back end
 			$.ajax({
 	    		url: "BruteForce",
 	    		data: {

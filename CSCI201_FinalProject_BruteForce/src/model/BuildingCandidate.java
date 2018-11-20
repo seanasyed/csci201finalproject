@@ -13,12 +13,20 @@
 package model;
 
 public class BuildingCandidate {
-	
+	/*
+	 * ---- Protected members ----
+	 */
 	String ID, fullName, address;
 	float longitude, latitude;
-	
+
+	/*
+	 * ---- Class Constants ----
+	 */
 	private static final int MAX_ADDRESS = 45, MAX_FULLNAME = 45;
-	
+
+	/*
+	 * ---- Constructors ----
+	 */
 	public BuildingCandidate(String iD, String fullName, String address) {
 		ID = iD;
 		if (fullName.length() > MAX_FULLNAME) {
@@ -37,8 +45,8 @@ public class BuildingCandidate {
 			}
 		}
 		this.address = address;
-		longitude = 1; // Use positive value to indicate the 
-						// longitude and attitude are unknown 
+		longitude = 1; // Use positive value to indicate the
+						// longitude and attitude are unknown
 		latitude = 0;
 	}
 
@@ -47,23 +55,28 @@ public class BuildingCandidate {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
-	
+
+	/*
+	 * ---- Getters and Setters ----
+	 */
 	public String getID() {
 		return ID;
 	}
 
+	/*
+	 * ---- Other methods ----
+	 */
 	public String insertDBString() {
-		
-		String base = "INSERT INTO `scheduling`.`Building` ("
-				+ "`ID`, `fullName`, `address`, `longitude`, `latitude`"
+
+		String base = "INSERT INTO `scheduling`.`Building` (" + "`ID`, `fullName`, `address`, `longitude`, `latitude`"
 				+ ")\n\tVALUES (";
 		base += "\"" + ID + "\", ";
 		base += "\"" + fullName + "\", ";
 		base += "\"" + address + "\", ";
 		base += longitude + ", ";
 		base += latitude + ");";
-		
+
 		return base;
 	}
-	
+
 }

@@ -93,8 +93,8 @@ public class BruteForceHandler {
 			}
 		}
 			break;
-			
-		//create a user
+
+		// create a user
 		case "create_user": {
 			// DONE
 			String email = request.getParameter("email");
@@ -125,8 +125,8 @@ public class BruteForceHandler {
 			}
 		}
 			break;
-			
-		//suggest courses 
+
+		// suggest courses
 		case "suggestions": {
 			String keyword = request.getParameter("keyword");
 
@@ -142,10 +142,10 @@ public class BruteForceHandler {
 			}
 		}
 			break;
-		
-		//check the schdeule
+
+		// check the schdeule
 		case "check_schedule": {
-			//RUN THE ALGORITHM AND RETURN PROPER VALUES
+			// RUN THE ALGORITHM AND RETURN PROPER VALUES
 			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime");
 			String endTime = request.getParameter("endTime");
@@ -200,8 +200,8 @@ public class BruteForceHandler {
 			}
 		}
 			break;
-		
-		//when confirmed that the schedule is valid, submit
+
+		// when confirmed that the schedule is valid, submit
 		case "submit_schedule": {
 			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime");
@@ -276,7 +276,7 @@ public class BruteForceHandler {
 			break;
 		}
 
-		//get the schedule returned by algorithm
+		// get the schedule returned by algorithm
 		case "get_schedule": {
 			String username = request.getParameter("username");
 			try {
@@ -294,7 +294,7 @@ public class BruteForceHandler {
 			break;
 		}
 
-		//download the schedule in the form of ics
+		// download the schedule in the form of ics
 		case "get_download": {
 			String username = request.getParameter("username");
 			Vector<Section> schedule = new Vector<>();
@@ -320,7 +320,7 @@ public class BruteForceHandler {
 
 	}
 
-	//send the email with schedule
+	// send the email with schedule
 	private void sentEmail(HttpServletRequest request, Vector<Section> schedule, String to,
 			HttpServletResponse response) {
 		String host = "smtp.gmail.com";
@@ -355,7 +355,7 @@ public class BruteForceHandler {
 
 	}
 
-	//get the schedule, return vector of sections
+	// get the schedule, return vector of sections
 	private String getSchedule(Vector<Section> schedule) {
 		String str = "";
 		for (Section course : schedule) {
