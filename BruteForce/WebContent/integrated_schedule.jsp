@@ -1,7 +1,18 @@
+<!--
+	Group 14
+	CP: Aya Shimizu (ashimizu@usc.edu)
+    Yiyang Hou (yiyangh@usc.edu)
+    Sean Syed (seansyed@usc.edu)
+    Eric Duguay (eduguay@usc.edu)
+    Xing Gao (gaoxing@usc.edu)
+    Sangjun Lee (sangjun@usc.edu)
+-->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
+
 <head>  
+
     <%
     	String username = request.getParameter("username"); 
     %>
@@ -31,13 +42,7 @@
     <link rel="stylesheet" href="css/schedule_style.css"> <!-- Resource style -->
     
     <style>
-    *{
-          
-     }
-     h1{
-        
-     }
-        body{
+    	body{
           margin: 0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
           font-size: 13px;
@@ -55,11 +60,12 @@
         	color: #00ff00;
         }
     </style>
-    
     <title>Brute Force Schedule</title>
 </head>
 <body>
     <script>
+    
+    //Press "Brute Force" to close current tab
     function closeTab(){
     	var r = confirm("Are you sure you want to leave the schedule page? ");
     	if (r==true){
@@ -71,7 +77,7 @@
     	
     };
     
-    
+    //"DOWNLOAD SCHEDULE" button
     function download(){
     	var downloadLink = 'http://localhost:8080/BruteForce/';
     	console.log("Downloading. ");
@@ -96,6 +102,7 @@
 		  });
     };
     
+    //use ajax call to connect with back end
     function getSchedule(){
     	//TODO: Connect with back end
 			$.ajax({
@@ -110,6 +117,8 @@
 	    		}
 			  });
     };
+    
+    //use data extracted from back end to print the classes
     function printSchedule(data) {
     	var courseList = JSON.parse(data);
 	      for (var i=0; i<courseList.length; i++){
@@ -132,28 +141,29 @@
           	console.log("Day: "+ day);
           	for (var j=0; j<day.length; j++){
           		var classnum = i+1;
+          		//e.g. "CSCI-103L"
           		var inner = '<a href="#0"><em class="event-name">'+ fullname+ '</em></a>';
           		var itemDay;
           		var listDay;
           		if (day[j]=='M'){ //monday's class
           			itemDay = 'mon';
           			listDay = 'monday';
-          		} else if (day[j]=='T'){
+          		} else if (day[j]=='T'){ //tuesday's class
           			itemDay = 'tue';
           			listDay = 'tuesday';
-          		} else if (day[j]=='W'){
+          		} else if (day[j]=='W'){ //wednesday's class
           			itemDay = 'wed';
           			listDay = 'wednesday';
-          		} else if (day[j]=='H'){
+          		} else if (day[j]=='H'){ //thursday's class
           			itemDay = 'thu';
           			listDay = 'thursday';
-          		} else if (day[j]=='F'){
+          		} else if (day[j]=='F'){ //friday's class
           			itemDay = 'fri';
           			listDay = 'friday';
           		}
+          		//update starting time, ending time and class number
                 var item = $('<li class="single-event" id="' + itemDay + '-class-'+ classnum + '" data-start="' + start_time + '" data-end="' + end_time + '" data-content="' + name + '" data-event="event-' + classnum + '">' + inner + '</li>');
       			item.appendTo($('#' + listDay + '-list'));
-               
           	}
           }
 	      initialize();
@@ -175,7 +185,6 @@
             
         </div>
     </nav>
-    
     <div class="cd-schedule loading">
     <div class="timeline">
         <ul>
@@ -208,9 +217,6 @@
             <li><span>21:00</span></li>
         </ul>
     </div> <!-- .timeline -->
-    <script>
-        
-    </script>
     <div class="events">
         <ul>
             <li class="events-group">
@@ -313,11 +319,9 @@
      crossorigin="anonymous"></script>
     <!-- Optional JavaScript -->
     <script type="text/javascript" src="javascript/script.js"></script>
-
     <script>
         $('#year').text(new Date().getFullYear());
         getSchedule();
-        
     </script>
 </body>
 </html>
