@@ -71,16 +71,13 @@ public class BruteForceHandler {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			Map<String, String> data = new HashMap<String, String>();
-			System.out.println("Trying to login...");
 			try {
 				String nextPage = "";
 				if (email == null || email.equals("") || password == null || password.equals("")) {
 					request.setAttribute("message", "One of the fields is empty.");
-					System.out.println("dispatching w/ attribute: " + "empty");
 					nextPage = "/login.jsp";
 				} else if (!dh.isAuthenticated(email, password)) {
 					request.setAttribute("message", "Email and password do not match.");
-					System.out.println("dispatching w/ attribute: " + "dont match");
 					nextPage = "/login.jsp";
 				} else {
 					request.setAttribute("email", email);
@@ -121,7 +118,6 @@ public class BruteForceHandler {
 
 			response.setContentType("application/json");
 			String json = new Gson().toJson(data);
-			System.out.println(json);
 			try {
 				response.getWriter().write(json);
 			} catch (IOException ioe) {
@@ -150,13 +146,11 @@ public class BruteForceHandler {
 		//check the schdeule
 		case "check_schedule": {
 			//RUN THE ALGORITHM AND RETURN PROPER VALUES
-			System.out.println("check_schedule");
 			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime");
 			String endTime = request.getParameter("endTime");
 			String courseListJSON = request.getParameter("courseList");
 			String distanceConstraint = request.getParameter("distanceConstraint");
-			System.out.println("Distance: " + distanceConstraint);
 			// get courses
 			courseListJSON = request.getParameter("courseList");
 			Vector<Course> vecCourses = new Vector<Course>();
@@ -173,8 +167,6 @@ public class BruteForceHandler {
 					// MAJOR: courseInfo[0]
 					// NUMBER: courseInfo[1]
 					String courseInfo[] = courses.optString(i).split("-");
-					System.out.println("major: " + courseInfo[0]);
-					System.out.println("number: " + courseInfo[1]);
 					Course course = dh.getCourse(courseInfo[0], courseInfo[1]);
 					if (course != null)
 						vecCourses.add(course);
@@ -182,30 +174,15 @@ public class BruteForceHandler {
 			} catch (JSONException je) {
 				System.out.println("je:" + je.getMessage());
 			}
-			System.out.println("vecCourses:" + vecCourses);
-			for (int i = 0; i < vecCourses.size(); i++) {
-				System.out.println("Course: " + vecCourses.get(i));
-				System.out.println("lectureSection: " + vecCourses.get(i).getLectureSections());
-				for (int j = 0; j < vecCourses.get(i).getLectureSections().size(); j++) {
-					System.out.println("labs: " + vecCourses.get(i).getLectureSections().get(j).getLabs());
-					System.out
-							.println("discussions: " + vecCourses.get(i).getLectureSections().get(j).getDiscussions());
-				}
-			}
-
 			if (startTime == null || startTime.equals(""))
 				startTime = "00:01";
 			if (endTime == null || endTime.equals(""))
 				endTime = "23:59";
 			if (distanceConstraint == null || distanceConstraint.equals(""))
 				distanceConstraint = "9999";
-			System.out.println("DistanceConstraint: " + Double.parseDouble(distanceConstraint));
 			ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime,
 					Double.parseDouble(distanceConstraint));
 			Vector<Section> vecSections = so.getSchedule();
-			for (int i = 0; i < vecSections.size(); i++) {
-				System.out.println(vecSections.get(i).getCourseName() + " at " + vecSections.get(i).getBuildingID());
-			}
 			Map<String, String> data = new HashMap<String, String>();
 			if (vecSections.size() <= 0) {
 				data.put("valid", "false");
@@ -213,7 +190,6 @@ public class BruteForceHandler {
 				String vecSectionsJSON = new Gson().toJson(vecSections);
 				data.put("courses", vecSectionsJSON);
 			}
-			System.out.println(vecSections);
 			response.setContentType("application/json");
 
 			String json = new Gson().toJson(data);
@@ -227,7 +203,6 @@ public class BruteForceHandler {
 		
 		//when confirmed that the schedule is valid, submit
 		case "submit_schedule": {
-			System.out.println("subbmit_schedule");
 			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime");
 			String endTime = request.getParameter("endTime");
@@ -249,8 +224,6 @@ public class BruteForceHandler {
 					// MAJOR: courseInfo[0]
 					// NUMBER: courseInfo[1]
 					String courseInfo[] = courses.optString(i).split("-");
-					System.out.println("major: " + courseInfo[0]);
-					System.out.println("number: " + courseInfo[1]);
 					Course course = dh.getCourse(courseInfo[0], courseInfo[1]);
 					if (course != null)
 						vecCourses.add(course);
@@ -258,23 +231,12 @@ public class BruteForceHandler {
 			} catch (JSONException je) {
 				System.out.println("je:" + je.getMessage());
 			}
-			System.out.println("vecCourses:" + vecCourses);
-			for (int i = 0; i < vecCourses.size(); i++) {
-				System.out.println("Course: " + vecCourses.get(i));
-				System.out.println("lectureSection: " + vecCourses.get(i).getLectureSections());
-				for (int j = 0; j < vecCourses.get(i).getLectureSections().size(); j++) {
-					System.out.println("labs: " + vecCourses.get(i).getLectureSections().get(j).getLabs());
-					System.out
-							.println("discussions: " + vecCourses.get(i).getLectureSections().get(j).getDiscussions());
-				}
-			}
 			if (startTime == null || startTime.equals(""))
 				startTime = "00:01";
 			if (endTime == null || endTime.equals(""))
 				endTime = "23:59";
 			if (distanceConstraint == null || distanceConstraint.equals(""))
 				distanceConstraint = "9999";
-			System.out.println("DistanceConstraint: " + Double.parseDouble(distanceConstraint));
 			ScheduleOptimization so = new ScheduleOptimization(vecCourses, startTime, endTime,
 					Double.parseDouble(distanceConstraint));
 			Vector<Section> vecSections = so.getSchedule();
@@ -285,7 +247,6 @@ public class BruteForceHandler {
 				String vecSectionsJSON = new Gson().toJson(vecSections);
 				data.put("courses", vecSectionsJSON);
 			}
-			System.out.println(vecSections);
 			ArrayList<String> sectionIDs = new ArrayList<>();
 			for (int i = 0; i < vecSections.size(); i++) {
 				sectionIDs.add(vecSections.get(i).getSectionID());
@@ -328,7 +289,6 @@ public class BruteForceHandler {
 					System.out.println(ioe.getMessage());
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
