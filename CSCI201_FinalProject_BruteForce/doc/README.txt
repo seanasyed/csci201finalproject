@@ -36,7 +36,8 @@ Make sure both your username and password are `root`.
 
 3. Launch Eclipse and open the project `CSCI201_FinalProject_BruteForce` in `csci201finalproject` folder. Change constant variable `ROOT` in `ICS.java` file under 
 `model` package to where you would like to store your generated .ics file. Update local variables `from` and `pass` in method `sentEmail()` within 
-`BruteForceHandler.java` file under `server` package to set up the email address and password of the host email.
+`BruteForceHandler.java` file under `server` package to set up the email address and password of the host email (must be a gmail account). Update 
+variable `downloadlink` in function `download()` within file `integrated_schedule.jsp` to your host url.
 
 4. Go to WebContent and open `login.jsp`
 
