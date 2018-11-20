@@ -1,3 +1,15 @@
+/**
+ * Group 14
+ * 
+ * CP: Aya Shimizu (ashimizu@usc.edu)
+ * Yiyang Hou (yiyangh@usc.edu)
+ * Sean Syed (seansyed@usc.edu)
+ * Eric Duguay (eduguay@usc.edu)
+ * Xing Gao (gaoxing@usc.edu)
+ * Sangjun Lee (sangjun@usc.edu)
+ * 
+ */
+
 package server;
 
 import java.io.IOException;
@@ -31,6 +43,7 @@ import model.Course;
 import model.ICS;
 import model.Section;
 
+//handler that connects back end and front end using different call types
 public class BruteForceHandler {
 
 	private DatabaseHandler dh;
@@ -53,8 +66,8 @@ public class BruteForceHandler {
 		start();
 
 		switch (callType) {
+		// user login
 		case "login_user": {
-			// DONE
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			Map<String, String> data = new HashMap<String, String>();
@@ -83,6 +96,8 @@ public class BruteForceHandler {
 			}
 		}
 			break;
+			
+		//create a user
 		case "create_user": {
 			// DONE
 			String email = request.getParameter("email");
@@ -114,8 +129,9 @@ public class BruteForceHandler {
 			}
 		}
 			break;
+			
+		//suggest courses 
 		case "suggestions": {
-			// DONE
 			String keyword = request.getParameter("keyword");
 
 			// RETURNS MAJOR+NUMBER (e.g. CSCI-201) OF THE COURSES
@@ -130,8 +146,10 @@ public class BruteForceHandler {
 			}
 		}
 			break;
+		
+		//check the schdeule
 		case "check_schedule": {
-			// TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
+			//RUN THE ALGORITHM AND RETURN PROPER VALUES
 			System.out.println("check_schedule");
 			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime");
@@ -139,7 +157,6 @@ public class BruteForceHandler {
 			String courseListJSON = request.getParameter("courseList");
 			String distanceConstraint = request.getParameter("distanceConstraint");
 			System.out.println("Distance: " + distanceConstraint);
-			// TODO: DISCUSS WITH FRANK
 			// get courses
 			courseListJSON = request.getParameter("courseList");
 			Vector<Course> vecCourses = new Vector<Course>();
@@ -207,8 +224,9 @@ public class BruteForceHandler {
 			}
 		}
 			break;
+		
+		//when confirmed that the schedule is valid, submit
 		case "submit_schedule": {
-			// TODO: RUN THE ALGORITHM AND RETURN PROPER VALUES
 			System.out.println("subbmit_schedule");
 			String username = request.getParameter("username");
 			String startTime = request.getParameter("startTime");
@@ -216,7 +234,6 @@ public class BruteForceHandler {
 			String courseListJSON = request.getParameter("courseList");
 			String distanceConstraint = request.getParameter("distanceConstraint");
 
-			// TODO: DISCUSS WITH FRANK
 			// get courses
 			courseListJSON = request.getParameter("courseList");
 			Vector<Course> vecCourses = new Vector<Course>();
@@ -298,6 +315,7 @@ public class BruteForceHandler {
 			break;
 		}
 
+		//get the schedule returned by algorithm
 		case "get_schedule": {
 			String username = request.getParameter("username");
 			try {
@@ -316,6 +334,7 @@ public class BruteForceHandler {
 			break;
 		}
 
+		//download the schedule in the form of ics
 		case "get_download": {
 			String username = request.getParameter("username");
 			Vector<Section> schedule = new Vector<>();
@@ -339,15 +358,9 @@ public class BruteForceHandler {
 			break;
 		}
 
-		// close();
 	}
 
-	/**
-	 * TODO Add your method description here.
-	 * 
-	 * @param schedule
-	 * @param username
-	 */
+	//send the email with schedule
 	private void sentEmail(HttpServletRequest request, Vector<Section> schedule, String to,
 			HttpServletResponse response) {
 		String host = "smtp.gmail.com";
@@ -382,12 +395,7 @@ public class BruteForceHandler {
 
 	}
 
-	/**
-	 * TODO Add your method description here.
-	 * 
-	 * @param schedule
-	 * @return
-	 */
+	//get the schedule, return vector of sections
 	private String getSchedule(Vector<Section> schedule) {
 		String str = "";
 		for (Section course : schedule) {
