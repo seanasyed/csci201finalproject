@@ -1,3 +1,11 @@
+-- Group 14
+
+-- CP: Aya Shimizu (ashimizu@usc.edu)
+-- Yiyang Hou (yiyangh@usc.edu)
+-- Sean Syed (seansyed@usc.edu)
+-- Eric Duguay (eduguay@usc.edu)
+-- Xing Gao (gaoxing@usc.edu)
+-- Sangjun Lee (sangjun@usc.edu)
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
