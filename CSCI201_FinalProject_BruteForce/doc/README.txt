@@ -23,6 +23,7 @@ in which there is space available for them at the time of their respective regis
 
 ## How to Run the Program
 1. Launch MySQL Workbench and open and run the following script files respectively:
+- database_v3/databasev3.sql
 - SampleBuilding.sql
 - SampleCourse.sql
 - SampleLecture.sql
